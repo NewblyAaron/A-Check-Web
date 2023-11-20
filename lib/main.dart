@@ -14,6 +14,7 @@ void main() async {
 
   if (kDebugMode) {
     try {
+      print("Connecting to local Firebase emulator");
       FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8000);
     } catch (e) {
       print(e);

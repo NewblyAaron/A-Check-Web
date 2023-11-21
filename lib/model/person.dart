@@ -36,7 +36,8 @@ class Student extends Person {
     this.guardianIds,
   });
 
-  factory Student.fromJson(Map<String, Object?> json) => _$StudentFromJson(json);
+  factory Student.fromJson(Map<String, Object?> json) =>
+      _$StudentFromJson(json);
 
   @Id()
   final String id;
@@ -58,7 +59,8 @@ class Guardian extends Person {
     super.phoneNumber,
   });
 
-  factory Guardian.fromJson(Map<String, Object?> json) => _$GuardianFromJson(json);
+  factory Guardian.fromJson(Map<String, Object?> json) =>
+      _$GuardianFromJson(json);
 
   @Id()
   final String id;
@@ -69,23 +71,23 @@ class Guardian extends Person {
 @Collection<Teacher>('teachers')
 @firestoreSerializable
 class Teacher extends Person {
-  Teacher({
-    required this.id,
-    required super.firstName,
-    required super.middleName,
-    required super.lastName,
-    super.email,
-    super.phoneNumber,
-    this.classIds
-  });
+  Teacher(
+      {required this.id,
+      required super.firstName,
+      required super.middleName,
+      required super.lastName,
+      super.email,
+      super.phoneNumber,
+      this.classIds});
 
-  factory Teacher.fromJson(Map<String, Object?> json) => _$TeacherFromJson(json);
+  factory Teacher.fromJson(Map<String, Object?> json) =>
+      _$TeacherFromJson(json);
 
   @Id()
   final String id;
 
   final List<String>? classIds;
-  
+
   Map<String, Object?> toJson() => _$TeacherToJson(this);
 }
 

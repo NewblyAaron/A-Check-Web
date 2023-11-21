@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'student.dart';
+part of 'person.dart';
 
 // **************************************************************************
 // CollectionGenerator
@@ -3048,6 +3048,1603 @@ class GuardianQueryDocumentSnapshot
   }
 }
 
+/// A collection reference object can be used for adding documents,
+/// getting document references, and querying for documents
+/// (using the methods inherited from Query).
+abstract class TeacherCollectionReference
+    implements
+        TeacherQuery,
+        FirestoreCollectionReference<Teacher, TeacherQuerySnapshot> {
+  factory TeacherCollectionReference([
+    FirebaseFirestore? firestore,
+  ]) = _$TeacherCollectionReference;
+
+  static Teacher fromFirestore(
+    DocumentSnapshot<Map<String, Object?>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    return Teacher.fromJson({'id': snapshot.id, ...?snapshot.data()});
+  }
+
+  static Map<String, Object?> toFirestore(
+    Teacher value,
+    SetOptions? options,
+  ) {
+    return {...value.toJson()}..remove('id');
+  }
+
+  @override
+  CollectionReference<Teacher> get reference;
+
+  @override
+  TeacherDocumentReference doc([String? id]);
+
+  /// Add a new document to this collection with the specified data,
+  /// assigning it a document ID automatically.
+  Future<TeacherDocumentReference> add(Teacher value);
+}
+
+class _$TeacherCollectionReference extends _$TeacherQuery
+    implements TeacherCollectionReference {
+  factory _$TeacherCollectionReference([FirebaseFirestore? firestore]) {
+    firestore ??= FirebaseFirestore.instance;
+
+    return _$TeacherCollectionReference._(
+      firestore.collection('teachers').withConverter(
+            fromFirestore: TeacherCollectionReference.fromFirestore,
+            toFirestore: TeacherCollectionReference.toFirestore,
+          ),
+    );
+  }
+
+  _$TeacherCollectionReference._(
+    CollectionReference<Teacher> reference,
+  ) : super(reference, $referenceWithoutCursor: reference);
+
+  String get path => reference.path;
+
+  @override
+  CollectionReference<Teacher> get reference =>
+      super.reference as CollectionReference<Teacher>;
+
+  @override
+  TeacherDocumentReference doc([String? id]) {
+    assert(
+      id == null || id.split('/').length == 1,
+      'The document ID cannot be from a different collection',
+    );
+    return TeacherDocumentReference(
+      reference.doc(id),
+    );
+  }
+
+  @override
+  Future<TeacherDocumentReference> add(Teacher value) {
+    return reference.add(value).then((ref) => TeacherDocumentReference(ref));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _$TeacherCollectionReference &&
+        other.runtimeType == runtimeType &&
+        other.reference == reference;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, reference);
+}
+
+abstract class TeacherDocumentReference
+    extends FirestoreDocumentReference<Teacher, TeacherDocumentSnapshot> {
+  factory TeacherDocumentReference(DocumentReference<Teacher> reference) =
+      _$TeacherDocumentReference;
+
+  DocumentReference<Teacher> get reference;
+
+  /// A reference to the [TeacherCollectionReference] containing this document.
+  TeacherCollectionReference get parent {
+    return _$TeacherCollectionReference(reference.firestore);
+  }
+
+  @override
+  Stream<TeacherDocumentSnapshot> snapshots();
+
+  @override
+  Future<TeacherDocumentSnapshot> get([GetOptions? options]);
+
+  @override
+  Future<void> delete();
+
+  /// Updates data on the document. Data will be merged with any existing
+  /// document data.
+  ///
+  /// If no document exists yet, the update will fail.
+  Future<void> update({
+    List<String>? classIds,
+    FieldValue classIdsFieldValue,
+    String firstName,
+    FieldValue firstNameFieldValue,
+    String middleName,
+    FieldValue middleNameFieldValue,
+    String lastName,
+    FieldValue lastNameFieldValue,
+    String? email,
+    FieldValue emailFieldValue,
+    String? phoneNumber,
+    FieldValue phoneNumberFieldValue,
+  });
+
+  /// Updates fields in the current document using the transaction API.
+  ///
+  /// The update will fail if applied to a document that does not exist.
+  void transactionUpdate(
+    Transaction transaction, {
+    List<String>? classIds,
+    FieldValue classIdsFieldValue,
+    String firstName,
+    FieldValue firstNameFieldValue,
+    String middleName,
+    FieldValue middleNameFieldValue,
+    String lastName,
+    FieldValue lastNameFieldValue,
+    String? email,
+    FieldValue emailFieldValue,
+    String? phoneNumber,
+    FieldValue phoneNumberFieldValue,
+  });
+}
+
+class _$TeacherDocumentReference
+    extends FirestoreDocumentReference<Teacher, TeacherDocumentSnapshot>
+    implements TeacherDocumentReference {
+  _$TeacherDocumentReference(this.reference);
+
+  @override
+  final DocumentReference<Teacher> reference;
+
+  /// A reference to the [TeacherCollectionReference] containing this document.
+  TeacherCollectionReference get parent {
+    return _$TeacherCollectionReference(reference.firestore);
+  }
+
+  @override
+  Stream<TeacherDocumentSnapshot> snapshots() {
+    return reference.snapshots().map(TeacherDocumentSnapshot._);
+  }
+
+  @override
+  Future<TeacherDocumentSnapshot> get([GetOptions? options]) {
+    return reference.get(options).then(TeacherDocumentSnapshot._);
+  }
+
+  @override
+  Future<TeacherDocumentSnapshot> transactionGet(Transaction transaction) {
+    return transaction.get(reference).then(TeacherDocumentSnapshot._);
+  }
+
+  Future<void> update({
+    Object? classIds = _sentinel,
+    FieldValue? classIdsFieldValue,
+    Object? firstName = _sentinel,
+    FieldValue? firstNameFieldValue,
+    Object? middleName = _sentinel,
+    FieldValue? middleNameFieldValue,
+    Object? lastName = _sentinel,
+    FieldValue? lastNameFieldValue,
+    Object? email = _sentinel,
+    FieldValue? emailFieldValue,
+    Object? phoneNumber = _sentinel,
+    FieldValue? phoneNumberFieldValue,
+  }) async {
+    assert(
+      classIds == _sentinel || classIdsFieldValue == null,
+      "Cannot specify both classIds and classIdsFieldValue",
+    );
+    assert(
+      firstName == _sentinel || firstNameFieldValue == null,
+      "Cannot specify both firstName and firstNameFieldValue",
+    );
+    assert(
+      middleName == _sentinel || middleNameFieldValue == null,
+      "Cannot specify both middleName and middleNameFieldValue",
+    );
+    assert(
+      lastName == _sentinel || lastNameFieldValue == null,
+      "Cannot specify both lastName and lastNameFieldValue",
+    );
+    assert(
+      email == _sentinel || emailFieldValue == null,
+      "Cannot specify both email and emailFieldValue",
+    );
+    assert(
+      phoneNumber == _sentinel || phoneNumberFieldValue == null,
+      "Cannot specify both phoneNumber and phoneNumberFieldValue",
+    );
+    final json = {
+      if (classIds != _sentinel)
+        _$TeacherFieldMap['classIds']!:
+            _$TeacherPerFieldToJson.classIds(classIds as List<String>?),
+      if (classIdsFieldValue != null)
+        _$TeacherFieldMap['classIds']!: classIdsFieldValue,
+      if (firstName != _sentinel)
+        _$TeacherFieldMap['firstName']!:
+            _$TeacherPerFieldToJson.firstName(firstName as String),
+      if (firstNameFieldValue != null)
+        _$TeacherFieldMap['firstName']!: firstNameFieldValue,
+      if (middleName != _sentinel)
+        _$TeacherFieldMap['middleName']!:
+            _$TeacherPerFieldToJson.middleName(middleName as String),
+      if (middleNameFieldValue != null)
+        _$TeacherFieldMap['middleName']!: middleNameFieldValue,
+      if (lastName != _sentinel)
+        _$TeacherFieldMap['lastName']!:
+            _$TeacherPerFieldToJson.lastName(lastName as String),
+      if (lastNameFieldValue != null)
+        _$TeacherFieldMap['lastName']!: lastNameFieldValue,
+      if (email != _sentinel)
+        _$TeacherFieldMap['email']!:
+            _$TeacherPerFieldToJson.email(email as String?),
+      if (emailFieldValue != null) _$TeacherFieldMap['email']!: emailFieldValue,
+      if (phoneNumber != _sentinel)
+        _$TeacherFieldMap['phoneNumber']!:
+            _$TeacherPerFieldToJson.phoneNumber(phoneNumber as String?),
+      if (phoneNumberFieldValue != null)
+        _$TeacherFieldMap['phoneNumber']!: phoneNumberFieldValue,
+    };
+
+    return reference.update(json);
+  }
+
+  void transactionUpdate(
+    Transaction transaction, {
+    Object? classIds = _sentinel,
+    FieldValue? classIdsFieldValue,
+    Object? firstName = _sentinel,
+    FieldValue? firstNameFieldValue,
+    Object? middleName = _sentinel,
+    FieldValue? middleNameFieldValue,
+    Object? lastName = _sentinel,
+    FieldValue? lastNameFieldValue,
+    Object? email = _sentinel,
+    FieldValue? emailFieldValue,
+    Object? phoneNumber = _sentinel,
+    FieldValue? phoneNumberFieldValue,
+  }) {
+    assert(
+      classIds == _sentinel || classIdsFieldValue == null,
+      "Cannot specify both classIds and classIdsFieldValue",
+    );
+    assert(
+      firstName == _sentinel || firstNameFieldValue == null,
+      "Cannot specify both firstName and firstNameFieldValue",
+    );
+    assert(
+      middleName == _sentinel || middleNameFieldValue == null,
+      "Cannot specify both middleName and middleNameFieldValue",
+    );
+    assert(
+      lastName == _sentinel || lastNameFieldValue == null,
+      "Cannot specify both lastName and lastNameFieldValue",
+    );
+    assert(
+      email == _sentinel || emailFieldValue == null,
+      "Cannot specify both email and emailFieldValue",
+    );
+    assert(
+      phoneNumber == _sentinel || phoneNumberFieldValue == null,
+      "Cannot specify both phoneNumber and phoneNumberFieldValue",
+    );
+    final json = {
+      if (classIds != _sentinel)
+        _$TeacherFieldMap['classIds']!:
+            _$TeacherPerFieldToJson.classIds(classIds as List<String>?),
+      if (classIdsFieldValue != null)
+        _$TeacherFieldMap['classIds']!: classIdsFieldValue,
+      if (firstName != _sentinel)
+        _$TeacherFieldMap['firstName']!:
+            _$TeacherPerFieldToJson.firstName(firstName as String),
+      if (firstNameFieldValue != null)
+        _$TeacherFieldMap['firstName']!: firstNameFieldValue,
+      if (middleName != _sentinel)
+        _$TeacherFieldMap['middleName']!:
+            _$TeacherPerFieldToJson.middleName(middleName as String),
+      if (middleNameFieldValue != null)
+        _$TeacherFieldMap['middleName']!: middleNameFieldValue,
+      if (lastName != _sentinel)
+        _$TeacherFieldMap['lastName']!:
+            _$TeacherPerFieldToJson.lastName(lastName as String),
+      if (lastNameFieldValue != null)
+        _$TeacherFieldMap['lastName']!: lastNameFieldValue,
+      if (email != _sentinel)
+        _$TeacherFieldMap['email']!:
+            _$TeacherPerFieldToJson.email(email as String?),
+      if (emailFieldValue != null) _$TeacherFieldMap['email']!: emailFieldValue,
+      if (phoneNumber != _sentinel)
+        _$TeacherFieldMap['phoneNumber']!:
+            _$TeacherPerFieldToJson.phoneNumber(phoneNumber as String?),
+      if (phoneNumberFieldValue != null)
+        _$TeacherFieldMap['phoneNumber']!: phoneNumberFieldValue,
+    };
+
+    transaction.update(reference, json);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TeacherDocumentReference &&
+        other.runtimeType == runtimeType &&
+        other.parent == parent &&
+        other.id == id;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, parent, id);
+}
+
+abstract class TeacherQuery
+    implements QueryReference<Teacher, TeacherQuerySnapshot> {
+  @override
+  TeacherQuery limit(int limit);
+
+  @override
+  TeacherQuery limitToLast(int limit);
+
+  /// Perform an order query based on a [FieldPath].
+  ///
+  /// This method is considered unsafe as it does check that the field path
+  /// maps to a valid property or that parameters such as [isEqualTo] receive
+  /// a value of the correct type.
+  ///
+  /// If possible, instead use the more explicit variant of order queries:
+  ///
+  /// **AVOID**:
+  /// ```dart
+  /// collection.orderByFieldPath(
+  ///   FieldPath.fromString('title'),
+  ///   startAt: 'title',
+  /// );
+  /// ```
+  ///
+  /// **PREFER**:
+  /// ```dart
+  /// collection.orderByTitle(startAt: 'title');
+  /// ```
+  TeacherQuery orderByFieldPath(
+    FieldPath fieldPath, {
+    bool descending = false,
+    Object? startAt,
+    Object? startAfter,
+    Object? endAt,
+    Object? endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  /// Perform a where query based on a [FieldPath].
+  ///
+  /// This method is considered unsafe as it does check that the field path
+  /// maps to a valid property or that parameters such as [isEqualTo] receive
+  /// a value of the correct type.
+  ///
+  /// If possible, instead use the more explicit variant of where queries:
+  ///
+  /// **AVOID**:
+  /// ```dart
+  /// collection.whereFieldPath(FieldPath.fromString('title'), isEqualTo: 'title');
+  /// ```
+  ///
+  /// **PREFER**:
+  /// ```dart
+  /// collection.whereTitle(isEqualTo: 'title');
+  /// ```
+  TeacherQuery whereFieldPath(
+    FieldPath fieldPath, {
+    Object? isEqualTo,
+    Object? isNotEqualTo,
+    Object? isLessThan,
+    Object? isLessThanOrEqualTo,
+    Object? isGreaterThan,
+    Object? isGreaterThanOrEqualTo,
+    Object? arrayContains,
+    List<Object?>? arrayContainsAny,
+    List<Object?>? whereIn,
+    List<Object?>? whereNotIn,
+    bool? isNull,
+  });
+
+  TeacherQuery whereDocumentId({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  TeacherQuery whereClassIds({
+    List<String>? isEqualTo,
+    List<String>? isNotEqualTo,
+    List<String>? isLessThan,
+    List<String>? isLessThanOrEqualTo,
+    List<String>? isGreaterThan,
+    List<String>? isGreaterThanOrEqualTo,
+    bool? isNull,
+    String? arrayContains,
+    List<String>? arrayContainsAny,
+  });
+  TeacherQuery whereFirstName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  TeacherQuery whereMiddleName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  TeacherQuery whereLastName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
+  TeacherQuery whereEmail({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  });
+  TeacherQuery wherePhoneNumber({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  });
+
+  TeacherQuery orderByDocumentId({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByClassIds({
+    bool descending = false,
+    List<String>? startAt,
+    List<String>? startAfter,
+    List<String>? endAt,
+    List<String>? endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByFirstName({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByMiddleName({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByLastName({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByEmail({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByPhoneNumber({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+}
+
+class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
+    implements TeacherQuery {
+  _$TeacherQuery(
+    this._collection, {
+    required Query<Teacher> $referenceWithoutCursor,
+    $QueryCursor $queryCursor = const $QueryCursor(),
+  }) : super(
+          $referenceWithoutCursor: $referenceWithoutCursor,
+          $queryCursor: $queryCursor,
+        );
+
+  final CollectionReference<Object?> _collection;
+
+  @override
+  Stream<TeacherQuerySnapshot> snapshots([SnapshotOptions? options]) {
+    return reference.snapshots().map(TeacherQuerySnapshot._fromQuerySnapshot);
+  }
+
+  @override
+  Future<TeacherQuerySnapshot> get([GetOptions? options]) {
+    return reference.get(options).then(TeacherQuerySnapshot._fromQuerySnapshot);
+  }
+
+  @override
+  TeacherQuery limit(int limit) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.limit(limit),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  @override
+  TeacherQuery limitToLast(int limit) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.limitToLast(limit),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery orderByFieldPath(
+    FieldPath fieldPath, {
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query =
+        $referenceWithoutCursor.orderBy(fieldPath, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery whereFieldPath(
+    FieldPath fieldPath, {
+    Object? isEqualTo,
+    Object? isNotEqualTo,
+    Object? isLessThan,
+    Object? isLessThanOrEqualTo,
+    Object? isGreaterThan,
+    Object? isGreaterThanOrEqualTo,
+    Object? arrayContains,
+    List<Object?>? arrayContainsAny,
+    List<Object?>? whereIn,
+    List<Object?>? whereNotIn,
+    bool? isNull,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        fieldPath,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        arrayContains: arrayContains,
+        arrayContainsAny: arrayContainsAny,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+        isNull: isNull,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery whereDocumentId({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        FieldPath.documentId,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery whereClassIds({
+    List<String>? isEqualTo,
+    List<String>? isNotEqualTo,
+    List<String>? isLessThan,
+    List<String>? isLessThanOrEqualTo,
+    List<String>? isGreaterThan,
+    List<String>? isGreaterThanOrEqualTo,
+    bool? isNull,
+    String? arrayContains,
+    List<String>? arrayContainsAny,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['classIds']!,
+        isEqualTo: isEqualTo != null
+            ? _$TeacherPerFieldToJson.classIds(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.classIds(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.classIds(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.classIds(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.classIds(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.classIds(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        arrayContains: arrayContains != null
+            ? (_$TeacherPerFieldToJson.classIds([arrayContains]) as List?)!
+                .single
+            : null,
+        arrayContainsAny: arrayContainsAny != null
+            ? _$TeacherPerFieldToJson.classIds(arrayContainsAny)
+                as Iterable<Object>?
+            : null,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery whereFirstName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['firstName']!,
+        isEqualTo: isEqualTo != null
+            ? _$TeacherPerFieldToJson.firstName(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.firstName(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.firstName(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.firstName(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.firstName(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.firstName(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.firstName(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$TeacherPerFieldToJson.firstName(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery whereMiddleName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['middleName']!,
+        isEqualTo: isEqualTo != null
+            ? _$TeacherPerFieldToJson.middleName(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.middleName(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.middleName(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.middleName(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.middleName(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.middleName(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.middleName(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$TeacherPerFieldToJson.middleName(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery whereLastName({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['lastName']!,
+        isEqualTo: isEqualTo != null
+            ? _$TeacherPerFieldToJson.lastName(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.lastName(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.lastName(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.lastName(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.lastName(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.lastName(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.lastName(e)),
+        whereNotIn: whereNotIn?.map((e) => _$TeacherPerFieldToJson.lastName(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery whereEmail({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['email']!,
+        isEqualTo:
+            isEqualTo != null ? _$TeacherPerFieldToJson.email(isEqualTo) : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.email(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.email(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.email(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.email(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.email(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.email(e)),
+        whereNotIn: whereNotIn?.map((e) => _$TeacherPerFieldToJson.email(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery wherePhoneNumber({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['phoneNumber']!,
+        isEqualTo: isEqualTo != null
+            ? _$TeacherPerFieldToJson.phoneNumber(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.phoneNumber(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.phoneNumber(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.phoneNumber(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.phoneNumber(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.phoneNumber(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.phoneNumber(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$TeacherPerFieldToJson.phoneNumber(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery orderByDocumentId({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByClassIds({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['classIds']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByFirstName({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['firstName']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByMiddleName({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['middleName']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByLastName({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['lastName']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByEmail({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$TeacherFieldMap['email']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByPhoneNumber({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['phoneNumber']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _$TeacherQuery &&
+        other.runtimeType == runtimeType &&
+        other.reference == reference;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, reference);
+}
+
+class TeacherDocumentSnapshot extends FirestoreDocumentSnapshot<Teacher> {
+  TeacherDocumentSnapshot._(this.snapshot) : data = snapshot.data();
+
+  @override
+  final DocumentSnapshot<Teacher> snapshot;
+
+  @override
+  TeacherDocumentReference get reference {
+    return TeacherDocumentReference(
+      snapshot.reference,
+    );
+  }
+
+  @override
+  final Teacher? data;
+}
+
+class TeacherQuerySnapshot
+    extends FirestoreQuerySnapshot<Teacher, TeacherQueryDocumentSnapshot> {
+  TeacherQuerySnapshot._(
+    this.snapshot,
+    this.docs,
+    this.docChanges,
+  );
+
+  factory TeacherQuerySnapshot._fromQuerySnapshot(
+    QuerySnapshot<Teacher> snapshot,
+  ) {
+    final docs = snapshot.docs.map(TeacherQueryDocumentSnapshot._).toList();
+
+    final docChanges = snapshot.docChanges.map((change) {
+      return _decodeDocumentChange(
+        change,
+        TeacherDocumentSnapshot._,
+      );
+    }).toList();
+
+    return TeacherQuerySnapshot._(
+      snapshot,
+      docs,
+      docChanges,
+    );
+  }
+
+  static FirestoreDocumentChange<TeacherDocumentSnapshot>
+      _decodeDocumentChange<T>(
+    DocumentChange<T> docChange,
+    TeacherDocumentSnapshot Function(DocumentSnapshot<T> doc) decodeDoc,
+  ) {
+    return FirestoreDocumentChange<TeacherDocumentSnapshot>(
+      type: docChange.type,
+      oldIndex: docChange.oldIndex,
+      newIndex: docChange.newIndex,
+      doc: decodeDoc(docChange.doc),
+    );
+  }
+
+  final QuerySnapshot<Teacher> snapshot;
+
+  @override
+  final List<TeacherQueryDocumentSnapshot> docs;
+
+  @override
+  final List<FirestoreDocumentChange<TeacherDocumentSnapshot>> docChanges;
+}
+
+class TeacherQueryDocumentSnapshot
+    extends FirestoreQueryDocumentSnapshot<Teacher>
+    implements TeacherDocumentSnapshot {
+  TeacherQueryDocumentSnapshot._(this.snapshot) : data = snapshot.data();
+
+  @override
+  final QueryDocumentSnapshot<Teacher> snapshot;
+
+  @override
+  final Teacher data;
+
+  @override
+  TeacherDocumentReference get reference {
+    return TeacherDocumentReference(snapshot.reference);
+  }
+}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -3143,4 +4740,54 @@ Map<String, dynamic> _$GuardianToJson(Guardian instance) => <String, dynamic>{
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'id': instance.id,
+    };
+
+Teacher _$TeacherFromJson(Map<String, dynamic> json) => Teacher(
+      id: json['id'] as String,
+      firstName: json['firstName'] as String,
+      middleName: json['middleName'] as String,
+      lastName: json['lastName'] as String,
+      email: json['email'] as String?,
+      phoneNumber: json['phoneNumber'] as String?,
+      classIds: (json['classIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+const _$TeacherFieldMap = <String, String>{
+  'firstName': 'firstName',
+  'middleName': 'middleName',
+  'lastName': 'lastName',
+  'email': 'email',
+  'phoneNumber': 'phoneNumber',
+  'id': 'id',
+  'classIds': 'classIds',
+};
+
+// ignore: unused_element
+abstract class _$TeacherPerFieldToJson {
+  // ignore: unused_element
+  static Object? firstName(String instance) => instance;
+  // ignore: unused_element
+  static Object? middleName(String instance) => instance;
+  // ignore: unused_element
+  static Object? lastName(String instance) => instance;
+  // ignore: unused_element
+  static Object? email(String? instance) => instance;
+  // ignore: unused_element
+  static Object? phoneNumber(String? instance) => instance;
+  // ignore: unused_element
+  static Object? id(String instance) => instance;
+  // ignore: unused_element
+  static Object? classIds(List<String>? instance) => instance;
+}
+
+Map<String, dynamic> _$TeacherToJson(Teacher instance) => <String, dynamic>{
+      'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'lastName': instance.lastName,
+      'email': instance.email,
+      'phoneNumber': instance.phoneNumber,
+      'id': instance.id,
+      'classIds': instance.classIds,
     };

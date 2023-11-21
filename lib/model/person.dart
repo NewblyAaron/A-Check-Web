@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'student.g.dart';
+part 'person.g.dart';
 
 const firestoreSerializable = JsonSerializable(
     converters: firestoreJsonConverters,
@@ -62,8 +62,33 @@ class Guardian extends Person {
 
   @Id()
   final String id;
+
   Map<String, Object?> toJson() => _$GuardianToJson(this);
+}
+
+@Collection<Teacher>('teachers')
+@firestoreSerializable
+class Teacher extends Person {
+  Teacher({
+    required this.id,
+    required super.firstName,
+    required super.middleName,
+    required super.lastName,
+    super.email,
+    super.phoneNumber,
+    this.classIds
+  });
+
+  factory Teacher.fromJson(Map<String, Object?> json) => _$TeacherFromJson(json);
+
+  @Id()
+  final String id;
+
+  final List<String>? classIds;
+  
+  Map<String, Object?> toJson() => _$TeacherToJson(this);
 }
 
 final studentsRef = StudentCollectionReference();
 final guardiansRef = GuardianCollectionReference();
+final teachersRef = TeacherCollectionReference();

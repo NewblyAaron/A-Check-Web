@@ -3,6 +3,7 @@ import 'package:a_check_web/student/students_page_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/list_row.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
+import 'package:a_check_web/forms/student_form_page.dart';
 import 'package:flutter/material.dart';
 
 class StudentsPage extends StatefulWidget {
@@ -38,7 +39,13 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StudentFormPage()),
+                    );
+                  },
                   icon: const Icon(
                       Icons.group_add_rounded), //icon data for elevated button
                   label: const Text("Add a student"), //label text

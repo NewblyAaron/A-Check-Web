@@ -23,8 +23,9 @@ void main() async {
   }
 
   runApp(MaterialApp(
-      theme: ThemeData(fontFamily: 'Inter',
-        useMaterial3:false,
+      theme: ThemeData(
+        fontFamily: 'Inter',
+        useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white,
           primary: Colors.white,
@@ -46,46 +47,46 @@ class MainApp extends StatelessWidget {
       backgroundColor: const Color(0xff000000),
       appBar: AppBar(
         elevation: 0.5,
-        title:  Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(
               padding: EdgeInsets.only(left: 0),
               child: Image(
-                image: AssetImage("assets/images/logo.png"), height: 55),
-              ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                const Column(
-                  children: [
-                    Text("De La Cruz, John",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                    ),
-                    Text("Ateneo De Naga University",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
-                ),
-
-                IconButton(
-                  //TODO: DropdownMenu (if logged in) with items[View Profile, Settings, Logout] or (if not logged in) items[Sign In, Register]
-                  color: Colors.black,
-                  icon: const Icon(Icons.arrow_drop_down, size: 25),
-                  tooltip: 'Profile',
-                  onPressed: (){},
-                ),
-              ]
+                  image: AssetImage("assets/images/logo.png"), height: 55),
             ),
+            Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  const Column(
+                    children: [
+                      Text(
+                        "De La Cruz, John",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "Ateneo De Naga University",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    //TODO: DropdownMenu (if logged in) with items[View Profile, Settings, Logout] or (if not logged in) items[Sign In, Register]
+                    color: Colors.black,
+                    icon: const Icon(Icons.arrow_drop_down, size: 25),
+                    tooltip: 'Profile',
+                    onPressed: () {},
+                  ),
+                ]),
           ],
         ),
       ),

@@ -21,6 +21,8 @@ class Person {
 
   final String firstName, middleName, lastName;
   final String? email, phoneNumber;
+
+  String get fullName => "$firstName ${middleName[0]}. $lastName";
 }
 
 @Collection<Student>('students')

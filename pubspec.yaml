@@ -9,6 +9,7 @@ environment:
 dependencies:
   cloud_firestore: ^4.13.1
   cloud_firestore_odm: ^1.0.0-dev.76
+  email_validator: ^2.1.17
   firebase_core: ^2.22.0
   flutter:
     sdk: flutter

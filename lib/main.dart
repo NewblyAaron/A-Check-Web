@@ -1,4 +1,5 @@
 import 'package:a_check_web/firebase_options.dart';
+import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,6 +24,7 @@ void main() async {
   }
 
   runApp(MaterialApp(
+      scaffoldMessengerKey: snackbarKey,
       theme: ThemeData(
         fontFamily: 'Inter',
         useMaterial3: false,

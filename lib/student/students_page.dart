@@ -3,7 +3,6 @@ import 'package:a_check_web/student/students_page_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/list_row.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
-import 'package:a_check_web/forms/student_form_page.dart';
 import 'package:flutter/material.dart';
 
 class StudentsPage extends StatefulWidget {
@@ -39,16 +38,9 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => StudentFormPage()),
-                    );
-                  },
-                  icon: const Icon(
-                      Icons.group_add_rounded), //icon data for elevated button
-                  label: const Text("Add a student"), //label text
+                  onPressed: state.openForm,
+                  icon: const Icon(Icons.group_add_rounded),
+                  label: const Text("Add a student"),
                   style:
                       ElevatedButton.styleFrom(foregroundColor: Colors.green),
                 ),
@@ -60,23 +52,21 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
             child: FirestoreBuilder(
               ref: studentsRef,
               builder: (context, snapshot, child) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                if (snapshot.hasData) {
+                  final students =
+                      snapshot.data!.docs.map((doc) => doc.data).toList();
+
+                  return ListView(
+                    shrinkWrap: true,
+                    children: students
+                        .map((student) => ListRow(
+                              object: student,
+                            ))
+                        .toList(),
                   );
+                } else {
+                  return const Text("Loading...");
                 }
-
-                final students =
-                    snapshot.data!.docs.map((doc) => doc.data).toList();
-
-                return ListView(
-                  shrinkWrap: true,
-                  children: students
-                      .map((student) => ListRow(
-                            object: student,
-                          ))
-                      .toList(),
-                );
               },
             ),
           ),

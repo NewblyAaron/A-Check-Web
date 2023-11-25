@@ -10,6 +10,7 @@ const firestoreSerializable = JsonSerializable(
     createFieldMap: true,
     createPerFieldToJson: true);
 
+@JsonSerializable()
 class Person {
   Person({
     required this.firstName,
@@ -35,8 +36,10 @@ class Student extends Person {
     required super.lastName,
     super.email,
     super.phoneNumber,
-    this.guardianIds,
-  });
+    List<String>? guardianIds,
+  }) {
+    this.guardianIds = guardianIds ?? List.empty();
+  }
 
   factory Student.fromJson(Map<String, Object?> json) =>
       _$StudentFromJson(json);
@@ -44,7 +47,7 @@ class Student extends Person {
   @Id()
   final String id;
 
-  final List<String>? guardianIds;
+  late final List<String>? guardianIds;
 
   Map<String, Object?> toJson() => _$StudentToJson(this);
 }
@@ -80,7 +83,9 @@ class Teacher extends Person {
       required super.lastName,
       super.email,
       super.phoneNumber,
-      this.classIds});
+      this.classIds}) {
+    classIds = classIds ?? List.empty();
+  }
 
   factory Teacher.fromJson(Map<String, Object?> json) =>
       _$TeacherFromJson(json);
@@ -88,7 +93,7 @@ class Teacher extends Person {
   @Id()
   final String id;
 
-  final List<String>? classIds;
+  late final List<String>? classIds;
 
   Map<String, Object?> toJson() => _$TeacherToJson(this);
 }

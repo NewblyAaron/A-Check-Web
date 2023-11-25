@@ -1,25 +1,32 @@
-import 'package:a_check_web/main.dart';
-import 'package:a_check_web/student/students_page.dart';
+import 'package:a_check_web/forms/student_form_con.dart';
+import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/utils/validators.dart';
 import 'package:flutter/material.dart';
 
-class StudentFormPage extends StatefulWidget {
-  const StudentFormPage({super.key});
+class StudentForm extends StatefulWidget {
+  const StudentForm({super.key, this.student});
+
+  final Student? student;
 
   @override
-  State<StudentFormPage> createState() => _StudentFormPageState();
+  State<StudentForm> createState() => StudentFormState();
 }
 
-class _StudentFormPageState extends State<StudentFormPage> {
+class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
+  const StudentFormView(super.state, {super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
+    return Form(
+      key: state.formKey,
+      child: Padding(
         padding: const EdgeInsets.fromLTRB(100, 50, 100, 0),
         child: Align(
           alignment: Alignment.center,
           child: Column(
             children: [
-              Text("Add Student",
+              const Text("Add Student",
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -31,6 +38,8 @@ class _StudentFormPageState extends State<StudentFormPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextFormField(
+                  controller: state.idCon,
+                  validator: Validators.hasValue,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   textInputAction: TextInputAction.next,
@@ -41,12 +50,14 @@ class _StudentFormPageState extends State<StudentFormPage> {
                     fontSize: 14,
                     color: Colors.black54,
                   ),
-                  decoration: InputDecoration(labelText: "Student ID"),
+                  decoration: const InputDecoration(labelText: "Student ID"),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextFormField(
+                  controller: state.fNameCon,
+                  validator: Validators.hasValue,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   textInputAction: TextInputAction.next,
@@ -57,12 +68,14 @@ class _StudentFormPageState extends State<StudentFormPage> {
                     fontSize: 14,
                     color: Colors.black54,
                   ),
-                  decoration: InputDecoration(labelText: "First Name"),
+                  decoration: const InputDecoration(labelText: "First Name"),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextFormField(
+                  controller: state.mNameCon,
+                  validator: Validators.hasValue,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   textInputAction: TextInputAction.next,
@@ -73,12 +86,14 @@ class _StudentFormPageState extends State<StudentFormPage> {
                     fontSize: 14,
                     color: Colors.black54,
                   ),
-                  decoration: InputDecoration(labelText: "Middle Name"),
+                  decoration: const InputDecoration(labelText: "Middle Name"),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextFormField(
+                  controller: state.lNameCon,
+                  validator: Validators.hasValue,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   textInputAction: TextInputAction.next,
@@ -89,12 +104,14 @@ class _StudentFormPageState extends State<StudentFormPage> {
                     fontSize: 14,
                     color: Colors.black54,
                   ),
-                  decoration: InputDecoration(labelText: "Last Name"),
+                  decoration: const InputDecoration(labelText: "Last Name"),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextFormField(
+                  controller: state.phoneNumCon,
+                  validator: Validators.isAMobileNumber,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   textInputAction: TextInputAction.next,
@@ -105,12 +122,14 @@ class _StudentFormPageState extends State<StudentFormPage> {
                     fontSize: 14,
                     color: Colors.black54,
                   ),
-                  decoration: InputDecoration(labelText: "Mobile Number"),
+                  decoration: const InputDecoration(labelText: "Mobile Number"),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TextFormField(
+                  controller: state.emailCon,
+                  validator: Validators.isAnEmail,
                   obscureText: false,
                   textAlign: TextAlign.start,
                   textInputAction: TextInputAction.next,
@@ -121,20 +140,15 @@ class _StudentFormPageState extends State<StudentFormPage> {
                     fontSize: 14,
                     color: Colors.black54,
                   ),
-                  decoration: InputDecoration(labelText: "Email Address"),
+                  decoration: const InputDecoration(labelText: "Email Address"),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainApp()),
-                  );
-                },
-                child: Text(
+                onPressed: state.finalize,
+                child: const Text(
                   "Confirm",
                   style: TextStyle(color: Colors.black),
                 ),
@@ -144,6 +158,5 @@ class _StudentFormPageState extends State<StudentFormPage> {
         ),
       ),
     );
-    ;
   }
 }

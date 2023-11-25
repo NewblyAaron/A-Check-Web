@@ -20,37 +20,33 @@ class SideNavBarView extends WidgetView<SideNavBar, SideNavBarState> {
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
       decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(blurRadius: 1)]),
-      child:  SideNavigationBar(
-          initiallyExpanded: true,
-          selectedIndex: state.selectedIndex,
-          items: const [
-            SideNavigationBarItem(icon: Icons.home, label: "Dashboard"),
-            SideNavigationBarItem(
-              icon: Icons.people_rounded,
-              label: 'Teachers',
-            ),
-            SideNavigationBarItem(
-              icon: Icons.person_rounded,
-              label: 'Students',
-            ),
-            SideNavigationBarItem(
-              icon: Icons.class_rounded,
-              label: 'Classes',
-            ),
-          ],
-          onTap: state.onTap,
+          color: Colors.white, boxShadow: [BoxShadow(blurRadius: 1)]),
+      child: SideNavigationBar(
+        initiallyExpanded: true,
+        selectedIndex: state.selectedIndex,
+        items: const [
+          SideNavigationBarItem(icon: Icons.home, label: "Dashboard"),
+          SideNavigationBarItem(
+            icon: Icons.people_rounded,
+            label: 'Teachers',
+          ),
+          SideNavigationBarItem(
+            icon: Icons.person_rounded,
+            label: 'Students',
+          ),
+          SideNavigationBarItem(
+            icon: Icons.class_rounded,
+            label: 'Classes',
+          ),
+        ],
+        onTap: state.onTap,
         theme: SideNavigationBarTheme(
           itemTheme: SideNavigationBarItemTheme(
               unselectedItemColor: Colors.black54,
               selectedItemColor: Colors.green,
               iconSize: 30,
-              labelTextStyle: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.black
-              )
-          ),
+              labelTextStyle:
+                  const TextStyle(fontSize: 20, color: Colors.black)),
           togglerTheme: SideNavigationBarTogglerTheme.standard(),
           dividerTheme: SideNavigationBarDividerTheme.standard(),
         ),

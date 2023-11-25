@@ -1,9 +1,9 @@
-import 'package:a_check_web/class/classes_page.dart';
 import 'package:a_check_web/dashboard.dart';
-import 'package:a_check_web/teacher/teachers_page.dart';
+import 'package:a_check_web/pages/student/students_page.dart';
+import 'package:a_check_web/pages/teacher/teachers_page.dart';
+import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/widgets/sidenavbar.dart';
 import 'package:flutter/material.dart';
-import 'student/students_page.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

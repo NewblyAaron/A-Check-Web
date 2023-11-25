@@ -85,6 +85,5 @@ class _ClassesPageState extends State<ClassesPage> {
         ],
       ),
     );
-    ;
   }
 }

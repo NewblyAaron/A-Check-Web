@@ -1,19 +1,20 @@
 import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/student/students_page_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/list_row.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:flutter/material.dart';
 
-class StudentsPage extends StatefulWidget {
-  const StudentsPage({super.key});
+import './teachers_page_con.dart';
+
+class TeachersPage extends StatefulWidget {
+  const TeachersPage({super.key});
 
   @override
-  State<StudentsPage> createState() => StudentsPageState();
+  State<TeachersPage> createState() => TeachersPageState();
 }
 
-class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
-  const StudentsPageView(super.state, {super.key});
+class TeachersPageView extends WidgetView<TeachersPage, TeachersPageState> {
+  const TeachersPageView(super.state, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 const Text(
-                  "List of Students",
+                  "List of Teachers",
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -39,8 +40,9 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
                 ),
                 ElevatedButton.icon(
                   onPressed: state.openForm,
-                  icon: const Icon(Icons.group_add_rounded),
-                  label: const Text("Add a student"),
+                  icon: const Icon(
+                      Icons.group_add_rounded), //icon data for elevated button
+                  label: const Text("Add a teacher"), //label text
                   style:
                       ElevatedButton.styleFrom(foregroundColor: Colors.green),
                 ),
@@ -50,17 +52,17 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
           Container(
             margin: const EdgeInsets.fromLTRB(50, 20, 70, 0),
             child: FirestoreBuilder(
-              ref: studentsRef,
+              ref: teachersRef,
               builder: (context, snapshot, child) {
                 if (snapshot.hasData) {
-                  final students =
+                  final teachers =
                       snapshot.data!.docs.map((doc) => doc.data).toList();
 
                   return ListView(
                     shrinkWrap: true,
-                    children: students
-                        .map((student) => ListRow(
-                              object: student,
+                    children: teachers
+                        .map((teacher) => ListRow(
+                              object: teacher,
                             ))
                         .toList(),
                   );

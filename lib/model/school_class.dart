@@ -12,6 +12,7 @@ const firestoreSerializable = JsonSerializable(
     createPerFieldToJson: true);
 
 @Collection<SchoolClass>('classes')
+@Collection<ClassSchedule>('classes/*/schedule')
 @firestoreSerializable
 class SchoolClass {
   SchoolClass(
@@ -37,7 +38,7 @@ class SchoolClass {
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);
 }
 
-@JsonSerializable()
+@firestoreSerializable
 class ClassSchedule {
   ClassSchedule(
       {required this.weekday,
@@ -64,3 +65,5 @@ class ClassSchedule {
   late int startTimeHour, startTimeMinute;
   late int endTimeHour, endTimeMinute;
 }
+
+final classesRef = SchoolClassCollectionReference();

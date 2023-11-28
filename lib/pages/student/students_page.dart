@@ -42,7 +42,9 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
                   icon: const Icon(Icons.group_add_rounded),
                   label: const Text("Add a student"),
                   style:
-                      ElevatedButton.styleFrom(foregroundColor: Colors.green),
+                      ElevatedButton.styleFrom(
+                          foregroundColor: Colors.green,
+                          backgroundColor: Colors.white),
                 ),
               ],
             ),

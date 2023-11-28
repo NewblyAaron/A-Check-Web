@@ -44,7 +44,8 @@ class TeachersPageView extends WidgetView<TeachersPage, TeachersPageState> {
                       Icons.group_add_rounded), //icon data for elevated button
                   label: const Text("Add a teacher"), //label text
                   style:
-                      ElevatedButton.styleFrom(foregroundColor: Colors.green),
+                      ElevatedButton.styleFrom(foregroundColor: Colors.green, backgroundColor: Colors.white),
+
                 ),
               ],
             ),

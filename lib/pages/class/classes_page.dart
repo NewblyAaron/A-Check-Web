@@ -1,4 +1,3 @@
-import 'package:a_check_web/forms/class_form.dart';
 import 'package:a_check_web/pages/class/classes_page_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:flutter/material.dart';

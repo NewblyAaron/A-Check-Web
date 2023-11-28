@@ -83,8 +83,8 @@ class Teacher extends Person {
       required super.lastName,
       super.email,
       super.phoneNumber,
-      this.classIds}) {
-    classIds = classIds ?? List.empty();
+      List<String>? classIds}) {
+    this.classIds = classIds ?? List.empty();
   }
 
   factory Teacher.fromJson(Map<String, Object?> json) =>

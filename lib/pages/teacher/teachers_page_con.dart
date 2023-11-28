@@ -1,18 +1,16 @@
-import 'package:a_check_web/forms/teacher_form.dart';
+import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/pages/teacher/teacher_info.dart';
 
 import './teachers_page.dart';
 import 'package:flutter/material.dart';
 
 class TeachersPageState extends State<TeachersPage> {
-  openForm() async {
-    await showDialog(
-      context: context,
-      builder: (context) => const Dialog(
-        child: TeacherForm(),
-      ),
-    );
-  }
+  TeacherInfo? teacherInfoWidget;
 
   @override
   Widget build(BuildContext context) => TeachersPageView(this);
+
+  onListRowTap(Teacher teacher) {
+    setState(() => teacherInfoWidget = TeacherInfo(teacher: teacher));
+  }
 }

@@ -1,13 +1,18 @@
+import 'package:a_check_web/forms/class_form.dart';
+import 'package:a_check_web/pages/class/classes_page_con.dart';
+import 'package:a_check_web/utils/abstracts.dart';
 import 'package:flutter/material.dart';
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({super.key});
 
   @override
-  State<ClassesPage> createState() => _ClassesPageState();
+  State<ClassesPage> createState() => ClassesPageState();
 }
 
-class _ClassesPageState extends State<ClassesPage> {
+class ClassesPageView extends WidgetView<ClassesPage, ClassesPageState> {
+  const ClassesPageView(super.state, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +36,10 @@ class _ClassesPageState extends State<ClassesPage> {
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: state.openForm,
                   icon: const Icon(
                       Icons.group_add_rounded), //icon data for elevated button
-                  label: const Text("Add a student"), //label text
+                  label: const Text("Add a class"), //label text
                   style:
                       ElevatedButton.styleFrom(foregroundColor: Colors.green,
                           backgroundColor: Colors.white),

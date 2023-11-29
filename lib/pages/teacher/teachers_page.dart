@@ -18,15 +18,28 @@ class TeachersPageView extends WidgetView<TeachersPage, TeachersPageState> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
-      children: [
-        Flexible(
-          flex: 2,
-          child: TeacherList(
-            onListRowTap: state.onListRowTap,
-          ),
-        ),
-        Flexible(flex: 1, child: state.teacherInfoWidget ?? Container()),
-      ],
-    ));
+          children: [
+            Flexible(
+              flex: 2,
+              child: TeacherList(
+                onListRowTap: state.onListRowTap,
+              ),
+            ),
+            const VerticalDivider(
+              color: Colors.black,
+              thickness: 0.1,
+            ),
+            Flexible(
+              flex: 1,
+              child:
+                state.teacherInfoWidget ?? Container(
+                  alignment: Alignment.center,
+                  child:
+                    const Text('Select a teacher to show profile.')
+              ),
+            ),
+          ],
+        )
+    );
   }
 }

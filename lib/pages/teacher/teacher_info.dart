@@ -9,48 +9,16 @@ class TeacherInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffffffff),
-      body:Padding(
-        padding:const EdgeInsets.all(16),
-        child:SingleChildScrollView(
-          child:
-          Column(
+      backgroundColor: const Color(0xfff9f9f9),
+      body:
+        SingleChildScrollView(
+          child: Column(
             mainAxisAlignment:MainAxisAlignment.start,
             crossAxisAlignment:CrossAxisAlignment.center,
             mainAxisSize:MainAxisSize.max,
             children: [
-              const Padding(
-                padding:EdgeInsets.fromLTRB(0, 16, 16, 0),
-                child:Row(
-                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment:CrossAxisAlignment.center,
-                  mainAxisSize:MainAxisSize.max,
-                  children:[
-
-                    Icon(
-                      Icons.arrow_back,
-                      color:Color(0xff212435),
-                      size:24,
-                    ),
-                    Text(
-                      "Teacher Profile",
-                      textAlign: TextAlign.start,
-                      overflow:TextOverflow.clip,
-                      style:TextStyle(
-                        fontWeight:FontWeight.w700,
-                        fontStyle:FontStyle.normal,
-                        fontSize:16,
-                        color:Color(0xff000000),
-                      ),
-                    ),
-                    Icon(
-                      Icons.edit,
-                      color:Color(0xff212435),
-                      size:24,
-                    ),
-                  ],),),
               Padding(
-                padding:const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                padding:const EdgeInsets.fromLTRB(0, 32, 0, 0),
                 child:Container(
                   height:80,
                   width:80,
@@ -64,7 +32,7 @@ class TeacherInfo extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                padding:const EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child:Text(
                   teacher.fullName,
                   textAlign: TextAlign.start,
@@ -84,7 +52,7 @@ class TeacherInfo extends StatelessWidget {
                   teacher.email.toString(),
                   textAlign: TextAlign.start,
                   overflow:TextOverflow.clip,
-                  style:TextStyle(
+                  style:const TextStyle(
                     fontWeight:FontWeight.w400,
                     fontStyle:FontStyle.normal,
                     fontSize:12,
@@ -93,12 +61,12 @@ class TeacherInfo extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:EdgeInsets.fromLTRB(0, 5, 0, 0),
+                padding:const EdgeInsets.fromLTRB(0, 5, 0, 0),
                 child:Text(
                   teacher.phoneNumber.toString(),
                   textAlign: TextAlign.start,
                   overflow:TextOverflow.clip,
-                  style:TextStyle(
+                  style:const TextStyle(
                     fontWeight:FontWeight.w400,
                     fontStyle:FontStyle.italic,
                     fontSize:12,
@@ -106,7 +74,7 @@ class TeacherInfo extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding:EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child:Row(
                   mainAxisAlignment:MainAxisAlignment.spaceAround,
@@ -175,9 +143,14 @@ class TeacherInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ],),
-                  ],),),
-            ],),),),
-    )
-    ;}
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+    );
+  }
 }

@@ -22,7 +22,9 @@ class SchoolClass {
       required this.name,
       required this.section,
       required this.schedule,
-      required this.studentIds});
+      Set<String>? studentIds}) {
+    this.studentIds = studentIds ?? List.empty().toSet().cast();
+  }
 
   factory SchoolClass.fromJson(Map<String, Object?> json) =>
       _$SchoolClassFromJson(json);
@@ -34,7 +36,7 @@ class SchoolClass {
   final String name;
   final String section;
   final List<ClassSchedule> schedule;
-  final Set<String> studentIds;
+  late final Set<String> studentIds;
 
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);
 }

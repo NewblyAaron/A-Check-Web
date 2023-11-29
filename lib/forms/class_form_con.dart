@@ -15,9 +15,16 @@ class ClassFormState extends State<ClassForm> {
   @override
   void initState() {
     super.initState();
+
     codeCon = TextEditingController();
     nameCon = TextEditingController();
     sectionCon = TextEditingController();
+
+    if (widget.schoolClass != null) {
+      codeCon.text = widget.schoolClass!.subjectCode;
+      nameCon.text = widget.schoolClass!.name;
+      sectionCon.text = widget.schoolClass!.section;
+    }
   }
 
   void addSchedule() async {
@@ -86,12 +93,28 @@ class ClassFormState extends State<ClassForm> {
     });
   }
 
-  confirmForm() {
+  cancel() {
+    Navigator.pop(context);
+  }
+
+  finalize() {
     if (!formKey.currentState!.validate()) return;
     if (schedules.isEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("No schedules set!")));
       return;
     }
+
+    final schoolClass = SchoolClass(
+        id: "",
+        subjectCode: codeCon.text,
+        name: nameCon.text,
+        section: sectionCon.text,
+        schedule: schedules);
+
+    // TODO: Finalizing of form
+    snackbarKey.currentState!
+        .showSnackBar(const SnackBar(content: Text("ya pressed the confirm")));
+    Navigator.pop(context);
   }
 }

@@ -24,8 +24,20 @@ class ClassesPageView extends WidgetView<ClassesPage, ClassesPageState> {
                 onListRowTap: state.onListRowTap,
               ),
             ),
-            Flexible(flex: 1, child: state.classInfoWidget ?? Container()),
+            const VerticalDivider(
+              color: Colors.black,
+              thickness: 0.1,
+            ),
+            Flexible(
+              flex: 1,
+              child: state.classInfoWidget ?? Container(
+                alignment: Alignment.center,
+                child:
+                const Text('Select a class to view details.')
+              ),
+            ),
           ],
-        ));
+        )
+    );
   }
 }

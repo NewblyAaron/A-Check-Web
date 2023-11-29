@@ -1,11 +1,14 @@
 import 'package:a_check_web/forms/class_form_con.dart';
+import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:a_check_web/widgets/schedule_row.dart';
 import 'package:flutter/material.dart';
 
 class ClassForm extends StatefulWidget {
-  const ClassForm({super.key});
+  const ClassForm({super.key, this.schoolClass});
+
+  final SchoolClass? schoolClass;
 
   @override
   State<ClassForm> createState() => ClassFormState();

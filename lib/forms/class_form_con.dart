@@ -24,6 +24,7 @@ class ClassFormState extends State<ClassForm> {
       codeCon.text = widget.schoolClass!.subjectCode;
       nameCon.text = widget.schoolClass!.name;
       sectionCon.text = widget.schoolClass!.section;
+      schedules = widget.schoolClass!.schedule;
     }
   }
 
@@ -106,15 +107,16 @@ class ClassFormState extends State<ClassForm> {
     }
 
     final schoolClass = SchoolClass(
-        id: "",
+        id: "${codeCon.text}_${sectionCon.text}",
         subjectCode: codeCon.text,
         name: nameCon.text,
         section: sectionCon.text,
         schedule: schedules);
 
-    // TODO: Finalizing of form
-    snackbarKey.currentState!
-        .showSnackBar(const SnackBar(content: Text("ya pressed the confirm")));
-    Navigator.pop(context);
+    classesRef.doc(schoolClass.id).set(schoolClass).then((_) {
+      snackbarKey.currentState!.showSnackBar(
+          SnackBar(content: Text("Successfully added ${schoolClass.id}!")));
+      Navigator.pop(context);
+    });
   }
 }

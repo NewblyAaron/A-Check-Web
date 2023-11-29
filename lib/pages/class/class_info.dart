@@ -9,7 +9,7 @@ class ClassInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Center(child: Text(schoolClass.name)),
+      child: Center(child: Text("${schoolClass.name} ${schoolClass.section}")),
     );
   }
 }

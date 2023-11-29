@@ -12,6 +12,10 @@ class TeacherFormState extends State<TeacherForm> {
       emailCon,
       phoneNumCon;
 
+  cancel() {
+    Navigator.pop(context);
+  }
+
   finalize() {
     if (!formKey.currentState!.validate()) return;
 

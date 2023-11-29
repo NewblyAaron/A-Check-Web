@@ -15,9 +15,17 @@ class ClassFormState extends State<ClassForm> {
   @override
   void initState() {
     super.initState();
+
     codeCon = TextEditingController();
     nameCon = TextEditingController();
     sectionCon = TextEditingController();
+
+    if (widget.schoolClass != null) {
+      codeCon.text = widget.schoolClass!.subjectCode;
+      nameCon.text = widget.schoolClass!.name;
+      sectionCon.text = widget.schoolClass!.section;
+      schedules = widget.schoolClass!.schedule;
+    }
   }
 
   void addSchedule() async {
@@ -86,12 +94,29 @@ class ClassFormState extends State<ClassForm> {
     });
   }
 
-  confirmForm() {
+  cancel() {
+    Navigator.pop(context);
+  }
+
+  finalize() {
     if (!formKey.currentState!.validate()) return;
     if (schedules.isEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("No schedules set!")));
       return;
     }
+
+    final schoolClass = SchoolClass(
+        id: "${codeCon.text}_${sectionCon.text}",
+        subjectCode: codeCon.text,
+        name: nameCon.text,
+        section: sectionCon.text,
+        schedule: schedules);
+
+    classesRef.doc(schoolClass.id).set(schoolClass).then((_) {
+      snackbarKey.currentState!.showSnackBar(
+          SnackBar(content: Text("Successfully added ${schoolClass.id}!")));
+      Navigator.pop(context);
+    });
   }
 }

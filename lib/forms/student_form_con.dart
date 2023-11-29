@@ -12,23 +12,8 @@ class StudentFormState extends State<StudentForm> {
       emailCon,
       phoneNumCon;
 
-  finalize() async {
-    if (!formKey.currentState!.validate()) return;
-
-    final student = Student(
-        id: idCon.text,
-        firstName: fNameCon.text,
-        middleName: mNameCon.text,
-        lastName: lNameCon.text,
-        email: emailCon.text,
-        phoneNumber: phoneNumCon.text);
-
-    await studentsRef.doc(student.id).set(student).then((_) {
-      snackbarKey.currentState!.showSnackBar(
-          SnackBar(content: Text("Successfully added ${student.fullName}!")));
-      Navigator.pop(context);
-    });
-  }
+  @override
+  Widget build(BuildContext context) => StudentFormView(this);
 
   @override
   void initState() {
@@ -51,6 +36,25 @@ class StudentFormState extends State<StudentForm> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) => StudentFormView(this);
+  cancel() {
+    Navigator.pop(context);
+  }
+
+  finalize() async {
+    if (!formKey.currentState!.validate()) return;
+
+    final student = Student(
+        id: idCon.text,
+        firstName: fNameCon.text,
+        middleName: mNameCon.text,
+        lastName: lNameCon.text,
+        email: emailCon.text,
+        phoneNumber: phoneNumCon.text);
+
+    studentsRef.doc(student.id).set(student).then((_) {
+      snackbarKey.currentState!.showSnackBar(
+          SnackBar(content: Text("Successfully added ${student.fullName}!")));
+      Navigator.pop(context);
+    });
+  }
 }

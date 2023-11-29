@@ -219,9 +219,7 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             hoverColor: Colors.red.withOpacity(0.4),
                             highlightColor: Colors.red.withOpacity(0.4),
                             splashColor: Colors.red.withOpacity(0.5),
-                            onTap:  () {
-                              Navigator.pop(context);
-                            },
+                            onTap: state.cancel,
                             child: Container(
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(vertical: 24),

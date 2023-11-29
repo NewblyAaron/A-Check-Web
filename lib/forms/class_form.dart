@@ -1,7 +1,8 @@
 import 'package:a_check_web/forms/class_form_con.dart';
-import 'package:a_check_web/utils/abstracts.dart';
-import 'package:a_check_web/widgets/schedule_row.dart';
 import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/utils/validators.dart';
+import 'package:a_check_web/widgets/schedule_row.dart';
 import 'package:flutter/material.dart';
 
 class ClassForm extends StatefulWidget {
@@ -99,8 +100,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
-                //controller: state.idCon,
-                //validator: Validators.hasValue,
+                controller: state.codeCon,
+                validator: Validators.hasValue,
                 obscureText: false,
                 textAlign: TextAlign.start,
                 textInputAction: TextInputAction.next,
@@ -126,8 +127,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
-                // controller: state.fNameCon,
-                // validator: Validators.hasValue,
+                controller: state.nameCon,
+                validator: Validators.hasValue,
                 obscureText: false,
                 textAlign: TextAlign.start,
                 textInputAction: TextInputAction.next,
@@ -153,8 +154,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
-                // controller: state.mNameCon,
-                // validator: Validators.hasValue,
+                controller: state.sectionCon,
+                validator: Validators.hasValue,
                 obscureText: false,
                 textAlign: TextAlign.start,
                 textInputAction: TextInputAction.next,
@@ -196,9 +197,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   hoverColor: Colors.red.withOpacity(0.4),
                   highlightColor: Colors.red.withOpacity(0.4),
                   splashColor: Colors.red.withOpacity(0.5),
-                  onTap:  () {
-                    Navigator.pop(context);
-                  },
+                  onTap: state.cancel,
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 24),
@@ -218,7 +217,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   hoverColor: Colors.green.withOpacity(0.4),
                   highlightColor: Colors.green.withOpacity(0.4),
                   splashColor: Colors.green.withOpacity(0.5),
-                  onTap: (){},  //state.finalize
+                  onTap: state.finalize,
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 24),

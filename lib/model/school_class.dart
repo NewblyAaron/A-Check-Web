@@ -1,3 +1,4 @@
+import 'package:a_check_web/model/person.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,10 @@ class SchoolClass {
   late final Set<String> studentIds;
 
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);
+
+  Future<Teacher> get teacher async {
+    return (await teachersRef.doc(teacherId).get()).data!;
+  }
 }
 
 @firestoreSerializable

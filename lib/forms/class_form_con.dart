@@ -1,11 +1,13 @@
 import 'package:a_check_web/forms/class_form.dart';
 import 'package:a_check_web/globals.dart';
+import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 
 class ClassFormState extends State<ClassForm> {
   final formKey = GlobalKey<FormState>();
+  Teacher? selectedTeacher;
   List<ClassSchedule> schedules = [];
   late TextEditingController codeCon, nameCon, sectionCon;
 
@@ -57,6 +59,10 @@ class ClassFormState extends State<ClassForm> {
     });
   }
 
+  void onDropdownChanged(Teacher? teacher) {
+    setState(() => selectedTeacher = teacher);
+  }
+
   bool _hasSameSchedule(ClassSchedule schedule) {
     for (ClassSchedule s in schedules) {
       if (schedule.toString() == s.toString()) return true;
@@ -100,8 +106,12 @@ class ClassFormState extends State<ClassForm> {
 
   finalize() {
     if (!formKey.currentState!.validate()) return;
+    if (selectedTeacher == null) {
+      snackbarKey.currentState!
+          .showSnackBar(const SnackBar(content: Text("No teacher set!")));
+    }
     if (schedules.isEmpty) {
-      ScaffoldMessenger.of(context)
+      snackbarKey.currentState!
           .showSnackBar(const SnackBar(content: Text("No schedules set!")));
       return;
     }
@@ -111,6 +121,7 @@ class ClassFormState extends State<ClassForm> {
         subjectCode: codeCon.text,
         name: nameCon.text,
         section: sectionCon.text,
+        teacherId: selectedTeacher!.id,
         schedule: schedules);
 
     classesRef.doc(schoolClass.id).set(schoolClass).then((_) {

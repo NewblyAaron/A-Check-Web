@@ -1,8 +1,10 @@
 import 'package:a_check_web/forms/class_form_con.dart';
+import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:a_check_web/widgets/schedule_row.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 class ClassForm extends StatefulWidget {
@@ -30,7 +32,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text("Schedule",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                 TextButton(
                   onPressed: state.addSchedule,
                   style: TextButton.styleFrom(
@@ -79,7 +82,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(8, 16,8,16),
+                    padding: EdgeInsets.fromLTRB(8, 16, 8, 16),
                     child: Text("Add Class",
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
@@ -113,11 +116,11 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   color: Colors.black54,
                 ),
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  hintText: 'e.g. MTH101',
-                  labelText: "Class Code"
-                ),
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    hintText: 'e.g. MTH101',
+                    labelText: "Class Code"),
               ),
             ),
           ),
@@ -141,10 +144,10 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                 ),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                     hintText: 'e.g. Mathematics in the Modern World',
-                    labelText: "Class Name"
-                ),
+                    labelText: "Class Name"),
               ),
             ),
           ),
@@ -168,14 +171,89 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                 ),
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                     hintText: 'e.g. ZT21',
-                    labelText: "Class Section"
-                ),
+                    labelText: "Class Section"),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildTeacherDropdown() {
+    SizedBox(
+      width: 600,
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: TextFormField(
+          controller: state.codeCon,
+          validator: Validators.hasValue,
+          obscureText: false,
+          textAlign: TextAlign.start,
+          textInputAction: TextInputAction.next,
+          maxLines: 1,
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+            fontStyle: FontStyle.normal,
+            fontSize: 14,
+            color: Colors.black54,
+          ),
+          decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              hintText: 'e.g. MTH101',
+              labelText: "Class Code"),
+        ),
+      ),
+    );
+
+    return SizedBox(
+      width: 600,
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        child: DropdownSearch<Teacher>(
+          popupProps: const PopupProps.menu(
+              showSearchBox: true,
+              showSelectedItems: true,
+              searchFieldProps: TextFieldProps(
+                decoration: InputDecoration(
+                  labelText: "Teacher ID",
+                  hintText: "e.g. 123"
+                )
+              ),
+              isFilterOnline: true),
+          dropdownDecoratorProps: const DropDownDecoratorProps(
+              baseStyle: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.normal,
+                fontSize: 14,
+                color: Colors.black54,
+              ),
+              dropdownSearchDecoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  labelText: "Teacher ID",
+                  hintText: "Select a teacher")),
+          asyncItems: (text) async {
+            final items =
+                (await teachersRef.get()).docs.map((e) => e.data).toList();
+
+            return items
+                .where(
+                  (e) => e.id.contains(text) || e.id.startsWith(text),
+                )
+                .toList();
+          },
+          itemAsString: (item) => "${item.fullName} (${item.id})",
+          compareFn: (item1, item2) => item1.id == item2.id,
+          onChanged: state.onDropdownChanged,
+        ),
       ),
     );
   }
@@ -187,6 +265,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
       child: Column(
         children: [
           buildClassInfo(),
+          buildTeacherDropdown(),
           buildScheduleList(),
           const Spacer(flex: 1),
           Row(
@@ -201,13 +280,17 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 24),
-                    width:300,
+                    width: 300,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(35),
                       // adding color will hide the splash effect
                       // color: Colors.blueGrey.shade200,
                     ),
-                    child: const Text("Cancel", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                    child: const Text(
+                      "Cancel",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ),
               ),
@@ -221,7 +304,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 24),
-                    width:300,
+                    width: 300,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(35),
                       // adding color will hide the splash effect
@@ -232,7 +315,11 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Confirm", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500), ),
+                        Text(
+                          "Confirm",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
                       ],
                     ),
                   ),

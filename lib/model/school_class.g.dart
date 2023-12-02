@@ -144,6 +144,8 @@ abstract class SchoolClassDocumentReference extends FirestoreDocumentReference<
     FieldValue sectionFieldValue,
     List<ClassSchedule> schedule,
     FieldValue scheduleFieldValue,
+    String teacherId,
+    FieldValue teacherIdFieldValue,
     Set<String> studentIds,
     FieldValue studentIdsFieldValue,
   });
@@ -161,6 +163,8 @@ abstract class SchoolClassDocumentReference extends FirestoreDocumentReference<
     FieldValue sectionFieldValue,
     List<ClassSchedule> schedule,
     FieldValue scheduleFieldValue,
+    String teacherId,
+    FieldValue teacherIdFieldValue,
     Set<String> studentIds,
     FieldValue studentIdsFieldValue,
   });
@@ -208,6 +212,8 @@ class _$SchoolClassDocumentReference
     FieldValue? sectionFieldValue,
     Object? schedule = _sentinel,
     FieldValue? scheduleFieldValue,
+    Object? teacherId = _sentinel,
+    FieldValue? teacherIdFieldValue,
     Object? studentIds = _sentinel,
     FieldValue? studentIdsFieldValue,
   }) async {
@@ -228,6 +234,10 @@ class _$SchoolClassDocumentReference
       "Cannot specify both schedule and scheduleFieldValue",
     );
     assert(
+      teacherId == _sentinel || teacherIdFieldValue == null,
+      "Cannot specify both teacherId and teacherIdFieldValue",
+    );
+    assert(
       studentIds == _sentinel || studentIdsFieldValue == null,
       "Cannot specify both studentIds and studentIdsFieldValue",
     );
@@ -252,6 +262,11 @@ class _$SchoolClassDocumentReference
             .schedule(schedule as List<ClassSchedule>),
       if (scheduleFieldValue != null)
         _$SchoolClassFieldMap['schedule']!: scheduleFieldValue,
+      if (teacherId != _sentinel)
+        _$SchoolClassFieldMap['teacherId']!:
+            _$SchoolClassPerFieldToJson.teacherId(teacherId as String),
+      if (teacherIdFieldValue != null)
+        _$SchoolClassFieldMap['teacherId']!: teacherIdFieldValue,
       if (studentIds != _sentinel)
         _$SchoolClassFieldMap['studentIds']!:
             _$SchoolClassPerFieldToJson.studentIds(studentIds as Set<String>),
@@ -272,6 +287,8 @@ class _$SchoolClassDocumentReference
     FieldValue? sectionFieldValue,
     Object? schedule = _sentinel,
     FieldValue? scheduleFieldValue,
+    Object? teacherId = _sentinel,
+    FieldValue? teacherIdFieldValue,
     Object? studentIds = _sentinel,
     FieldValue? studentIdsFieldValue,
   }) {
@@ -290,6 +307,10 @@ class _$SchoolClassDocumentReference
     assert(
       schedule == _sentinel || scheduleFieldValue == null,
       "Cannot specify both schedule and scheduleFieldValue",
+    );
+    assert(
+      teacherId == _sentinel || teacherIdFieldValue == null,
+      "Cannot specify both teacherId and teacherIdFieldValue",
     );
     assert(
       studentIds == _sentinel || studentIdsFieldValue == null,
@@ -316,6 +337,11 @@ class _$SchoolClassDocumentReference
             .schedule(schedule as List<ClassSchedule>),
       if (scheduleFieldValue != null)
         _$SchoolClassFieldMap['schedule']!: scheduleFieldValue,
+      if (teacherId != _sentinel)
+        _$SchoolClassFieldMap['teacherId']!:
+            _$SchoolClassPerFieldToJson.teacherId(teacherId as String),
+      if (teacherIdFieldValue != null)
+        _$SchoolClassFieldMap['teacherId']!: teacherIdFieldValue,
       if (studentIds != _sentinel)
         _$SchoolClassFieldMap['studentIds']!:
             _$SchoolClassPerFieldToJson.studentIds(studentIds as Set<String>),
@@ -466,6 +492,17 @@ abstract class SchoolClassQuery
     ClassSchedule? arrayContains,
     List<ClassSchedule>? arrayContainsAny,
   });
+  SchoolClassQuery whereTeacherId({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
   SchoolClassQuery whereStudentIds({
     Set<String>? isEqualTo,
     Set<String>? isNotEqualTo,
@@ -532,6 +569,18 @@ abstract class SchoolClassQuery
     List<ClassSchedule> startAfter,
     List<ClassSchedule> endAt,
     List<ClassSchedule> endBefore,
+    SchoolClassDocumentSnapshot? startAtDocument,
+    SchoolClassDocumentSnapshot? endAtDocument,
+    SchoolClassDocumentSnapshot? endBeforeDocument,
+    SchoolClassDocumentSnapshot? startAfterDocument,
+  });
+
+  SchoolClassQuery orderByTeacherId({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
     SchoolClassDocumentSnapshot? startAtDocument,
     SchoolClassDocumentSnapshot? endAtDocument,
     SchoolClassDocumentSnapshot? endBeforeDocument,
@@ -905,6 +954,48 @@ class _$SchoolClassQuery
     );
   }
 
+  SchoolClassQuery whereTeacherId({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$SchoolClassQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$SchoolClassFieldMap['teacherId']!,
+        isEqualTo: isEqualTo != null
+            ? _$SchoolClassPerFieldToJson.teacherId(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$SchoolClassPerFieldToJson.teacherId(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$SchoolClassPerFieldToJson.teacherId(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$SchoolClassPerFieldToJson.teacherId(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$SchoolClassPerFieldToJson.teacherId(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$SchoolClassPerFieldToJson.teacherId(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$SchoolClassPerFieldToJson.teacherId(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$SchoolClassPerFieldToJson.teacherId(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
   SchoolClassQuery whereStudentIds({
     Set<String>? isEqualTo,
     Set<String>? isNotEqualTo,
@@ -1254,6 +1345,78 @@ class _$SchoolClassQuery
   }) {
     final query = $referenceWithoutCursor
         .orderBy(_$SchoolClassFieldMap['schedule']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$SchoolClassQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  SchoolClassQuery orderByTeacherId({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    SchoolClassDocumentSnapshot? startAtDocument,
+    SchoolClassDocumentSnapshot? endAtDocument,
+    SchoolClassDocumentSnapshot? endBeforeDocument,
+    SchoolClassDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$SchoolClassFieldMap['teacherId']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -2970,8 +3133,10 @@ SchoolClass _$SchoolClassFromJson(Map<String, dynamic> json) => SchoolClass(
       schedule: (json['schedule'] as List<dynamic>)
           .map((e) => ClassSchedule.fromJson(e as Map<String, dynamic>))
           .toList(),
-      studentIds:
-          (json['studentIds'] as List<dynamic>).map((e) => e as String).toSet(),
+      teacherId: json['teacherId'] as String,
+      studentIds: (json['studentIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toSet(),
     );
 
 const _$SchoolClassFieldMap = <String, String>{
@@ -2980,6 +3145,7 @@ const _$SchoolClassFieldMap = <String, String>{
   'name': 'name',
   'section': 'section',
   'schedule': 'schedule',
+  'teacherId': 'teacherId',
   'studentIds': 'studentIds',
 };
 
@@ -2997,6 +3163,8 @@ abstract class _$SchoolClassPerFieldToJson {
   static Object? schedule(List<ClassSchedule> instance) =>
       instance.map((e) => e.toJson()).toList();
   // ignore: unused_element
+  static Object? teacherId(String instance) => instance;
+  // ignore: unused_element
   static Object? studentIds(Set<String> instance) => instance.toList();
 }
 
@@ -3007,6 +3175,7 @@ Map<String, dynamic> _$SchoolClassToJson(SchoolClass instance) =>
       'name': instance.name,
       'section': instance.section,
       'schedule': instance.schedule.map((e) => e.toJson()).toList(),
+      'teacherId': instance.teacherId,
       'studentIds': instance.studentIds.toList(),
     };
 

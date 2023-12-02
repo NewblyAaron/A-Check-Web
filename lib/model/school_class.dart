@@ -22,6 +22,7 @@ class SchoolClass {
       required this.name,
       required this.section,
       required this.schedule,
+      required this.teacherId,
       Set<String>? studentIds}) {
     this.studentIds = studentIds ?? List.empty().toSet().cast();
   }
@@ -36,6 +37,7 @@ class SchoolClass {
   final String name;
   final String section;
   final List<ClassSchedule> schedule;
+  final String teacherId;
   late final Set<String> studentIds;
 
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);

@@ -17,27 +17,25 @@ class ClassesPageView extends WidgetView<ClassesPage, ClassesPageState> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
-          children: [
-            Flexible(
-              flex: 2,
-              child: ClassList(
-                onListRowTap: state.onListRowTap,
-              ),
-            ),
-            const VerticalDivider(
-              color: Colors.black,
-              thickness: 0.1,
-            ),
-            Flexible(
-              flex: 1,
-              child: state.classInfoWidget ?? Container(
-                alignment: Alignment.center,
-                child:
-                const Text('Select a class to view details.')
-              ),
-            ),
-          ],
-        )
-    );
+      children: [
+        Flexible(
+          flex: 2,
+          child: ClassList(
+            onListRowTap: state.onListRowTap,
+          ),
+        ),
+        const VerticalDivider(
+          color: Colors.black,
+          thickness: 0.1,
+        ),
+        Flexible(
+          flex: 1,
+          child: state.classProfile ??
+              Container(
+                  alignment: Alignment.center,
+                  child: const Text('Select a class to view details.')),
+        ),
+      ],
+    ));
   }
 }

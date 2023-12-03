@@ -1,3 +1,4 @@
+import 'package:a_check_web/model/attendance_record.dart';
 import 'package:a_check_web/model/person.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
@@ -45,6 +46,60 @@ class SchoolClass {
 
   Future<Teacher> get teacher async {
     return (await teachersRef.doc(teacherId).get()).data!;
+  }
+
+  @override
+  String toString() {
+    String classInfo = "$id: $name [$section]\n";
+    var classSchedBuf = StringBuffer();
+    for (var s in schedule) {
+      classSchedBuf.write(
+          "${s.weekdayName()} ${s.startTimeHour.toString().padLeft(2, '0')}:${s.startTimeMinute.toString().padLeft(2, '0')} - ${s.endTimeHour.toString().padLeft(2, '0')}:${s.endTimeMinute.toString().padLeft(2, '0')}\n");
+    }
+
+    return classInfo + classSchedBuf.toString();
+  }
+
+  Future<List<Student>> getStudents() async {
+    List<Student> studentsList = [];
+    for (var id in studentIds) {
+      final student = (await studentsRef.doc(id).get()).data!;
+      studentsList.add(student);
+    }
+
+    studentsList.sort(
+      (a, b) =>
+          a.firstName[0].toLowerCase().compareTo(b.firstName[0].toLowerCase()),
+    );
+    return studentsList;
+  }
+
+  String getSchedule() {
+    StringBuffer buffer = StringBuffer();
+    for (ClassSchedule s in schedule) {
+      buffer.writeln(s.toString());
+    }
+
+    return buffer.toString();
+  }
+
+  Future<Map<DateTime, List<AttendanceRecord>>> getAttendanceRecords() async {
+    final attendanceRecords = await attendancesRef
+        .whereClassId(isEqualTo: id)
+        .orderByDateTime()
+        .get()
+        .then((value) => value.docs.map((e) => e.data).toList());
+
+    final Map<DateTime, List<AttendanceRecord>> map = {};
+    for (var record in attendanceRecords) {
+      if (!map.containsKey(record.dateTime)) {
+        map[record.dateTime] = [];
+      }
+
+      map[record.dateTime]!.add(record);
+    }
+
+    return map;
   }
 }
 

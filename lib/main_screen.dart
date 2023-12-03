@@ -31,6 +31,22 @@ class MainScreenState extends State<MainScreen> {
     }
 
     return Scaffold(
+      backgroundColor: const Color(0xff000000),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 0),
+              child: Image(
+                  image: AssetImage("assets/images/logo.png"), height: 55),
+            ),
+          ],
+        ),
+      ),
       body: Row(
         children: [
           SideNavBar(onIndexChange: sideNavbarChanged),

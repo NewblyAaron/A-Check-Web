@@ -1,6 +1,6 @@
 import 'package:a_check_web/firebase_options.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/main_screen.dart';
+import 'package:a_check_web/new_main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -23,20 +23,7 @@ void main() async {
     }
   }
 
-  runApp(MaterialApp(
-      scaffoldMessengerKey: snackbarKey,
-      theme: ThemeData(
-        fontFamily: 'Inter',
-        useMaterial3: false,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.white,
-          secondary: Colors.green,
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(foregroundColor: Colors.green),
-        ),
-      ),
-      home: const MainApp()));
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -44,24 +31,20 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xff000000),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.5,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 0),
-              child: Image(
-                  image: AssetImage("assets/images/logo.png"), height: 55),
-            ),
-          ],
+    return MaterialApp(
+        scaffoldMessengerKey: snackbarKey,
+        theme: ThemeData(
+          fontFamily: 'Inter',
+          useMaterial3: false,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.lightGreen,
+            primary: Colors.lightGreen,
+            secondary: Colors.lightGreenAccent
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(foregroundColor: Colors.green),
+          ),
         ),
-      ),
-      body: const MainScreen(),
-    );
+        home: const MainScreen());
   }
 }

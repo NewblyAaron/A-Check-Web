@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-abstract class WidgetView<T1, T2> extends StatelessWidget {
-  final T2 state;
+abstract class WidgetView<model, controller> extends StatelessWidget {
+  final controller state;
 
-  T1 get widget => (state as State).widget as T1;
+  model get widget => (state as State).widget as model;
 
   const WidgetView(this.state, {Key? key}) : super(key: key);
 
@@ -11,8 +11,8 @@ abstract class WidgetView<T1, T2> extends StatelessWidget {
   Widget build(BuildContext context);
 }
 
-abstract class StatelessView<T1> extends StatelessWidget {
-  final T1 widget;
+abstract class StatelessView<model> extends StatelessWidget {
+  final model widget;
 
   const StatelessView(this.widget, {Key? key}) : super(key: key);
 

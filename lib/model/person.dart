@@ -1,3 +1,4 @@
+import 'package:a_check_web/model/school_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -37,8 +38,10 @@ class Student extends Person {
     super.email,
     super.phoneNumber,
     List<String>? guardianIds,
+    List? faceArray,
   }) {
     this.guardianIds = guardianIds ?? List.empty();
+    this.faceArray = faceArray ?? List.empty();
   }
 
   factory Student.fromJson(Map<String, Object?> json) =>
@@ -47,9 +50,47 @@ class Student extends Person {
   @Id()
   final String id;
 
-  late final List<String>? guardianIds;
+  late final List<String> guardianIds;
+  late final List faceArray;
 
   Map<String, Object?> toJson() => _$StudentToJson(this);
+
+  Map<String, int> getPALEValues(String classKey) {
+    return {'present': 0, 'absent': 0, 'late': 0, 'excused': 0};
+    // TODO: fetch PALE values from firebase
+    // final attendances = HiveBoxes.attendancesBox()
+    //     .values
+    //     .cast<AttendanceRecord>()
+    //     .where((element) =>
+    //         element.classKey == classKey && element.studentId == id);
+
+    // int present = 0, absent = 0, late = 0, excused = 0;
+    // for (AttendanceRecord record in attendances) {
+    //   switch (record.status) {
+    //     case AttendanceStatus.present:
+    //       present++;
+    //       break;
+    //     case AttendanceStatus.absent:
+    //       absent++;
+    //       break;
+    //     case AttendanceStatus.late:
+    //       late++;
+    //       break;
+    //     case AttendanceStatus.excused:
+    //       excused++;
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
+
+    // return {
+    //   'present': present,
+    //   'absent': absent,
+    //   'late': late,
+    //   'excused': excused
+    // };
+  }
 }
 
 @Collection<Guardian>('guardians')
@@ -82,10 +123,7 @@ class Teacher extends Person {
       required super.middleName,
       required super.lastName,
       super.email,
-      super.phoneNumber,
-      List<String>? classIds}) {
-    this.classIds = classIds ?? List.empty();
-  }
+      super.phoneNumber});
 
   factory Teacher.fromJson(Map<String, Object?> json) =>
       _$TeacherFromJson(json);
@@ -93,9 +131,11 @@ class Teacher extends Person {
   @Id()
   final String id;
 
-  late final List<String>? classIds;
-
   Map<String, Object?> toJson() => _$TeacherToJson(this);
+
+  Future<int> get totalClasses async {
+    return (await classesRef.whereTeacherId(isEqualTo: id).get()).docs.length;
+  }
 }
 
 final studentsRef = StudentCollectionReference();

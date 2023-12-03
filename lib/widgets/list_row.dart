@@ -1,4 +1,5 @@
 import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school_class.dart';
 import 'package:flutter/material.dart';
 
 class ListRow extends StatelessWidget {
@@ -8,14 +9,24 @@ class ListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String fullName = (object as Person).fullName;
+    String title = "";
     String subtitle = "";
-    if (object is Student) {
-      subtitle = (object as Student).id;
-    } else if (object is Teacher) {
-      subtitle = (object as Teacher).email!;
-    } else if (object is Guardian) {
-      subtitle = "Guardian of a student lol";
+
+    if (object is Person) {
+      title = (object as Person).fullName;
+
+      if (object is Student) {
+        subtitle = (object as Student).id;
+      } else if (object is Teacher) {
+        subtitle = (object as Teacher).email!;
+      } else if (object is Guardian) {
+        subtitle = "Guardian of a student lol";
+      }
+    }
+
+    if (object is SchoolClass) {
+      title = (object as SchoolClass).name;
+      subtitle = "${(object as SchoolClass).subjectCode} ${(object as SchoolClass).section}";
     }
 
     return Card(
@@ -27,7 +38,7 @@ class ListRow extends StatelessWidget {
         dense: false,
         contentPadding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
         selectedTileColor: Colors.blue.shade100,
-        title: Text(fullName),
+        title: Text(title),
         subtitle: Text(subtitle),
         trailing: Row(
             mainAxisSize: MainAxisSize.min,

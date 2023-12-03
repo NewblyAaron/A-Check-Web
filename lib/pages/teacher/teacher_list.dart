@@ -43,7 +43,10 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
                 icon: const Icon(
                     Icons.group_add_rounded), //icon data for elevated button
                 label: const Text("Add a teacher"), //label text
-                style: ElevatedButton.styleFrom(foregroundColor: Colors.green),
+                style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.green,
+                    backgroundColor: Colors.white
+                ),
               ),
             ],
           ),

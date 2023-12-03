@@ -1,3 +1,4 @@
+import 'package:a_check_web/model/person.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class SchoolClass {
       required this.name,
       required this.section,
       required this.schedule,
+      required this.teacherId,
       Set<String>? studentIds}) {
     this.studentIds = studentIds ?? List.empty().toSet().cast();
   }
@@ -36,9 +38,14 @@ class SchoolClass {
   final String name;
   final String section;
   final List<ClassSchedule> schedule;
+  final String teacherId;
   late final Set<String> studentIds;
 
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);
+
+  Future<Teacher> get teacher async {
+    return (await teachersRef.doc(teacherId).get()).data!;
+  }
 }
 
 @firestoreSerializable

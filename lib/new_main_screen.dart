@@ -1,4 +1,4 @@
-import 'package:a_check_web/dashboard.dart';
+import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/pages/student/students_page.dart';
 import 'package:a_check_web/pages/teacher/teachers_page.dart';

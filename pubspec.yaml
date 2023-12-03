@@ -19,6 +19,7 @@ dependencies:
   intl: ^0.18.1
   json_annotation: ^4.8.1
   side_navigation: ^1.0.4
+  dynamic_table: ^0.0.1-beta.2
 
 dev_dependencies:
   flutter_test:

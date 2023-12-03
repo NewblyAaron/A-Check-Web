@@ -44,40 +44,48 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
 
     List<NavigationRailDestination> destinations = const [
       NavigationRailDestination(
-        icon: Icon(Icons.dashboard_outlined),
-        selectedIcon: Icon(Icons.dashboard),
-        label: Text("Dashboard"),
+        icon: Icon(Icons.home_outlined, color: Color(0xff353535),size: 30,),
+        selectedIcon: Icon(Icons.home, color: Color(0xff153faa),size: 30,),
+        label: Text("Dashboard", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
       ),
       NavigationRailDestination(
-        icon: Icon(Icons.person_outline),
-        selectedIcon: Icon(Icons.person),
-        label: Text("Teachers"),
+        icon: Icon(Icons.person_outline, color: Color(0xff353535),size: 30,),
+        selectedIcon: Icon(Icons.person, color: Color(0xff153faa),size: 30,),
+        label: Text("Teachers", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
       ),
       NavigationRailDestination(
-        icon: Icon(Icons.group_outlined),
-        selectedIcon: Icon(Icons.group),
-        label: Text("Students"),
+        icon: Icon(Icons.group_outlined, color: Color(0xff353535),size: 30,),
+        selectedIcon: Icon(Icons.group, color: Color(0xff153faa),size: 30,),
+        label: Text("Students", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
       ),
       NavigationRailDestination(
-        icon: Icon(Icons.grid_view_outlined),
-        selectedIcon: Icon(Icons.grid_view_rounded),
-        label: Text("Classes"),
+        icon: Icon(Icons.grid_view_outlined, color: Color(0xff353535),size: 30,),
+        selectedIcon: Icon(Icons.grid_view_rounded, color: Color(0xff153faa),size: 30,),
+        label: Text("Classes", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
       ),
     ];
 
     return Scaffold(
       body: Row(
-        children: [buildNavRail(destinations), buildPageView(views)],
+        children: [
+          Container(
+              decoration: const BoxDecoration(
+                  border: Border(right: BorderSide(width: 0.5))
+              ),
+            child: buildNavRail(destinations)
+          ),
+          buildPageView(views)],
       ),
     );
   }
 
   NavigationRail buildNavRail(List<NavigationRailDestination> destinations) {
     return NavigationRail(
+      backgroundColor: Colors.white,
       destinations: destinations,
       selectedIndex: state.selectedIndex,
       onDestinationSelected: state.onDestinationChanged,
-      useIndicator: true,
+      useIndicator: false,
       extended: true,
       leading: buildLeading(),
     );
@@ -87,15 +95,18 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image(image: AssetImage("assets/images/small_logo.png"), height: 60),
         Padding(
-            padding: EdgeInsets.only(left: 4),
+          padding: EdgeInsets.only(top:40.0, bottom: 30),
+          child: Image(image: AssetImage("assets/images/small_logo_blue.png"), height: 60),
+        ),
+        Padding(
+            padding: EdgeInsets.only(left: 4, top: 30, bottom: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "A-Check",
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Color(0xff153faa)),
                 ),
                 Text(
                   "Web Admin",

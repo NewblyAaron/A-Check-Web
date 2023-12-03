@@ -1,16 +1,16 @@
 import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/pages/student/student_info.dart';
+import 'package:a_check_web/pages/student/student_profile.dart';
 
 import './students_page.dart';
 import 'package:flutter/material.dart';
 
 class StudentsPageState extends State<StudentsPage> {
-  StudentInfo? studentInfoWidget;
+  StudentProfile? studentProfile;
 
   @override
   Widget build(BuildContext context) => StudentsPageView(this);
 
   onListRowTap(Student student) {
-    setState(() => studentInfoWidget = StudentInfo(student: student));
+    setState(() => studentProfile = StudentProfile(studentId: student.id));
   }
 }

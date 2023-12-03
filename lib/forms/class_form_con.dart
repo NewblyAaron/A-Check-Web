@@ -59,6 +59,16 @@ class ClassFormState extends State<ClassForm> {
     });
   }
 
+  Future<List<Teacher>> getSearchedItems(text) async {
+    final items = (await teachersRef.get()).docs.map((e) => e.data).toList();
+
+    return items
+        .where(
+          (e) => e.id.contains(text) && e.id.startsWith(text),
+        )
+        .toList();
+  }
+
   void onDropdownChanged(Teacher? teacher) {
     setState(() => selectedTeacher = teacher);
   }

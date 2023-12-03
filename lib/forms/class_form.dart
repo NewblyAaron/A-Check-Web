@@ -221,11 +221,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               showSearchBox: true,
               showSelectedItems: true,
               searchFieldProps: TextFieldProps(
-                decoration: InputDecoration(
-                  labelText: "Teacher ID",
-                  hintText: "e.g. 123"
-                )
-              ),
+                  decoration: InputDecoration(
+                      labelText: "Teacher ID", hintText: "e.g. 123")),
               isFilterOnline: true),
           dropdownDecoratorProps: const DropDownDecoratorProps(
               baseStyle: TextStyle(
@@ -240,16 +237,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                       EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   labelText: "Teacher ID",
                   hintText: "Select a teacher")),
-          asyncItems: (text) async {
-            final items =
-                (await teachersRef.get()).docs.map((e) => e.data).toList();
-
-            return items
-                .where(
-                  (e) => e.id.contains(text) || e.id.startsWith(text),
-                )
-                .toList();
-          },
+          asyncItems: state.getSearchedItems,
           itemAsString: (item) => "${item.fullName} (${item.id})",
           compareFn: (item1, item2) => item1.id == item2.id,
           onChanged: state.onDropdownChanged,

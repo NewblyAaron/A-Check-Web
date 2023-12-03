@@ -3328,8 +3328,6 @@ abstract class TeacherDocumentReference
   ///
   /// If no document exists yet, the update will fail.
   Future<void> update({
-    List<String>? classIds,
-    FieldValue classIdsFieldValue,
     String firstName,
     FieldValue firstNameFieldValue,
     String middleName,
@@ -3347,8 +3345,6 @@ abstract class TeacherDocumentReference
   /// The update will fail if applied to a document that does not exist.
   void transactionUpdate(
     Transaction transaction, {
-    List<String>? classIds,
-    FieldValue classIdsFieldValue,
     String firstName,
     FieldValue firstNameFieldValue,
     String middleName,
@@ -3391,8 +3387,6 @@ class _$TeacherDocumentReference
   }
 
   Future<void> update({
-    Object? classIds = _sentinel,
-    FieldValue? classIdsFieldValue,
     Object? firstName = _sentinel,
     FieldValue? firstNameFieldValue,
     Object? middleName = _sentinel,
@@ -3404,10 +3398,6 @@ class _$TeacherDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) async {
-    assert(
-      classIds == _sentinel || classIdsFieldValue == null,
-      "Cannot specify both classIds and classIdsFieldValue",
-    );
     assert(
       firstName == _sentinel || firstNameFieldValue == null,
       "Cannot specify both firstName and firstNameFieldValue",
@@ -3429,11 +3419,6 @@ class _$TeacherDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
-      if (classIds != _sentinel)
-        _$TeacherFieldMap['classIds']!:
-            _$TeacherPerFieldToJson.classIds(classIds as List<String>?),
-      if (classIdsFieldValue != null)
-        _$TeacherFieldMap['classIds']!: classIdsFieldValue,
       if (firstName != _sentinel)
         _$TeacherFieldMap['firstName']!:
             _$TeacherPerFieldToJson.firstName(firstName as String),
@@ -3465,8 +3450,6 @@ class _$TeacherDocumentReference
 
   void transactionUpdate(
     Transaction transaction, {
-    Object? classIds = _sentinel,
-    FieldValue? classIdsFieldValue,
     Object? firstName = _sentinel,
     FieldValue? firstNameFieldValue,
     Object? middleName = _sentinel,
@@ -3478,10 +3461,6 @@ class _$TeacherDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) {
-    assert(
-      classIds == _sentinel || classIdsFieldValue == null,
-      "Cannot specify both classIds and classIdsFieldValue",
-    );
     assert(
       firstName == _sentinel || firstNameFieldValue == null,
       "Cannot specify both firstName and firstNameFieldValue",
@@ -3503,11 +3482,6 @@ class _$TeacherDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
-      if (classIds != _sentinel)
-        _$TeacherFieldMap['classIds']!:
-            _$TeacherPerFieldToJson.classIds(classIds as List<String>?),
-      if (classIdsFieldValue != null)
-        _$TeacherFieldMap['classIds']!: classIdsFieldValue,
       if (firstName != _sentinel)
         _$TeacherFieldMap['firstName']!:
             _$TeacherPerFieldToJson.firstName(firstName as String),
@@ -3633,17 +3607,6 @@ abstract class TeacherQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
-  TeacherQuery whereClassIds({
-    List<String>? isEqualTo,
-    List<String>? isNotEqualTo,
-    List<String>? isLessThan,
-    List<String>? isLessThanOrEqualTo,
-    List<String>? isGreaterThan,
-    List<String>? isGreaterThanOrEqualTo,
-    bool? isNull,
-    String? arrayContains,
-    List<String>? arrayContainsAny,
-  });
   TeacherQuery whereFirstName({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -3706,18 +3669,6 @@ abstract class TeacherQuery
     String startAfter,
     String endAt,
     String endBefore,
-    TeacherDocumentSnapshot? startAtDocument,
-    TeacherDocumentSnapshot? endAtDocument,
-    TeacherDocumentSnapshot? endBeforeDocument,
-    TeacherDocumentSnapshot? startAfterDocument,
-  });
-
-  TeacherQuery orderByClassIds({
-    bool descending = false,
-    List<String>? startAt,
-    List<String>? startAfter,
-    List<String>? endAt,
-    List<String>? endBefore,
     TeacherDocumentSnapshot? startAtDocument,
     TeacherDocumentSnapshot? endAtDocument,
     TeacherDocumentSnapshot? endBeforeDocument,
@@ -3961,53 +3912,6 @@ class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
     );
   }
 
-  TeacherQuery whereClassIds({
-    List<String>? isEqualTo,
-    List<String>? isNotEqualTo,
-    List<String>? isLessThan,
-    List<String>? isLessThanOrEqualTo,
-    List<String>? isGreaterThan,
-    List<String>? isGreaterThanOrEqualTo,
-    bool? isNull,
-    String? arrayContains,
-    List<String>? arrayContainsAny,
-  }) {
-    return _$TeacherQuery(
-      _collection,
-      $referenceWithoutCursor: $referenceWithoutCursor.where(
-        _$TeacherFieldMap['classIds']!,
-        isEqualTo: isEqualTo != null
-            ? _$TeacherPerFieldToJson.classIds(isEqualTo)
-            : null,
-        isNotEqualTo: isNotEqualTo != null
-            ? _$TeacherPerFieldToJson.classIds(isNotEqualTo)
-            : null,
-        isLessThan: isLessThan != null
-            ? _$TeacherPerFieldToJson.classIds(isLessThan)
-            : null,
-        isLessThanOrEqualTo: isLessThanOrEqualTo != null
-            ? _$TeacherPerFieldToJson.classIds(isLessThanOrEqualTo)
-            : null,
-        isGreaterThan: isGreaterThan != null
-            ? _$TeacherPerFieldToJson.classIds(isGreaterThan)
-            : null,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
-            ? _$TeacherPerFieldToJson.classIds(isGreaterThanOrEqualTo)
-            : null,
-        isNull: isNull,
-        arrayContains: arrayContains != null
-            ? (_$TeacherPerFieldToJson.classIds([arrayContains]) as List?)!
-                .single
-            : null,
-        arrayContainsAny: arrayContainsAny != null
-            ? _$TeacherPerFieldToJson.classIds(arrayContainsAny)
-                as Iterable<Object>?
-            : null,
-      ),
-      $queryCursor: $queryCursor,
-    );
-  }
-
   TeacherQuery whereFirstName({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -4228,78 +4132,6 @@ class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
         descending: descending);
-    var queryCursor = $queryCursor;
-
-    if (startAtDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        startAt: const [],
-        startAtDocumentSnapshot: startAtDocument.snapshot,
-      );
-    }
-    if (startAfterDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        startAfter: const [],
-        startAfterDocumentSnapshot: startAfterDocument.snapshot,
-      );
-    }
-    if (endAtDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        endAt: const [],
-        endAtDocumentSnapshot: endAtDocument.snapshot,
-      );
-    }
-    if (endBeforeDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        endBefore: const [],
-        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
-      );
-    }
-
-    if (startAt != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        startAt: [...queryCursor.startAt, startAt],
-        startAtDocumentSnapshot: null,
-      );
-    }
-    if (startAfter != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        startAfter: [...queryCursor.startAfter, startAfter],
-        startAfterDocumentSnapshot: null,
-      );
-    }
-    if (endAt != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        endAt: [...queryCursor.endAt, endAt],
-        endAtDocumentSnapshot: null,
-      );
-    }
-    if (endBefore != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        endBefore: [...queryCursor.endBefore, endBefore],
-        endBeforeDocumentSnapshot: null,
-      );
-    }
-
-    return _$TeacherQuery(
-      _collection,
-      $referenceWithoutCursor: query,
-      $queryCursor: queryCursor,
-    );
-  }
-
-  TeacherQuery orderByClassIds({
-    bool descending = false,
-    Object? startAt = _sentinel,
-    Object? startAfter = _sentinel,
-    Object? endAt = _sentinel,
-    Object? endBefore = _sentinel,
-    TeacherDocumentSnapshot? startAtDocument,
-    TeacherDocumentSnapshot? endAtDocument,
-    TeacherDocumentSnapshot? endBeforeDocument,
-    TeacherDocumentSnapshot? startAfterDocument,
-  }) {
-    final query = $referenceWithoutCursor
-        .orderBy(_$TeacherFieldMap['classIds']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -4960,9 +4792,6 @@ Teacher _$TeacherFromJson(Map<String, dynamic> json) => Teacher(
       lastName: json['lastName'] as String,
       email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
-      classIds: (json['classIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
     );
 
 const _$TeacherFieldMap = <String, String>{
@@ -4972,7 +4801,6 @@ const _$TeacherFieldMap = <String, String>{
   'email': 'email',
   'phoneNumber': 'phoneNumber',
   'id': 'id',
-  'classIds': 'classIds',
 };
 
 // ignore: unused_element
@@ -4989,8 +4817,6 @@ abstract class _$TeacherPerFieldToJson {
   static Object? phoneNumber(String? instance) => instance;
   // ignore: unused_element
   static Object? id(String instance) => instance;
-  // ignore: unused_element
-  static Object? classIds(List<String>? instance) => instance;
 }
 
 Map<String, dynamic> _$TeacherToJson(Teacher instance) => <String, dynamic>{
@@ -5000,5 +4826,4 @@ Map<String, dynamic> _$TeacherToJson(Teacher instance) => <String, dynamic>{
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'id': instance.id,
-      'classIds': instance.classIds,
     };

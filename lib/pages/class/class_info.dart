@@ -27,9 +27,11 @@ class ClassInfo extends StatelessWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: Image.network(
-                      "https://cdn.pixabay.com/photo/2020/09/21/13/38/woman-5590119_960_720.jpg",
-                      fit: BoxFit.cover),
+                  child: snapshot.hasData
+                      ? Image.network(
+                          "https://cdn.pixabay.com/photo/2020/09/21/13/38/woman-5590119_960_720.jpg",
+                          fit: BoxFit.cover)
+                      : const Icon(Icons.person),
                 ),
               ),
               Padding(
@@ -74,8 +76,8 @@ class ClassInfo extends StatelessWidget {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,8 +88,8 @@ class ClassInfo extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Text(
-                          "Classes",
+                        const Text(
+                          "Enrolled Students",
                           textAlign: TextAlign.start,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
@@ -98,44 +100,12 @@ class ClassInfo extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                           child: Text(
-                            "3",
+                            schoolClass.studentIds.length.toString(),
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 20,
-                              color: Color(0xff3a57e8),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          "Students",
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12,
-                            color: Color(0xff808080),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          child: Text(
-                            "26",
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.normal,
                               fontSize: 20,

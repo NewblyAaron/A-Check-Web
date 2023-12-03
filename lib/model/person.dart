@@ -1,3 +1,4 @@
+import 'package:a_check_web/model/school_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -122,10 +123,7 @@ class Teacher extends Person {
       required super.middleName,
       required super.lastName,
       super.email,
-      super.phoneNumber,
-      List<String>? classIds}) {
-    this.classIds = classIds ?? List.empty();
-  }
+      super.phoneNumber});
 
   factory Teacher.fromJson(Map<String, Object?> json) =>
       _$TeacherFromJson(json);
@@ -133,9 +131,11 @@ class Teacher extends Person {
   @Id()
   final String id;
 
-  late final List<String>? classIds;
-
   Map<String, Object?> toJson() => _$TeacherToJson(this);
+
+  Future<int> get totalClasses async {
+    return (await classesRef.whereTeacherId(isEqualTo: id).get()).docs.length;
+  }
 }
 
 final studentsRef = StudentCollectionReference();

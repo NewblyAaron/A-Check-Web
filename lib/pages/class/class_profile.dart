@@ -62,83 +62,90 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
 
   Widget buildHeader(SchoolClass schoolClass) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 30, 0, 20),
-      padding: const EdgeInsets.all(0),
-      width: 360,
+      margin: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: Color(0x1fffffff),
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.zero,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 0, bottom: 20),
-              child: Text(
-                schoolClass.id,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.clip,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 24,
-                  color: Color(0xff000000),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-            child: Text(
-              schoolClass.name,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.clip,
-              style: const TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 26,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Text(
-              "${schoolClass.section}\n${schoolClass.getSchedule()}",
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.clip,
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontStyle: FontStyle.normal,
-                fontSize: 14,
-                color: Colors.green,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.green.shade900),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "${schoolClass.studentIds.length.toString()} student${schoolClass.studentIds.length > 1 ? "s" : ""}",
-                    style: const TextStyle(color: Colors.white),
+      child: FutureBuilder(
+        future: schoolClass.teacher,
+        builder: (context, snapshot) => snapshot.hasData
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        schoolClass.name,
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 24,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        schoolClass.section,
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-              ),
-            ),
-          )
-        ],
+                  Text(
+                    snapshot.hasData ? snapshot.data!.fullName : "",
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Text(
+                    schoolClass.getSchedule(),
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.green.shade900),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${schoolClass.studentIds.length.toString()} student${schoolClass.studentIds.length > 1 ? "s" : ""}",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : const CircularProgressIndicator(),
       ),
     );
   }

@@ -23,7 +23,22 @@ void main() async {
     }
   }
 
-  runApp(const MainApp());
+  runApp(MaterialApp(
+      scaffoldMessengerKey: snackbarKey,
+      theme: ThemeData(
+        fontFamily: 'Inter',
+        useMaterial3: false,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xff153faa),
+          secondary: Colors.transparent,
+        ),
+        highlightColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(foregroundColor: const Color(0xff353535)),
+        ),
+      ),
+      home: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -31,20 +46,54 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        scaffoldMessengerKey: snackbarKey,
-        theme: ThemeData(
-          fontFamily: 'Inter',
-          useMaterial3: false,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.lightGreen,
-            primary: Colors.lightGreen,
-            secondary: Colors.lightGreenAccent
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(foregroundColor: Colors.green),
-          ),
-        ),
-        home: const MainScreen());
+    return const Scaffold(
+      backgroundColor: Color(0xff000000),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0.5,
+      //   title: const Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     crossAxisAlignment: CrossAxisAlignment.center,
+      //     children: [
+      //       Padding(
+      //         padding: EdgeInsets.only(left: 0),
+      //         child: Image(
+      //             image: AssetImage("assets/images/logo.png"), height: 55),
+      //       ),
+      //       // Row(
+      //       //     mainAxisSize: MainAxisSize.min,
+      //       //     crossAxisAlignment: CrossAxisAlignment.center,
+      //       //     mainAxisAlignment: MainAxisAlignment.end,
+      //       //     children: <Widget>[
+      //       //       const Column(
+      //       //         children: [
+      //       //           Text(
+      //       //             "De La Cruz, John",
+      //       //             style: TextStyle(
+      //       //                 color: Colors.black,
+      //       //                 fontSize: 14,
+      //       //                 fontWeight: FontWeight.w600),
+      //       //           ),
+      //       //           Text(
+      //       //             "Ateneo De Naga University",
+      //       //             style: TextStyle(
+      //       //                 color: Colors.black,
+      //       //                 fontSize: 12,
+      //       //                 fontWeight: FontWeight.w400),
+      //       //           ),
+      //       //         ],
+      //       //       ),
+      //       //       IconButton(
+      //       //         color: Colors.black,
+      //       //         icon: const Icon(Icons.arrow_drop_down, size: 25),
+      //       //         tooltip: 'Profile',
+      //       //         onPressed: () {},
+      //       //       ),
+      //       //     ]),
+      //     ],
+      //   ),
+      // ),
+      body: MainScreen()
+    );
   }
 }

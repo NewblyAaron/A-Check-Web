@@ -79,18 +79,31 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
       onDestinationSelected: state.onDestinationChanged,
       useIndicator: true,
       extended: true,
-      leading: const Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Image(image: AssetImage("assets/images/small_logo.png"), height: 60),
-          Padding(
-              padding: EdgeInsets.only(left: 4),
-              child: Text(
-                "A-Check",
-                style: TextStyle(fontSize: 24),
-              ))
-        ],
-      ),
+      leading: buildLeading(),
+    );
+  }
+
+  Row buildLeading() {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image(image: AssetImage("assets/images/small_logo.png"), height: 60),
+        Padding(
+            padding: EdgeInsets.only(left: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "A-Check",
+                  style: TextStyle(fontSize: 24),
+                ),
+                Text(
+                  "Web Admin",
+                  style: TextStyle(fontSize: 10)
+                )
+              ],
+            ))
+      ],
     );
   }
 

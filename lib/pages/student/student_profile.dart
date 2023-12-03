@@ -224,7 +224,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
   }
 
   Widget buildGuardianInfo(Student student) {
-    return Placeholder();
+    return const Placeholder();
     // TODO: guardian information using firebase stuff
     // return Padding(
     //   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 30),

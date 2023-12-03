@@ -54,7 +54,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
     return TabBarView(
       children: [
         buildStudentsListView(schoolClass),
-        Placeholder(),
+        const Placeholder(),
         // buildReportsListView(schoolClass)
       ],
     );

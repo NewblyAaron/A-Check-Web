@@ -28,6 +28,17 @@ class MainScreenState extends State<MainScreen> {
           duration: const Duration(milliseconds: 400), curve: Curves.ease);
     });
   }
+
+  String getPageName() {
+    List<String> pageNames = const [
+      "Dashboard",
+      "Teachers",
+      "Students",
+      "Classes"
+    ];
+
+    return pageNames[selectedIndex];
+  }
 }
 
 class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
@@ -67,9 +78,50 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
 
     return Scaffold(
       body: Row(
-        children: [buildNavRail(destinations), buildPageView(views)],
+        children: [
+          buildNavRail(destinations),
+          Expanded(
+            child: Column(
+              children: [
+                buildBar(),
+                buildPageView(views),
+              ],
+            ),
+          )
+        ],
       ),
     );
+  }
+
+  Container buildBar() {
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        height: 64,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 350),
+              transitionBuilder: (child, animation) => SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(0.0, -3),
+                          end: const Offset(0.0, 0.0))
+                      .animate(animation),
+                  child: child),
+              child: Text(
+                state.getPageName(),
+                key: ValueKey<String>(state.getPageName()),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SearchBar(
+              elevation: MaterialStatePropertyAll(1),
+              leading: Icon(Icons.search),
+              hintText: "Search here...",
+            )
+          ],
+        ));
   }
 
   NavigationRail buildNavRail(List<NavigationRailDestination> destinations) {
@@ -97,10 +149,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
                   "A-Check",
                   style: TextStyle(fontSize: 24),
                 ),
-                Text(
-                  "Web Admin",
-                  style: TextStyle(fontSize: 10)
-                )
+                Text("Web Admin", style: TextStyle(fontSize: 10))
               ],
             ))
       ],

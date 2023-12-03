@@ -5,14 +5,14 @@ import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/widgets/sidenavbar.dart';
 import 'package:flutter/material.dart';
 
-class Splash extends StatefulWidget {
-  const Splash({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => SplashState();
+  State<StatefulWidget> createState() => MainScreenState();
 }
 
-class SplashState extends State<Splash> {
+class MainScreenState extends State<MainScreen> {
   List<Widget> views = const [
     Dashboard(),
     TeachersPage(),

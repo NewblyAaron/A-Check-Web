@@ -1,6 +1,6 @@
 import 'package:a_check_web/firebase_options.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/splash.dart';
+import 'package:a_check_web/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -58,40 +58,10 @@ class MainApp extends StatelessWidget {
               child: Image(
                   image: AssetImage("assets/images/logo.png"), height: 55),
             ),
-            // Row(
-            //     mainAxisSize: MainAxisSize.min,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: <Widget>[
-            //       const Column(
-            //         children: [
-            //           Text(
-            //             "De La Cruz, John",
-            //             style: TextStyle(
-            //                 color: Colors.black,
-            //                 fontSize: 14,
-            //                 fontWeight: FontWeight.w600),
-            //           ),
-            //           Text(
-            //             "Ateneo De Naga University",
-            //             style: TextStyle(
-            //                 color: Colors.black,
-            //                 fontSize: 12,
-            //                 fontWeight: FontWeight.w400),
-            //           ),
-            //         ],
-            //       ),
-            //       IconButton(
-            //         color: Colors.black,
-            //         icon: const Icon(Icons.arrow_drop_down, size: 25),
-            //         tooltip: 'Profile',
-            //         onPressed: () {},
-            //       ),
-            //     ]),
           ],
         ),
       ),
-      body: const Splash(),
+      body: const MainScreen(),
     );
   }
 }

@@ -1,6 +1,7 @@
+import 'package:a_check_web/auth.dart';
 import 'package:a_check_web/firebase_options.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/new_main_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -12,11 +13,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
   if (kDebugMode) {
     try {
       print("Connecting to local Firebase emulator");
       // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!
+      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
       FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
     } catch (e) {
       print(e);
@@ -48,52 +51,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Color(0xff000000),
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   elevation: 0.5,
-      //   title: const Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     crossAxisAlignment: CrossAxisAlignment.center,
-      //     children: [
-      //       Padding(
-      //         padding: EdgeInsets.only(left: 0),
-      //         child: Image(
-      //             image: AssetImage("assets/images/logo.png"), height: 55),
-      //       ),
-      //       // Row(
-      //       //     mainAxisSize: MainAxisSize.min,
-      //       //     crossAxisAlignment: CrossAxisAlignment.center,
-      //       //     mainAxisAlignment: MainAxisAlignment.end,
-      //       //     children: <Widget>[
-      //       //       const Column(
-      //       //         children: [
-      //       //           Text(
-      //       //             "De La Cruz, John",
-      //       //             style: TextStyle(
-      //       //                 color: Colors.black,
-      //       //                 fontSize: 14,
-      //       //                 fontWeight: FontWeight.w600),
-      //       //           ),
-      //       //           Text(
-      //       //             "Ateneo De Naga University",
-      //       //             style: TextStyle(
-      //       //                 color: Colors.black,
-      //       //                 fontSize: 12,
-      //       //                 fontWeight: FontWeight.w400),
-      //       //           ),
-      //       //         ],
-      //       //       ),
-      //       //       IconButton(
-      //       //         color: Colors.black,
-      //       //         icon: const Icon(Icons.arrow_drop_down, size: 25),
-      //       //         tooltip: 'Profile',
-      //       //         onPressed: () {},
-      //       //       ),
-      //       //     ]),
-      //     ],
-      //   ),
-      // ),
-      body: MainScreen()
+      body: AuthGate()
     );
   }
 }

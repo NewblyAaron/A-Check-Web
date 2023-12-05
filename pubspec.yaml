@@ -20,6 +20,8 @@ dependencies:
   json_annotation: ^4.8.1
   side_navigation: ^1.0.4
   dynamic_table: ^0.0.1-beta.2
+  firebase_auth: ^4.15.0
+  firebase_ui_auth: ^1.10.0
 
 dev_dependencies:
   flutter_test:

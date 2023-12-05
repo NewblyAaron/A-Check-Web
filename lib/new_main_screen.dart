@@ -3,6 +3,7 @@ import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/pages/student/students_page.dart';
 import 'package:a_check_web/pages/teacher/teachers_page.dart';
 import 'package:a_check_web/utils/abstracts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -28,6 +29,10 @@ class MainScreenState extends State<MainScreen> {
           duration: const Duration(milliseconds: 400), curve: Curves.ease);
     });
   }
+
+  void logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }
 
 class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
@@ -44,24 +49,68 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
 
     List<NavigationRailDestination> destinations = const [
       NavigationRailDestination(
-        icon: Icon(Icons.home_outlined, color: Color(0xff353535),size: 30,),
-        selectedIcon: Icon(Icons.home, color: Color(0xff153faa),size: 30,),
-        label: Text("Dashboard", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+        icon: Icon(
+          Icons.home_outlined,
+          color: Color(0xff353535),
+          size: 30,
+        ),
+        selectedIcon: Icon(
+          Icons.home,
+          color: Color(0xff153faa),
+          size: 30,
+        ),
+        label: Text(
+          "Dashboard",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
       ),
       NavigationRailDestination(
-        icon: Icon(Icons.person_outline, color: Color(0xff353535),size: 30,),
-        selectedIcon: Icon(Icons.person, color: Color(0xff153faa),size: 30,),
-        label: Text("Teachers", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+        icon: Icon(
+          Icons.person_outline,
+          color: Color(0xff353535),
+          size: 30,
+        ),
+        selectedIcon: Icon(
+          Icons.person,
+          color: Color(0xff153faa),
+          size: 30,
+        ),
+        label: Text(
+          "Teachers",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
       ),
       NavigationRailDestination(
-        icon: Icon(Icons.group_outlined, color: Color(0xff353535),size: 30,),
-        selectedIcon: Icon(Icons.group, color: Color(0xff153faa),size: 30,),
-        label: Text("Students", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+        icon: Icon(
+          Icons.group_outlined,
+          color: Color(0xff353535),
+          size: 30,
+        ),
+        selectedIcon: Icon(
+          Icons.group,
+          color: Color(0xff153faa),
+          size: 30,
+        ),
+        label: Text(
+          "Students",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
       ),
       NavigationRailDestination(
-        icon: Icon(Icons.grid_view_outlined, color: Color(0xff353535),size: 30,),
-        selectedIcon: Icon(Icons.grid_view_rounded, color: Color(0xff153faa),size: 30,),
-        label: Text("Classes", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+        icon: Icon(
+          Icons.grid_view_outlined,
+          color: Color(0xff353535),
+          size: 30,
+        ),
+        selectedIcon: Icon(
+          Icons.grid_view_rounded,
+          color: Color(0xff153faa),
+          size: 30,
+        ),
+        label: Text(
+          "Classes",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
       ),
     ];
 
@@ -70,11 +119,10 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
         children: [
           Container(
               decoration: const BoxDecoration(
-                  border: Border(right: BorderSide(width: 0.5))
-              ),
-            child: buildNavRail(destinations)
-          ),
-          buildPageView(views)],
+                  border: Border(right: BorderSide(width: 0.5))),
+              child: buildNavRail(destinations)),
+          buildPageView(views)
+        ],
       ),
     );
   }
@@ -88,6 +136,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
       useIndicator: false,
       extended: true,
       leading: buildLeading(),
+      trailing: buildTrailing(),
     );
   }
 
@@ -96,8 +145,10 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: EdgeInsets.only(top:40.0, bottom: 30),
-          child: Image(image: AssetImage("assets/images/small_logo_blue.png"), height: 60),
+          padding: EdgeInsets.only(top: 40.0, bottom: 30),
+          child: Image(
+              image: AssetImage("assets/images/small_logo_blue.png"),
+              height: 60),
         ),
         Padding(
             padding: EdgeInsets.only(left: 4, top: 30, bottom: 30),
@@ -106,16 +157,35 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
               children: [
                 Text(
                   "A-Check",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Color(0xff153faa)),
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff153faa)),
                 ),
-                Text(
-                  "Web Admin",
-                  style: TextStyle(fontSize: 10)
-                )
+                Text("Web Admin", style: TextStyle(fontSize: 10))
               ],
             ))
       ],
     );
+  }
+
+  Expanded buildTrailing() {
+    return Expanded(
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          width: 256,
+          alignment: Alignment.bottomLeft,
+          padding: const EdgeInsets.only(bottom: 24, left: 16),
+          child: TextButton.icon(
+            icon: const Icon(Icons.logout_outlined),
+            label: const Text("Log out"),
+            onPressed: state.logout,
+          ),
+        ),
+      ],
+    ));
   }
 
   Expanded buildPageView(List<Widget> views) {

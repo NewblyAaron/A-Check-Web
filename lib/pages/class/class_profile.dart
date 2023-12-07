@@ -172,9 +172,19 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
       Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsets.only(bottom: 16, right: 16),
-          child: FloatingActionButton(
-            onPressed: state.addStudent,
-            child: const Icon(Icons.person_add_alt),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FloatingActionButton(
+                onPressed: state.addStudents,
+                child: const Icon(Icons.person_add_alt_1),
+              ),
+              const SizedBox(width: 8),
+              FloatingActionButton(
+                onPressed: state.removeStudents,
+                child: const Icon(Icons.person_remove_alt_1),
+              ),
+            ],
           ))
     ]);
   }

@@ -36,7 +36,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
               label: const Text("Name"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.name, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           DataColumn2(
               label: const Text("Section"),
               onSort: (columnIndex, ascending) =>
@@ -51,7 +51,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
               label: const Text("Schedule"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.getSchedule(), columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
         ];
 
@@ -62,6 +62,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           actions: [
             IconButton(
                 onPressed: state.openForm, icon: const Icon(Icons.person_add)),
+            const SizedBox(width: 10,),
             IconButton(
                 onPressed: state.deleteClasses,
                 icon: const Icon(Icons.delete_sweep)),
@@ -81,7 +82,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("List of Classes"),
+            Text("List of Classes",style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ],
         ));
   }

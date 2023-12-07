@@ -28,20 +28,20 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
 
         List<DataColumn2> columns = [
           DataColumn2(
-              label: const Text("Student ID"),
+              label: const Text("ID"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.id, columnIndex, ascending),
-              size: ColumnSize.S),
+              size: ColumnSize.M),
           DataColumn2(
               label: const Text("Last Name"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.lastName, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           DataColumn2(
               label: const Text("First Name"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.firstName, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           DataColumn2(
               label: const Text("E-mail"),
               onSort: (columnIndex, ascending) => state.sort(
@@ -51,7 +51,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
               label: const Text("Phone Number"),
               onSort: (columnIndex, ascending) => state.sort(
                   (s) => s.phoneNumber ?? "Z_None", columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
         ];
 
@@ -62,6 +62,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
           actions: [
             IconButton(
                 onPressed: state.openForm, icon: const Icon(Icons.person_add)),
+            SizedBox(width: 10,),
             IconButton(
                 onPressed: state.deleteStudents,
                 icon: const Icon(Icons.delete_sweep)),
@@ -81,7 +82,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("List of Students"),
+            Text("List of Students",style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ],
         ));
   }

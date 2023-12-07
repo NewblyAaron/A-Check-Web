@@ -130,13 +130,13 @@ class ClassDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     return DataRow(
         cells: [
-          DataCell(Text(_data[index].subjectCode)),
-          DataCell(Text(_data[index].name)),
-          DataCell(Text(_data[index].section)),
+          DataCell(Text(_data[index].subjectCode, style: const TextStyle(fontSize: 12))),
+          DataCell(Text(_data[index].name, style: const TextStyle(fontSize: 12))),
+          DataCell(Text(_data[index].section, style: const TextStyle(fontSize: 12))),
           DataCell(FutureBuilder(
             future: _data[index].teacher,
             builder: (context, snapshot) => snapshot.hasData
-                ? Text(snapshot.data!.fullName)
+                ? Text(snapshot.data!.fullName, style: const TextStyle(fontSize: 12))
                 : const CircularProgressIndicator(),
           )),
           DataCell(Text(_data[index].getSchedule())),

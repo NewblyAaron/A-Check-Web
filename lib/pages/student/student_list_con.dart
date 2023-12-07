@@ -129,11 +129,11 @@ class StudentDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     return DataRow(
         cells: [
-          DataCell(Text(_data[index].id)),
-          DataCell(Text(_data[index].lastName)),
-          DataCell(Text(_data[index].firstName)),
-          DataCell(Text(_data[index].email ?? "None")),
-          DataCell(Text(_data[index].phoneNumber ?? "None")),
+          DataCell(Text(_data[index].id, style: TextStyle(fontSize: 12),)),
+          DataCell(Text(_data[index].lastName, style: TextStyle(fontSize: 12),)),
+          DataCell(Text(_data[index].firstName, style: TextStyle(fontSize: 12),)),
+          DataCell(Text(_data[index].email ?? "None", style: TextStyle(fontSize: 12),)),
+          DataCell(Text(_data[index].phoneNumber ?? "None", style: TextStyle(fontSize: 12),)),
           DataCell(
             Row(
               children: [

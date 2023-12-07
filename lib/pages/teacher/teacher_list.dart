@@ -31,17 +31,17 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
               label: const Text("ID"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.id, columnIndex, ascending),
-              size: ColumnSize.S),
+              size: ColumnSize.M),
           DataColumn2(
               label: const Text("Last Name"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.lastName, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           DataColumn2(
               label: const Text("First Name"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.firstName, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           DataColumn2(
               label: const Text("E-mail"),
               onSort: (columnIndex, ascending) => state.sort(
@@ -51,7 +51,7 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
               label: const Text("Phone Number"),
               onSort: (columnIndex, ascending) => state.sort(
                   (s) => s.phoneNumber ?? "Z_None", columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.L),
           const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
         ];
 
@@ -62,6 +62,7 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
           actions: [
             IconButton(
                 onPressed: state.openForm, icon: const Icon(Icons.person_add)),
+            const SizedBox(width: 10,),
             IconButton(
                 onPressed: state.deleteStudents,
                 icon: const Icon(Icons.delete_sweep)),
@@ -81,7 +82,7 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("List of Teachers"),
+            Text("List of Teachers",style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ],
         ));
   }

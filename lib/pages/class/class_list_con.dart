@@ -4,6 +4,7 @@ import 'package:a_check_web/model/school_class.dart';
 
 import 'package:a_check_web/pages/class/class_list.dart';
 import 'package:a_check_web/utils/dialogs.dart';
+import 'package:a_check_web/widgets/cell_actions.dart';
 import 'package:flutter/material.dart';
 
 class ClassListState extends State<ClassList> {
@@ -184,29 +185,12 @@ class ClassDataSource extends DataTableSource {
           )),
           DataCell(Text(data[index].getSchedule())),
           DataCell(
-            Row(
-              children: [
-                IconButton(
-                  tooltip: "View Class Info",
-                  splashRadius: 15,
-                  onPressed: () {
-                    if (onViewButtonPressed is Function) {
-                      onViewButtonPressed!(data[index]);
-                    }
-                  },
-                  icon: const Icon(Icons.visibility),
-                ),
-                IconButton(
-                  tooltip: "Edit Class Info",
-                  splashRadius: 15,
-                  onPressed: () {
-                    if (onEditButtonPressed is Function) {
-                      onEditButtonPressed!(data[index]);
-                    }
-                  },
-                  icon: const Icon(Icons.edit),
-                ),
-              ],
+            CellActions(
+              data: data[index],
+              onViewButtonPressed: (o) => onViewButtonPressed,
+              onEditButtonPressed: (o) => onEditButtonPressed,
+              viewTooltip: "View class info",
+              editTooltip: "Edit class info",
             ),
           ),
         ],

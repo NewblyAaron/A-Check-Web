@@ -5,6 +5,8 @@ import 'package:a_check_web/pages/teacher/teacher_list.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/cell_actions.dart';
+
 class TeacherListState extends State<TeacherList> {
   @override
   Widget build(BuildContext context) => TeacherListView(this);
@@ -180,32 +182,12 @@ class TeacherDataSource extends DataTableSource {
           DataCell(Text(data[index].phoneNumber ?? "None",
               style: const TextStyle(fontSize: 12))),
           DataCell(
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  tooltip: "View Teacher Info",
-                  splashRadius: 15,
-                  onPressed: () {
-                    if (onViewButtonPressed is Function) {
-                      onViewButtonPressed!(data[index]);
-                    }
-                  },
-                  icon: const Icon(Icons.visibility_outlined, color: Color(0xff153faa)),
-                ),
-                IconButton(
-                  tooltip: "Edit Teacher Info",
-                  splashRadius: 15,
-                  onPressed: () {
-                    if (onEditButtonPressed is Function) {
-                      onEditButtonPressed!(data[index]);
-                    }
-                  },
-                  icon: const Icon(Icons.edit_outlined, color: Colors.black45,),
-                ),
-              ],
+            CellActions(
+              data: data[index],
+              onViewButtonPressed: (o) => onViewButtonPressed,
+              onEditButtonPressed: (o) => onEditButtonPressed,
+              viewTooltip: "View teacher info",
+              editTooltip: "Edit teacher info",
             ),
           ),
         ],

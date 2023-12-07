@@ -3,6 +3,7 @@ import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/pages/student/student_list.dart';
 import 'package:a_check_web/utils/dialogs.dart';
+import 'package:a_check_web/widgets/cell_actions.dart';
 import 'package:flutter/material.dart';
 
 class StudentListState extends State<StudentList> {
@@ -188,32 +189,15 @@ class StudentDataSource extends DataTableSource {
             data[index].phoneNumber ?? "None",
             style: const TextStyle(fontSize: 12),
           )),
-          if (onViewButtonPressed is Function ||
-              onEditButtonPressed is Function)
-            DataCell(
-              Row(
-                children: [
-                  if (onViewButtonPressed is Function)
-                    IconButton(
-                  tooltip: "View Student Info",
-                  splashRadius: 15,
-                      onPressed: () {
-                        onViewButtonPressed!(data[index]);
-                      },
-                      icon: const Icon(Icons.visibility),
-                    ),
-                  if (onEditButtonPressed is Function)
-                    IconButton(
-                  tooltip: "Edit Student Info",
-                  splashRadius: 15,
-                      onPressed: () {
-                        onEditButtonPressed!(data[index]);
-                      },
-                      icon: const Icon(Icons.edit),
-                    ),
-                ],
-              ),
-            )
+          DataCell(
+            CellActions(
+              data: data[index],
+              onViewButtonPressed: (o) => onViewButtonPressed,
+              onEditButtonPressed: (o) => onEditButtonPressed,
+              viewTooltip: "View student info",
+              editTooltip: "Edit student info",
+            ),
+          )
         ],
         selected: _map[data[index]] ?? false,
         onSelectChanged: (value) {

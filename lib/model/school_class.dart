@@ -25,8 +25,10 @@ class SchoolClass {
       required this.section,
       required this.schedule,
       required this.teacherId,
-      Set<String>? studentIds}) {
+      Set<String>? studentIds,
+      int? maxAbsences}) {
     this.studentIds = studentIds ?? List.empty().toSet().cast();
+    this.maxAbsences = maxAbsences ?? 3;
   }
 
   factory SchoolClass.fromJson(Map<String, Object?> json) =>
@@ -40,6 +42,7 @@ class SchoolClass {
   final String section;
   final List<ClassSchedule> schedule;
   final String teacherId;
+  late final int maxAbsences;
   late final Set<String> studentIds;
 
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);

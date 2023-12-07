@@ -1,5 +1,4 @@
 import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/pages/teacher/teacher_info.dart';
 import 'package:a_check_web/pages/teacher/teacher_profile.dart';
 
 import './teachers_page.dart';
@@ -19,6 +18,7 @@ class TeachersPageState extends State<TeachersPage>
   bool get wantKeepAlive => true;
 
   onListRowTap(Teacher teacher) {
-    setState(() => teacherProfileWidget = TeacherProfile(teacher: teacher));
+    setState(() => teacherProfileWidget =
+        TeacherProfile(teacher: teacher, key: ValueKey<Teacher>(teacher)));
   }
 }

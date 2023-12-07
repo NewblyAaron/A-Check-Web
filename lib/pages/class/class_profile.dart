@@ -2,7 +2,6 @@ import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/pages/class/class_profile_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/student_card.dart';
-import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:flutter/material.dart';
 
 class ClassProfile extends StatefulWidget {
@@ -25,9 +24,18 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          buildHeader(widget.schoolClass),
+          Stack(children: [
+            buildHeader(state.schoolClass),
+            Container(
+              padding: const EdgeInsets.only(top: 16, right: 16),
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: state.openSettings,
+                  icon: const Icon(Icons.settings)),
+            ),
+          ]),
           buildTabBar(),
-          Expanded(child: buildTabBarView(widget.schoolClass))
+          Expanded(child: buildTabBarView(state.schoolClass))
         ],
       ),
     );

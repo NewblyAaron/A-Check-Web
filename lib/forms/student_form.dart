@@ -32,7 +32,7 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                 child: Column(
                   children: [
                     const Padding(
-                      padding: EdgeInsets.fromLTRB(8, 16,8,16),
+                      padding: EdgeInsets.fromLTRB(8, 16, 8, 16),
                       child: Text("Add Student",
                           textAlign: TextAlign.start,
                           overflow: TextOverflow.clip,
@@ -63,10 +63,10 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 12),
                               hintText: 'e.g. 202010824',
-                              labelText: "Student ID number"
-                          ),
+                              labelText: "Student ID number"),
                         ),
                       ),
                     ),
@@ -90,10 +90,10 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 12),
                               hintText: 'e.g. Aaron',
-                              labelText: "First Name"
-                          ),
+                              labelText: "First Name"),
                         ),
                       ),
                     ),
@@ -117,10 +117,10 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 12),
                               hintText: 'e.g. Marcos',
-                              labelText: "Middle Name"
-                          ),
+                              labelText: "Middle Name"),
                         ),
                       ),
                     ),
@@ -144,10 +144,10 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 12),
                               hintText: 'e.g. De La Cruz',
-                              labelText: "Last Name"
-                          ),
+                              labelText: "Last Name"),
                         ),
                       ),
                     ),
@@ -171,10 +171,10 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 12),
                               hintText: 'e.g. 09123456789',
-                              labelText: "Mobile Number"
-                          ),
+                              labelText: "Mobile Number"),
                         ),
                       ),
                     ),
@@ -188,7 +188,7 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           validator: Validators.isAnEmail,
                           obscureText: false,
                           textAlign: TextAlign.start,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           maxLines: 1,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
@@ -198,10 +198,10 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           ),
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 12),
                               hintText: 'e.g. adelacruz@gmail.com',
-                              labelText: "E-mail Address"
-                          ),
+                              labelText: "E-mail Address"),
                         ),
                       ),
                     ),
@@ -223,13 +223,17 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             child: Container(
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(vertical: 24),
-                              width:300,
+                              width: 300,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(35),
                                 // adding color will hide the splash effect
                                 // color: Colors.blueGrey.shade200,
                               ),
-                              child: const Text("Cancel", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                              child: const Text(
+                                "Cancel",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
                         ),
@@ -243,13 +247,17 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             child: Container(
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(vertical: 24),
-                              width:300,
+                              width: 300,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(35),
                                 // adding color will hide the splash effect
                                 // color: Colors.blueGrey.shade200,
                               ),
-                              child: const Text("Confirm", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500), ),
+                              child: const Text(
+                                "Confirm",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
                             ),
                           ),
                         ),

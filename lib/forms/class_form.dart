@@ -19,6 +19,22 @@ class ClassForm extends StatefulWidget {
 class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
   const ClassFormView(super.state, {super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 600,
+      child: Column(
+        children: [
+          buildClassInfo(),
+          buildTeacherDropdown(),
+          buildScheduleList(),
+          const Spacer(flex: 1),
+          buildButtons(),
+        ],
+      ),
+    );
+  }
+
   Widget buildScheduleList() {
     return Column(
       children: [
@@ -161,7 +177,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                 validator: Validators.hasValue,
                 obscureText: false,
                 textAlign: TextAlign.start,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
                 maxLines: 1,
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
@@ -246,77 +262,63 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 600,
-      child: Column(
-        children: [
-          buildClassInfo(),
-          buildTeacherDropdown(),
-          buildScheduleList(),
-          const Spacer(flex: 1),
-          Row(
-            children: [
-              Material(
-                  color: Colors.grey.shade200,
-                child: InkWell(
-                  hoverColor: Colors.grey.withOpacity(0.4),
-                  highlightColor: Colors.grey.withOpacity(0.4),
-                  splashColor: Colors.grey.withOpacity(0.5),
-                  onTap: state.cancel,
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
-                      // adding color will hide the splash effect
-                      // color: Colors.blueGrey.shade200,
-                    ),
-                    child: const Text(
-                      "Cancel",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ),
+  Row buildButtons() {
+    return Row(
+      children: [
+        Material(
+            color: Colors.grey.shade200,
+          child: InkWell(
+            hoverColor: Colors.grey.withOpacity(0.4),
+            highlightColor: Colors.grey.withOpacity(0.4),
+            splashColor: Colors.grey.withOpacity(0.5),
+            onTap: state.cancel,
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                // adding color will hide the splash effect
+                // color: Colors.blueGrey.shade200,
               ),
-              Material(
-                color: Colors.lightGreen.shade200,
-                child: InkWell(
-                  hoverColor: Colors.green.withOpacity(0.4),
-                  highlightColor: Colors.green.withOpacity(0.4),
-                  splashColor: Colors.green.withOpacity(0.5),
-                  onTap: state.finalize,
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
-                      // adding color will hide the splash effect
-                      // color: Colors.blueGrey.shade200,
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Confirm",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
-            ],
+            ),
           ),
-        ],
-      ),
+        ),
+        Material(
+          color: Colors.lightGreen.shade200,
+          child: InkWell(
+            hoverColor: Colors.green.withOpacity(0.4),
+            highlightColor: Colors.green.withOpacity(0.4),
+            splashColor: Colors.green.withOpacity(0.5),
+            onTap: state.finalize,
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                // adding color will hide the splash effect
+                // color: Colors.blueGrey.shade200,
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Confirm",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

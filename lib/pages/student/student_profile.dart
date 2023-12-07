@@ -23,18 +23,18 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildHeader(widget.student),
+        buildHeader(state.student),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               children: [
-                buildStudentInfo(widget.student),
+                buildStudentInfo(state.student),
                 const SizedBox(height: 24),
                 // student.guardian != null
                 //     ? buildGuardianInfo(student)
                 //     : const Text("No guardian!"),
                 widget.studentClass != null
-                    ? buildClassInfo(widget.student)
+                    ? buildClassInfo(state.student)
                     : buildEnrolledClasses(),
               ],
             )),
@@ -99,44 +99,57 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
     );
   }
 
-  GestureDetector buildStudentPhoto() {
-    return GestureDetector(
-      child: Stack(
-        clipBehavior: Clip.antiAlias,
-        alignment: Alignment.bottomRight,
-        fit: StackFit.loose,
-        children: [
-          Container(
-            height: 112,
-            width: 112,
+  Widget buildStudentPhoto() {
+    return Stack(
+      clipBehavior: Clip.antiAlias,
+      alignment: Alignment.bottomRight,
+      fit: StackFit.loose,
+      children: [
+        Container(
+            height: 250,
+            width: 250,
             clipBehavior: Clip.antiAlias,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: <Color>[Color(0xffD7E5CA), Color(0xffF9F3CC)]),
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(35.0)),
-              border: Border.fromBorderSide(BorderSide()),
+              border: Border.fromBorderSide(BorderSide(strokeAlign: BorderSide.strokeAlignOutside)),
             ),
-            // TODO: display image of student from firebase
-            child: const Placeholder(),
-            // child: state.student.facePhotoBytes != null
-            //     ? Image.memory(state.student.facePhotoBytes!)
-            //     : const Icon(Icons.person_add_alt),
-          ),
-          Container(
+            child: FutureBuilder(
+                future: state.student.getPhotoUrl(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return snapshot.hasData
+                        ? snapshot.data!.isNotEmpty
+                            ? Image.network(
+                                snapshot.data!,
+                                fit: BoxFit.cover,
+                              )
+                            : const Center(
+                                child: Icon(
+                                  Icons.person_outline,
+                                  size: 64,
+                                ),
+                              )
+                        : const Center(child: CircularProgressIndicator());
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                })),
+        GestureDetector(
+          onTap: state.pickPhoto,
+          child: Container(
               padding: const EdgeInsets.all(4),
               decoration: const BoxDecoration(
-                  color: Colors.lightGreen,
+                  color: Color(0xFF153FAA),
                   shape: BoxShape.circle,
                   boxShadow: [BoxShadow(offset: Offset(0, 2), blurRadius: 1)]),
               child: const Icon(
                 Icons.camera_alt,
+                color: Colors.white,
                 size: 20,
               )),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -19,8 +19,12 @@ class StudentsPageState extends State<StudentsPage>
 
   onListRowTap(Student? student) {
     setState(() {
-      studentProfile =
-          student != null ? StudentProfile(student: student) : null;
+      studentProfile = student != null
+          ? StudentProfile(
+              student: student,
+              key: ValueKey<Student>(student),
+            )
+          : null;
     });
   }
 }

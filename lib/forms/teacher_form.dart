@@ -188,7 +188,7 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                           validator: Validators.isAnEmail,
                           obscureText: false,
                           textAlign: TextAlign.start,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           maxLines: 1,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,

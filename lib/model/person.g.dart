@@ -128,6 +128,8 @@ abstract class StudentDocumentReference
   ///
   /// If no document exists yet, the update will fail.
   Future<void> update({
+    String photoPath,
+    FieldValue photoPathFieldValue,
     List<String> guardianIds,
     FieldValue guardianIdsFieldValue,
     List<dynamic> faceArray,
@@ -149,6 +151,8 @@ abstract class StudentDocumentReference
   /// The update will fail if applied to a document that does not exist.
   void transactionUpdate(
     Transaction transaction, {
+    String photoPath,
+    FieldValue photoPathFieldValue,
     List<String> guardianIds,
     FieldValue guardianIdsFieldValue,
     List<dynamic> faceArray,
@@ -195,6 +199,8 @@ class _$StudentDocumentReference
   }
 
   Future<void> update({
+    Object? photoPath = _sentinel,
+    FieldValue? photoPathFieldValue,
     Object? guardianIds = _sentinel,
     FieldValue? guardianIdsFieldValue,
     Object? faceArray = _sentinel,
@@ -210,6 +216,10 @@ class _$StudentDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) async {
+    assert(
+      photoPath == _sentinel || photoPathFieldValue == null,
+      "Cannot specify both photoPath and photoPathFieldValue",
+    );
     assert(
       guardianIds == _sentinel || guardianIdsFieldValue == null,
       "Cannot specify both guardianIds and guardianIdsFieldValue",
@@ -239,6 +249,11 @@ class _$StudentDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
+      if (photoPath != _sentinel)
+        _$StudentFieldMap['photoPath']!:
+            _$StudentPerFieldToJson.photoPath(photoPath as String),
+      if (photoPathFieldValue != null)
+        _$StudentFieldMap['photoPath']!: photoPathFieldValue,
       if (guardianIds != _sentinel)
         _$StudentFieldMap['guardianIds']!:
             _$StudentPerFieldToJson.guardianIds(guardianIds as List<String>),
@@ -280,6 +295,8 @@ class _$StudentDocumentReference
 
   void transactionUpdate(
     Transaction transaction, {
+    Object? photoPath = _sentinel,
+    FieldValue? photoPathFieldValue,
     Object? guardianIds = _sentinel,
     FieldValue? guardianIdsFieldValue,
     Object? faceArray = _sentinel,
@@ -295,6 +312,10 @@ class _$StudentDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) {
+    assert(
+      photoPath == _sentinel || photoPathFieldValue == null,
+      "Cannot specify both photoPath and photoPathFieldValue",
+    );
     assert(
       guardianIds == _sentinel || guardianIdsFieldValue == null,
       "Cannot specify both guardianIds and guardianIdsFieldValue",
@@ -324,6 +345,11 @@ class _$StudentDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
+      if (photoPath != _sentinel)
+        _$StudentFieldMap['photoPath']!:
+            _$StudentPerFieldToJson.photoPath(photoPath as String),
+      if (photoPathFieldValue != null)
+        _$StudentFieldMap['photoPath']!: photoPathFieldValue,
       if (guardianIds != _sentinel)
         _$StudentFieldMap['guardianIds']!:
             _$StudentPerFieldToJson.guardianIds(guardianIds as List<String>),
@@ -459,6 +485,17 @@ abstract class StudentQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
+  StudentQuery wherePhotoPath({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
   StudentQuery whereGuardianIds({
     List<String>? isEqualTo,
     List<String>? isNotEqualTo,
@@ -538,6 +575,18 @@ abstract class StudentQuery
   });
 
   StudentQuery orderByDocumentId({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    StudentDocumentSnapshot? startAtDocument,
+    StudentDocumentSnapshot? endAtDocument,
+    StudentDocumentSnapshot? endBeforeDocument,
+    StudentDocumentSnapshot? startAfterDocument,
+  });
+
+  StudentQuery orderByPhotoPath({
     bool descending = false,
     String startAt,
     String startAfter,
@@ -805,6 +854,48 @@ class _$StudentQuery extends QueryReference<Student, StudentQuerySnapshot>
         isNull: isNull,
         whereIn: whereIn,
         whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  StudentQuery wherePhotoPath({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$StudentQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$StudentFieldMap['photoPath']!,
+        isEqualTo: isEqualTo != null
+            ? _$StudentPerFieldToJson.photoPath(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$StudentPerFieldToJson.photoPath(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$StudentPerFieldToJson.photoPath(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$StudentPerFieldToJson.photoPath(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$StudentPerFieldToJson.photoPath(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$StudentPerFieldToJson.photoPath(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$StudentPerFieldToJson.photoPath(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$StudentPerFieldToJson.photoPath(e)),
       ),
       $queryCursor: $queryCursor,
     );
@@ -1124,6 +1215,78 @@ class _$StudentQuery extends QueryReference<Student, StudentQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
         descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$StudentQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  StudentQuery orderByPhotoPath({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    StudentDocumentSnapshot? startAtDocument,
+    StudentDocumentSnapshot? endAtDocument,
+    StudentDocumentSnapshot? endBeforeDocument,
+    StudentDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$StudentFieldMap['photoPath']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -3328,6 +3491,8 @@ abstract class TeacherDocumentReference
   ///
   /// If no document exists yet, the update will fail.
   Future<void> update({
+    String photoPath,
+    FieldValue photoPathFieldValue,
     String firstName,
     FieldValue firstNameFieldValue,
     String middleName,
@@ -3345,6 +3510,8 @@ abstract class TeacherDocumentReference
   /// The update will fail if applied to a document that does not exist.
   void transactionUpdate(
     Transaction transaction, {
+    String photoPath,
+    FieldValue photoPathFieldValue,
     String firstName,
     FieldValue firstNameFieldValue,
     String middleName,
@@ -3387,6 +3554,8 @@ class _$TeacherDocumentReference
   }
 
   Future<void> update({
+    Object? photoPath = _sentinel,
+    FieldValue? photoPathFieldValue,
     Object? firstName = _sentinel,
     FieldValue? firstNameFieldValue,
     Object? middleName = _sentinel,
@@ -3398,6 +3567,10 @@ class _$TeacherDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) async {
+    assert(
+      photoPath == _sentinel || photoPathFieldValue == null,
+      "Cannot specify both photoPath and photoPathFieldValue",
+    );
     assert(
       firstName == _sentinel || firstNameFieldValue == null,
       "Cannot specify both firstName and firstNameFieldValue",
@@ -3419,6 +3592,11 @@ class _$TeacherDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
+      if (photoPath != _sentinel)
+        _$TeacherFieldMap['photoPath']!:
+            _$TeacherPerFieldToJson.photoPath(photoPath as String),
+      if (photoPathFieldValue != null)
+        _$TeacherFieldMap['photoPath']!: photoPathFieldValue,
       if (firstName != _sentinel)
         _$TeacherFieldMap['firstName']!:
             _$TeacherPerFieldToJson.firstName(firstName as String),
@@ -3450,6 +3628,8 @@ class _$TeacherDocumentReference
 
   void transactionUpdate(
     Transaction transaction, {
+    Object? photoPath = _sentinel,
+    FieldValue? photoPathFieldValue,
     Object? firstName = _sentinel,
     FieldValue? firstNameFieldValue,
     Object? middleName = _sentinel,
@@ -3461,6 +3641,10 @@ class _$TeacherDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) {
+    assert(
+      photoPath == _sentinel || photoPathFieldValue == null,
+      "Cannot specify both photoPath and photoPathFieldValue",
+    );
     assert(
       firstName == _sentinel || firstNameFieldValue == null,
       "Cannot specify both firstName and firstNameFieldValue",
@@ -3482,6 +3666,11 @@ class _$TeacherDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
+      if (photoPath != _sentinel)
+        _$TeacherFieldMap['photoPath']!:
+            _$TeacherPerFieldToJson.photoPath(photoPath as String),
+      if (photoPathFieldValue != null)
+        _$TeacherFieldMap['photoPath']!: photoPathFieldValue,
       if (firstName != _sentinel)
         _$TeacherFieldMap['firstName']!:
             _$TeacherPerFieldToJson.firstName(firstName as String),
@@ -3607,6 +3796,17 @@ abstract class TeacherQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
+  TeacherQuery wherePhotoPath({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
   TeacherQuery whereFirstName({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -3664,6 +3864,18 @@ abstract class TeacherQuery
   });
 
   TeacherQuery orderByDocumentId({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByPhotoPath({
     bool descending = false,
     String startAt,
     String startAfter,
@@ -3912,6 +4124,48 @@ class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
     );
   }
 
+  TeacherQuery wherePhotoPath({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['photoPath']!,
+        isEqualTo: isEqualTo != null
+            ? _$TeacherPerFieldToJson.photoPath(isEqualTo)
+            : null,
+        isNotEqualTo: isNotEqualTo != null
+            ? _$TeacherPerFieldToJson.photoPath(isNotEqualTo)
+            : null,
+        isLessThan: isLessThan != null
+            ? _$TeacherPerFieldToJson.photoPath(isLessThan)
+            : null,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.photoPath(isLessThanOrEqualTo)
+            : null,
+        isGreaterThan: isGreaterThan != null
+            ? _$TeacherPerFieldToJson.photoPath(isGreaterThan)
+            : null,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
+            ? _$TeacherPerFieldToJson.photoPath(isGreaterThanOrEqualTo)
+            : null,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.photoPath(e)),
+        whereNotIn:
+            whereNotIn?.map((e) => _$TeacherPerFieldToJson.photoPath(e)),
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
   TeacherQuery whereFirstName({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -4132,6 +4386,78 @@ class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
         descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByPhotoPath({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['photoPath']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -4698,6 +5024,7 @@ Student _$StudentFromJson(Map<String, dynamic> json) => Student(
           ?.map((e) => e as String)
           .toList(),
       faceArray: json['faceArray'] as List<dynamic>?,
+      photoPath: json['photoPath'] as String?,
     );
 
 const _$StudentFieldMap = <String, String>{
@@ -4707,6 +5034,7 @@ const _$StudentFieldMap = <String, String>{
   'email': 'email',
   'phoneNumber': 'phoneNumber',
   'id': 'id',
+  'photoPath': 'photoPath',
   'guardianIds': 'guardianIds',
   'faceArray': 'faceArray',
 };
@@ -4726,6 +5054,8 @@ abstract class _$StudentPerFieldToJson {
   // ignore: unused_element
   static Object? id(String instance) => instance;
   // ignore: unused_element
+  static Object? photoPath(String instance) => instance;
+  // ignore: unused_element
   static Object? guardianIds(List<String> instance) => instance;
   // ignore: unused_element
   static Object? faceArray(List<dynamic> instance) => instance;
@@ -4738,6 +5068,7 @@ Map<String, dynamic> _$StudentToJson(Student instance) => <String, dynamic>{
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'id': instance.id,
+      'photoPath': instance.photoPath,
       'guardianIds': instance.guardianIds,
       'faceArray': instance.faceArray,
     };
@@ -4792,6 +5123,7 @@ Teacher _$TeacherFromJson(Map<String, dynamic> json) => Teacher(
       lastName: json['lastName'] as String,
       email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
+      photoPath: json['photoPath'] as String?,
     );
 
 const _$TeacherFieldMap = <String, String>{
@@ -4801,6 +5133,7 @@ const _$TeacherFieldMap = <String, String>{
   'email': 'email',
   'phoneNumber': 'phoneNumber',
   'id': 'id',
+  'photoPath': 'photoPath',
 };
 
 // ignore: unused_element
@@ -4817,6 +5150,8 @@ abstract class _$TeacherPerFieldToJson {
   static Object? phoneNumber(String? instance) => instance;
   // ignore: unused_element
   static Object? id(String instance) => instance;
+  // ignore: unused_element
+  static Object? photoPath(String instance) => instance;
 }
 
 Map<String, dynamic> _$TeacherToJson(Teacher instance) => <String, dynamic>{
@@ -4826,4 +5161,5 @@ Map<String, dynamic> _$TeacherToJson(Teacher instance) => <String, dynamic>{
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'id': instance.id,
+      'photoPath': instance.photoPath,
     };

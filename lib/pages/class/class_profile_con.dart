@@ -1,11 +1,23 @@
-import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/attendance_record.dart';
+import 'package:a_check_web/forms/class_settings_form.dart';
 import 'package:a_check_web/model/school_class.dart';
-import 'package:a_check_web/utils/dialogs.dart';
 import 'package:a_check_web/pages/class/class_profile.dart';
 import 'package:flutter/material.dart';
 
 class ClassProfileState extends State<ClassProfile> {
+  @override
+  Widget build(BuildContext context) => ClassView(this);
+
+  @override
+  void initState() {
+    super.initState();
+
+    schoolClass = widget.schoolClass;
+
+    classesRef.doc(widget.schoolClass.id).snapshots().listen((event) {
+      setState(() => schoolClass = event.data!);
+    });
+  }
+
   late SchoolClass schoolClass;
 
   void backButtonPressed() {
@@ -32,6 +44,12 @@ class ClassProfileState extends State<ClassProfile> {
     // TODO: edit class
   }
 
-  @override
-  Widget build(BuildContext context) => ClassView(this);
+  void openSettings() async {
+    await showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: ClassSettingsForm(schoolClass: schoolClass),
+      ),
+    );
+  }
 }

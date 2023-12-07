@@ -59,7 +59,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   ),
                   child: const Text(
                     'Add Schedule',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: Color(0xff153faa)),
                   ),
                 ),
               ],
@@ -266,7 +266,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
     return Row(
       children: [
         Material(
-            color: Colors.grey.shade200,
+            color: Colors.grey.shade100,
           child: InkWell(
             hoverColor: Colors.grey.withOpacity(0.4),
             highlightColor: Colors.grey.withOpacity(0.4),
@@ -283,17 +283,17 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               ),
               child: const Text(
                 "Cancel",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
           ),
         ),
         Material(
-          color: Colors.lightGreen.shade200,
+          color: const Color(0xff153faa).withOpacity(0.6),
           child: InkWell(
-            hoverColor: Colors.green.withOpacity(0.4),
-            highlightColor: Colors.green.withOpacity(0.4),
-            splashColor: Colors.green.withOpacity(0.5),
+            hoverColor: const Color(0xff153faa).withOpacity(0.8),
+            highlightColor: const Color(0xff153faa).withOpacity(0.4),
+            splashColor: const Color(0xff153faa).withOpacity(1),
             onTap: state.finalize,
             child: Container(
               alignment: Alignment.center,
@@ -311,7 +311,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                 children: [
                   Text(
                     "Confirm",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),

@@ -17,12 +17,13 @@ void main() async {
   FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
 
   if (kDebugMode) {
+    bypassLogin = true;
     try {
       print("Connecting to local Firebase emulator");
       // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!
-      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-      await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
-      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+      // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+      // await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
+      // FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
     } catch (e) {
       print(e);
     }
@@ -35,13 +36,23 @@ void main() async {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff153faa),
-          secondary: Colors.transparent,
+          secondary: Colors.black,
         ),
         highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: const Color(0xff353535)),
         ),
+          checkboxTheme: CheckboxThemeData(
+            fillColor: MaterialStateColor.resolveWith(
+                  (states) {
+                if (states.contains(MaterialState.selected)) {
+                  return Colors.purple; // the color when checkbox is selected;
+                }
+                return Colors.white; //the color when checkbox is unselected;
+              },
+            ),
+          ),
       ),
       home: const MainApp()));
 }

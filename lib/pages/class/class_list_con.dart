@@ -180,6 +180,8 @@ class ClassDataSource extends DataTableSource {
             Row(
               children: [
                 IconButton(
+                  tooltip: "View Class Info",
+                  splashRadius: 15,
                   onPressed: () {
                     if (onViewButtonPressed is Function) {
                       onViewButtonPressed!(_data[index]);
@@ -188,6 +190,8 @@ class ClassDataSource extends DataTableSource {
                   icon: const Icon(Icons.visibility),
                 ),
                 IconButton(
+                  tooltip: "Edit Class Info",
+                  splashRadius: 15,
                   onPressed: () {
                     if (onEditButtonPressed is Function) {
                       onEditButtonPressed!(_data[index]);

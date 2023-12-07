@@ -174,20 +174,24 @@ class TeacherDataSource extends DataTableSource {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
+                  tooltip: "View Teacher Info",
+                  splashRadius: 15,
                   onPressed: () {
                     if (onViewButtonPressed is Function) {
                       onViewButtonPressed!(data[index]);
                     }
                   },
-                  icon: const Icon(Icons.visibility),
+                  icon: const Icon(Icons.visibility_outlined, color: Color(0xff153faa)),
                 ),
                 IconButton(
+                  tooltip: "Edit Teacher Info",
+                  splashRadius: 15,
                   onPressed: () {
                     if (onEditButtonPressed is Function) {
                       onEditButtonPressed!(data[index]);
                     }
                   },
-                  icon: const Icon(Icons.edit),
+                  icon: const Icon(Icons.edit_outlined, color: Colors.black45,),
                 ),
               ],
             ),

@@ -63,11 +63,16 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           header: buildHeader(),
           actions: [
             IconButton(
+                tooltip: "Add a class from the list",
+                splashRadius: 15,
                 onPressed: state.openForm, icon: const Icon(Icons.person_add)),
             const SizedBox(width: 10,),
             IconButton(
+              tooltip: "Delete selected classes from the list",
+              splashRadius: 15,
                 onPressed: state.deleteClasses,
-                icon: const Icon(Icons.delete_sweep)),
+                icon: const Icon(Icons.delete_sweep),
+            ),
           ],
           rowsPerPage: 15,
           sortColumnIndex: state.sortColumnIndex,
@@ -76,6 +81,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           empty: const Center(
             child: Text("No entries found!"),
           ),
+          headingCheckboxTheme:Theme.of(context).checkboxTheme,
         );
       },
     );

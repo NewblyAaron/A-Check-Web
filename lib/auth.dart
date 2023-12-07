@@ -1,3 +1,4 @@
+import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/new_main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -8,6 +9,10 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (bypassLogin) {
+      return const MainScreen();
+    }
+
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -16,11 +21,14 @@ class AuthGate extends StatelessWidget {
             providers: [
               EmailAuthProvider(),
             ],
-            headerBuilder: (context, constraints, shrinkOffset) => const Image(
-                image: AssetImage("assets/images/logo.png"), height: 60),
+            headerBuilder: (context, constraints, shrinkOffset) => Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: const Image(
+                  image: AssetImage("assets/images/logo_blue.png"), height: 60),
+            ),
             sideBuilder: (context, constraints) => const AspectRatio(
               aspectRatio: 1,
-              child: Image(image: AssetImage("assets/images/logo.png")),
+              child: Image(image: AssetImage("assets/images/logo_blue.png")),
             ),
           );
         }

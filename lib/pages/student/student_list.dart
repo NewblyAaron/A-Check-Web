@@ -32,7 +32,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
               label: const Text("ID"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.id, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.S),
           DataColumn2(
               label: const Text("Last Name"),
               onSort: (columnIndex, ascending) =>
@@ -62,9 +62,13 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
           header: buildHeader(),
           actions: [
             IconButton(
+                tooltip: "Add a student from the list",
+                splashRadius: 15,
                 onPressed: state.openForm, icon: const Icon(Icons.person_add)),
             const SizedBox(width: 10),
             IconButton(
+                tooltip: "Delete selected students from the list",
+                splashRadius: 15,
                 onPressed: state.deleteStudents,
                 icon: const Icon(Icons.delete_sweep)),
           ],

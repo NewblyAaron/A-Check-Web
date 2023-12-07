@@ -291,6 +291,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
             label: const Text(
               "Log out",
               style: TextStyle(
+                letterSpacing: 2,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xff353535)),

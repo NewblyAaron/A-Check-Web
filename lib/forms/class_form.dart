@@ -259,11 +259,11 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
           Row(
             children: [
               Material(
-                color: Colors.grey.shade200,
+                  color: Colors.grey.shade200,
                 child: InkWell(
-                  hoverColor: Colors.red.withOpacity(0.4),
-                  highlightColor: Colors.red.withOpacity(0.4),
-                  splashColor: Colors.red.withOpacity(0.5),
+                  hoverColor: Colors.grey.withOpacity(0.4),
+                  highlightColor: Colors.grey.withOpacity(0.4),
+                  splashColor: Colors.grey.withOpacity(0.5),
                   onTap: state.cancel,
                   child: Container(
                     alignment: Alignment.center,

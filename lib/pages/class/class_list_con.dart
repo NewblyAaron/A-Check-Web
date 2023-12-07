@@ -185,7 +185,7 @@ class ClassDataSource extends DataTableSource {
                     style: const TextStyle(fontSize: 12))
                 : const CircularProgressIndicator(),
           )),
-          DataCell(Text(data[index].getSchedule())),
+          DataCell(Text(data[index].getSchedule(),style: const TextStyle(fontSize: 12),)),
           DataCell(
             CellActions(
               data: data[index],

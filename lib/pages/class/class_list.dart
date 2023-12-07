@@ -79,6 +79,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           ),
           headingCheckboxTheme: Theme.of(context).checkboxTheme,
           onSelectAll: state.rows.selectAll,
+          sortArrowIcon: Icons.keyboard_arrow_up_sharp,
         );
       },
     );

@@ -46,6 +46,15 @@ class MainScreenState extends State<MainScreen> {
   }
 }
 
+// class Constants {
+//   static const String FirstItem = 'Profile';
+//   static const String SecondItem = 'Settings';
+//   static const List<String> choices = <String>[
+//     FirstItem,
+//     SecondItem,
+//   ];
+// }
+
 class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
   const MainScreenView(super.state, {super.key});
 
@@ -147,6 +156,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
 
   Container buildBar() {
     return Container(
+        color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         height: 64,
         child: Row(
@@ -167,10 +177,66 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
-            SearchBar(
-              elevation: MaterialStatePropertyAll(1),
-              leading: Icon(Icons.search),
-              hintText: "Search here...",
+            const Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SearchBar(
+                  constraints: BoxConstraints(minWidth: 100.0,maxWidth: 300, maxHeight: 100, minHeight: 100) ,
+                  elevation: MaterialStatePropertyAll(1),
+                  leading: Icon(Icons.search),
+                  hintText: "Search here...",
+                ),
+                SizedBox(width: 230,),
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Ateneo De Naga University",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            "Administrator",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 35)
+
+                      // PopupMenuButton<String>(
+                      //   offset: Offset.zero,
+                      //   position: PopupMenuPosition.under,
+                      //   icon: const Icon(Icons.arrow_drop_down,size: 25),
+                      //   tooltip: 'Profile',
+                      //   itemBuilder: (BuildContext context) {
+                      //     return Constants.choices.map((String choice) {
+                      //       return PopupMenuItem<String>(
+                      //         value: choice,
+                      //         child: Text(choice, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),),
+                      //       );
+                      //     }).toList();
+                      //   },
+                      // ),
+                    ],
+
+                  ),
+                ),
+              ],
             )
           ],
         ));
@@ -228,8 +294,13 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
           alignment: Alignment.bottomLeft,
           padding: const EdgeInsets.only(bottom: 24, left: 16),
           child: TextButton.icon(
-            icon: const Icon(Icons.logout_outlined),
-            label: const Text("Log out"),
+            icon: const Icon(Icons.logout_outlined, size: 30,),
+            label: const Text("Log out",
+              style: TextStyle(fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff353535)
+              ),
+            ),
             onPressed: state.logout,
           ),
         ),

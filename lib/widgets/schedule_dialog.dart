@@ -51,7 +51,7 @@ class ScheduleDialogView
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
             child: Text(
-                widget.schedule == null ? "Add Schedule" : "Edit Schedule"),
+                widget.schedule == null ? "Add Schedule" : "Edit Schedule", style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),),
           ),
         ],
       ),
@@ -124,7 +124,7 @@ class ScheduleDialogView
                         ),
                       ),
                       child: const Text("Set Start Time",
-                          style: TextStyle(color: Colors.green)),
+                          style: TextStyle(color: Color(0XFF153FAA))),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -156,7 +156,7 @@ class ScheduleDialogView
                       ),
                       child: const Text(
                         "Set End Time",
-                        style: TextStyle(color: Colors.green),
+                        style: TextStyle(color: Color(0XFF153FAA)),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -169,7 +169,7 @@ class ScheduleDialogView
               child: Container(
                 padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                 decoration: const BoxDecoration(
-                  color: Colors.green,
+                  color: Color(0XFF153FAA),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(32.0),
                       bottomRight: Radius.circular(32.0)),

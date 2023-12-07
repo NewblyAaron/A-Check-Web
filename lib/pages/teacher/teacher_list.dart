@@ -53,7 +53,7 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
               label: const Text("Phone Number"),
               onSort: (columnIndex, ascending) => state.sort(
                   (s) => s.phoneNumber ?? "Z_None", columnIndex, ascending),
-              size: ColumnSize.L),
+              size: ColumnSize.M),
           const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
         ];
 
@@ -63,11 +63,14 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
           header: buildHeader(),
           actions: [
             IconButton(
-                onPressed: state.openForm, icon: const Icon(Icons.person_add)),
+              splashRadius: 25,
+                onPressed: state.openForm,
+                icon: const Icon(Icons.person_add, color: Color(0xff153faa),)),
             const SizedBox(width: 10,),
             IconButton(
+                splashRadius: 25,
                 onPressed: state.deleteStudents,
-                icon: const Icon(Icons.delete_sweep)),
+                icon: const Icon(Icons.delete_sweep, color: Colors.black54,)),
           ],
           rowsPerPage: 15,
           sortColumnIndex: state.sortColumnIndex,

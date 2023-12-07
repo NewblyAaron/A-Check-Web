@@ -4,7 +4,9 @@ import 'package:a_check_web/utils/abstracts.dart';
 import 'package:flutter/material.dart';
 
 class ClassesPage extends StatefulWidget {
-  const ClassesPage({super.key});
+  const ClassesPage({super.key, this.searchController});
+
+  final SearchController? searchController;
 
   @override
   State<ClassesPage> createState() => ClassesPageState();
@@ -21,6 +23,7 @@ class ClassesPageView extends WidgetView<ClassesPage, ClassesPageState> {
           flex: 2,
           child: ClassList(
             onListRowTap: state.onListRowTap,
+            searchController: widget.searchController,
           ),
         ),
         const VerticalDivider(

@@ -6,8 +6,10 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 class ClassList extends StatefulWidget {
-  const ClassList({super.key, required this.onListRowTap});
+  const ClassList(
+      {super.key, required this.onListRowTap, this.searchController});
 
+  final SearchController? searchController;
   final Function(SchoolClass schoolClass) onListRowTap;
 
   @override
@@ -69,6 +71,10 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           rowsPerPage: 15,
           sortColumnIndex: state.sortColumnIndex,
           sortAscending: state.sortAscending,
+          renderEmptyRowsInTheEnd: false,
+          empty: const Center(
+            child: Text("No entries found!"),
+          ),
         );
       },
     );

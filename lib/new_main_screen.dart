@@ -21,6 +21,7 @@ class MainScreenState extends State<MainScreen> {
   PageController pageController = PageController(
     keepPage: true,
   );
+  SearchController searchController = SearchController();
 
   void onDestinationChanged(int value) {
     setState(() {
@@ -34,7 +35,7 @@ class MainScreenState extends State<MainScreen> {
     await FirebaseAuth.instance.signOut();
   }
 
-  String getPageName() {
+  String getSearchName() {
     List<String> pageNames = const [
       "Dashboard",
       "Teachers",
@@ -44,6 +45,10 @@ class MainScreenState extends State<MainScreen> {
 
     return pageNames[selectedIndex];
   }
+
+  void clearSearch() {
+    searchController.clear();
+  }
 }
 
 class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
@@ -51,11 +56,11 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> views = const [
-      Dashboard(),
-      TeachersPage(),
-      StudentsPage(),
-      ClassesPage(),
+    List<Widget> views = [
+      const Dashboard(),
+      TeachersPage(searchController: state.searchController),
+      StudentsPage(searchController: state.searchController),
+      ClassesPage(searchController: state.searchController),
     ];
 
     List<NavigationRailDestination> destinations = const [
@@ -135,7 +140,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
           Expanded(
             child: Column(
               children: [
-                buildBar(),
+                buildBar(context),
                 buildPageView(views),
               ],
             ),
@@ -145,7 +150,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
     );
   }
 
-  Container buildBar() {
+  Container buildBar(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         height: 64,
@@ -161,19 +166,27 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
                       .animate(animation),
                   child: child),
               child: Text(
-                state.getPageName(),
-                key: ValueKey<String>(state.getPageName()),
+                state.getSearchName(),
+                key: ValueKey<String>(state.getSearchName()),
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
-            SearchBar(
-              elevation: MaterialStatePropertyAll(1),
-              leading: Icon(Icons.search),
-              hintText: "Search here...",
-            )
+            buildSearchBar(context)
           ],
         ));
+  }
+
+  Widget buildSearchBar(BuildContext context) {
+    return SearchBar(
+      controller: state.searchController,
+      elevation: const MaterialStatePropertyAll(1),
+      leading: const Icon(Icons.search),
+      hintText: "Search ${state.getSearchName()}...",
+      trailing: [
+        IconButton(onPressed: state.clearSearch, icon: const Icon(Icons.clear))
+      ],
+    );
   }
 
   NavigationRail buildNavRail(List<NavigationRailDestination> destinations) {

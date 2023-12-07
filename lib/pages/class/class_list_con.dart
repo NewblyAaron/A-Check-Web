@@ -22,11 +22,24 @@ class ClassListState extends State<ClassList> {
     classesRef.snapshots().listen((event) {
       rows.updateData(event.docs.map((e) => e.data).toList());
     });
+
+    widget.searchController?.addListener(filter);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    widget.searchController?.removeListener(filter);
   }
 
   late final ClassDataSource rows;
   int sortColumnIndex = 0;
   bool sortAscending = false;
+
+  filter() {
+    setState(() => rows.filter(widget.searchController!.text));
+  }
 
   sort<T>(Comparable<T> Function(SchoolClass s) getField, int columnIndex,
       bool ascending) {
@@ -87,10 +100,13 @@ class ClassDataSource extends DataTableSource {
     updateData(data);
   }
 
-  late Map<SchoolClass, bool> _map;
-  List<SchoolClass> _data = [];
   final Function(SchoolClass schoolClass)? onViewButtonPressed;
   final Function(SchoolClass schoolClass)? onEditButtonPressed;
+
+  late Map<SchoolClass, bool> _map;
+  List<SchoolClass> _data = [];
+  List<SchoolClass> _filteredData = [];
+  bool _filtered = false;
 
   List<SchoolClass> get selectedData {
     List<SchoolClass> selectedRows = [
@@ -122,6 +138,26 @@ class ClassDataSource extends DataTableSource {
           ? Comparable.compare(aValue, bValue)
           : Comparable.compare(bValue, aValue);
     });
+
+    notifyListeners();
+  }
+
+  void filter<T>(String contains) {
+    _filteredData = List.empty(growable: true);
+    String filter = contains.toLowerCase().trim();
+    if (filter.isEmpty) {
+      _filtered = false;
+      updateData(_data);
+      return;
+    }
+
+    _filtered = true;
+    for (var s in _data) {
+      if (s.id.toLowerCase().contains(filter) ||
+          s.name.toLowerCase().contains(filter)) {
+        _filteredData.add(s);
+      }
+    }
 
     notifyListeners();
   }
@@ -174,7 +210,7 @@ class ClassDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => _data.length;
+  int get rowCount => _filtered ? _filteredData.length : _data.length;
 
   @override
   int get selectedRowCount =>

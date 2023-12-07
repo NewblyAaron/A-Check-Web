@@ -21,6 +21,7 @@ class MainScreenState extends State<MainScreen> {
   PageController pageController = PageController(
     keepPage: true,
   );
+  SearchController searchController = SearchController();
 
   void onDestinationChanged(int value) {
     setState(() {
@@ -34,7 +35,7 @@ class MainScreenState extends State<MainScreen> {
     await FirebaseAuth.instance.signOut();
   }
 
-  String getPageName() {
+  String getSearchName() {
     List<String> pageNames = const [
       "Dashboard",
       "Teachers",
@@ -43,6 +44,10 @@ class MainScreenState extends State<MainScreen> {
     ];
 
     return pageNames[selectedIndex];
+  }
+
+  void clearSearch() {
+    searchController.clear();
   }
 }
 
@@ -60,11 +65,11 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> views = const [
-      Dashboard(),
-      TeachersPage(),
-      StudentsPage(),
-      ClassesPage(),
+    List<Widget> views = [
+      const Dashboard(),
+      TeachersPage(searchController: state.searchController),
+      StudentsPage(searchController: state.searchController),
+      ClassesPage(searchController: state.searchController),
     ];
 
     List<NavigationRailDestination> destinations = const [
@@ -144,7 +149,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
           Expanded(
             child: Column(
               children: [
-                buildBar(),
+                buildBar(context),
                 buildPageView(views),
               ],
             ),
@@ -154,92 +159,77 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
     );
   }
 
-  Container buildBar() {
+  Container buildBar(BuildContext context) {
     return Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         height: 64,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 350),
-              transitionBuilder: (child, animation) => SlideTransition(
-                  position: Tween<Offset>(
-                          begin: const Offset(0.0, -3),
-                          end: const Offset(0.0, 0.0))
-                      .animate(animation),
-                  child: child),
-              child: Text(
-                state.getPageName(),
-                key: ValueKey<String>(state.getPageName()),
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 350),
+            transitionBuilder: (child, animation) => SlideTransition(
+                position: Tween<Offset>(
+                        begin: const Offset(0.0, -3),
+                        end: const Offset(0.0, 0.0))
+                    .animate(animation),
+                child: child),
+            child: Text(
+              state.getSearchName(),
+              key: ValueKey<String>(state.getSearchName()),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SearchBar(
-                  constraints: BoxConstraints(minWidth: 100.0,maxWidth: 300, maxHeight: 100, minHeight: 100) ,
-                  elevation: MaterialStatePropertyAll(1),
-                  leading: Icon(Icons.search),
-                  hintText: "Search here...",
-                ),
-                SizedBox(width: 230,),
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Ateneo De Naga University",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            "Administrator",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 35)
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              buildSearchBar(context),
+              const SizedBox(width: 48),
+              const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Ateneo De Naga University",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          "Administrator",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ])
+            ],
+          )
+        ]));
+  }
 
-                      // PopupMenuButton<String>(
-                      //   offset: Offset.zero,
-                      //   position: PopupMenuPosition.under,
-                      //   icon: const Icon(Icons.arrow_drop_down,size: 25),
-                      //   tooltip: 'Profile',
-                      //   itemBuilder: (BuildContext context) {
-                      //     return Constants.choices.map((String choice) {
-                      //       return PopupMenuItem<String>(
-                      //         value: choice,
-                      //         child: Text(choice, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),),
-                      //       );
-                      //     }).toList();
-                      //   },
-                      // ),
-                    ],
-
-                  ),
-                ),
-              ],
-            )
-          ],
-        ));
+  Widget buildSearchBar(BuildContext context) {
+    return SearchBar(
+      constraints: const BoxConstraints(
+          minWidth: 100.0, maxWidth: 300, maxHeight: 100, minHeight: 100),
+      controller: state.searchController,
+      elevation: const MaterialStatePropertyAll(1),
+      leading: const Icon(Icons.search),
+      hintText: "Search ${state.getSearchName()}...",
+      trailing: [
+        IconButton(onPressed: state.clearSearch, icon: const Icon(Icons.clear))
+      ],
+    );
   }
 
   NavigationRail buildNavRail(List<NavigationRailDestination> destinations) {
@@ -294,12 +284,16 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
           alignment: Alignment.bottomLeft,
           padding: const EdgeInsets.only(bottom: 24, left: 16),
           child: TextButton.icon(
-            icon: const Icon(Icons.logout_outlined, size: 30,),
-            label: const Text("Log out",
-              style: TextStyle(fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff353535)
-              ),
+            icon: const Icon(
+              Icons.logout_outlined,
+              size: 30,
+            ),
+            label: const Text(
+              "Log out",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xff353535)),
             ),
             onPressed: state.logout,
           ),

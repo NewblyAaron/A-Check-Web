@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import './students_page_con.dart';
 
 class StudentsPage extends StatefulWidget {
-  const StudentsPage({super.key});
+  const StudentsPage({super.key, this.searchController});
+
+  final SearchController? searchController;
 
   @override
   State<StudentsPage> createState() => StudentsPageState();
@@ -21,6 +23,7 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
           flex: 2,
           child: StudentList(
             onRowTap: state.onListRowTap,
+            searchController: widget.searchController,
           ),
         ),
         const VerticalDivider(

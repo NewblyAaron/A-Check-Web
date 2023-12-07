@@ -14,6 +14,6 @@ class DashboardView extends WidgetView<Dashboard, DashboardState> {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return const Placeholder();
   }
 }

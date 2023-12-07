@@ -18,6 +18,15 @@ class TeacherListState extends State<TeacherList> {
     teachersRef.snapshots().listen((event) {
       rows.updateData(event.docs.map((e) => e.data).toList());
     });
+
+    widget.searchController?.addListener(filter);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    widget.searchController?.removeListener(filter);
   }
 
   late final TeacherDataSource rows;
@@ -37,6 +46,10 @@ class TeacherListState extends State<TeacherList> {
 
   viewTeacher(Teacher teacher) {
     widget.onListRowTap(teacher);
+  }
+
+  filter() {
+    setState(() => rows.filter(widget.searchController!.text));
   }
 
   sort<T>(Comparable<T> Function(Teacher s) getField, int columnIndex,
@@ -83,10 +96,13 @@ class TeacherDataSource extends DataTableSource {
     updateData(data);
   }
 
-  late Map<Teacher, bool> _map;
-  List<Teacher> _data = [];
   final Function(Teacher student)? onViewButtonPressed;
   final Function(Teacher student)? onEditButtonPressed;
+
+  late Map<Teacher, bool> _map;
+  List<Teacher> _data = [];
+  List<Teacher> _filteredData = [];
+  bool _filtered = false;
 
   List<Teacher> get selectedData {
     List<Teacher> selectedRows = [
@@ -120,15 +136,37 @@ class TeacherDataSource extends DataTableSource {
     notifyListeners();
   }
 
+  void filter<T>(String contains) {
+    _filteredData = List.empty(growable: true);
+    String filter = contains.toLowerCase().trim();
+    if (filter.isEmpty) {
+      _filtered = false;
+      updateData(_data);
+      return;
+    }
+
+    _filtered = true;
+    for (var s in _data) {
+      if (s.fullName.toLowerCase().contains(filter) ||
+          s.id.toLowerCase().contains(filter)) {
+        _filteredData.add(s);
+      }
+    }
+
+    notifyListeners();
+  }
+
   @override
   DataRow? getRow(int index) {
+    var data = _filtered ? _filteredData : _data;
+
     return DataRow(
         cells: [
-          DataCell(Text(_data[index].id, style: TextStyle(fontSize: 12),)),
-          DataCell(Text(_data[index].lastName,style: TextStyle(fontSize: 12)),),
-          DataCell(Text(_data[index].firstName,style: TextStyle(fontSize: 12))),
-          DataCell(Text(_data[index].email ?? "None",style: TextStyle(fontSize: 12))),
-          DataCell(Text(_data[index].phoneNumber ?? "None",style: TextStyle(fontSize: 12))),
+          DataCell(Text(data[index].id, style: const TextStyle(fontSize: 12),)),
+          DataCell(Text(data[index].lastName,style: const TextStyle(fontSize: 12)),),
+          DataCell(Text(data[index].firstName,style: const TextStyle(fontSize: 12))),
+          DataCell(Text(data[index].email ?? "None",style: const TextStyle(fontSize: 12))),
+          DataCell(Text(data[index].phoneNumber ?? "None",style: const TextStyle(fontSize: 12))),
           DataCell(
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -138,7 +176,7 @@ class TeacherDataSource extends DataTableSource {
                 IconButton(
                   onPressed: () {
                     if (onViewButtonPressed is Function) {
-                      onViewButtonPressed!(_data[index]);
+                      onViewButtonPressed!(data[index]);
                     }
                   },
                   icon: const Icon(Icons.visibility),
@@ -146,7 +184,7 @@ class TeacherDataSource extends DataTableSource {
                 IconButton(
                   onPressed: () {
                     if (onEditButtonPressed is Function) {
-                      onEditButtonPressed!(_data[index]);
+                      onEditButtonPressed!(data[index]);
                     }
                   },
                   icon: const Icon(Icons.edit),
@@ -155,9 +193,9 @@ class TeacherDataSource extends DataTableSource {
             ),
           ),
         ],
-        selected: _map[_data[index]] ?? false,
+        selected: _map[data[index]] ?? false,
         onSelectChanged: (value) {
-          _map[_data[index]] = value ?? false;
+          _map[data[index]] = value ?? false;
           notifyListeners();
         });
   }
@@ -166,7 +204,7 @@ class TeacherDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => _data.length;
+  int get rowCount => _filtered ? _filteredData.length : _data.length;
 
   @override
   int get selectedRowCount =>

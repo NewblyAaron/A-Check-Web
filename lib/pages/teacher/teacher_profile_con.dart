@@ -36,7 +36,6 @@ class TeacherState extends State<TeacherProfile> {
       teachersRef.doc(teacher.id).update(photoPath: fsRef.fullPath).then(
           (value) => snackbarKey.currentState!.showSnackBar(SnackBar(
               content: Text("Uploaded photo of ${teacher.fullName}!"))));
-      print('uploaded to ${fsRef.fullPath}');
     });
   }
 

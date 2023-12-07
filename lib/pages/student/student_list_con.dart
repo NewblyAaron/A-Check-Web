@@ -19,13 +19,26 @@ class StudentListState extends State<StudentList> {
         onEditButtonPressed: (s) => openForm(student: s));
 
     studentsRef.snapshots().listen((event) {
-      rows.updateData(event.docs.map((e) => e.data).toList());
+      setState(() => rows.updateData(event.docs.map((e) => e.data).toList()));
     });
+
+    widget.searchController?.addListener(filter);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    widget.searchController?.removeListener(filter);
   }
 
   late final StudentDataSource rows;
   int sortColumnIndex = 0;
   bool sortAscending = false;
+
+  filter() {
+    setState(() => rows.filter(widget.searchController!.text));
+  }
 
   sort<T>(Comparable<T> Function(Student s) getField, int columnIndex,
       bool ascending) {
@@ -88,10 +101,13 @@ class StudentDataSource extends DataTableSource {
     updateData(data);
   }
 
-  late Map<Student, bool> _map;
-  List<Student> _data = [];
   final Function(Student student)? onViewButtonPressed;
   final Function(Student student)? onEditButtonPressed;
+
+  late Map<Student, bool> _map;
+  List<Student> _data = [];
+  List<Student> _filteredData = [];
+  bool _filtered = false;
 
   List<Student> get selectedData {
     List<Student> selectedRows = [
@@ -125,22 +141,44 @@ class StudentDataSource extends DataTableSource {
     notifyListeners();
   }
 
+  void filter<T>(String contains) {
+    _filteredData = List.empty(growable: true);
+    String filter = contains.toLowerCase().trim();
+    if (filter.isEmpty) {
+      _filtered = false;
+      updateData(_data);
+      return;
+    }
+
+    _filtered = true;
+    for (var s in _data) {
+      if (s.fullName.toLowerCase().contains(filter) ||
+          s.id.toLowerCase().contains(filter)) {
+        _filteredData.add(s);
+      }
+    }
+
+    notifyListeners();
+  }
+
   @override
   DataRow? getRow(int index) {
+    var data = _filtered ? _filteredData : _data;
+
     return DataRow(
         cells: [
-          DataCell(Text(_data[index].id, style: TextStyle(fontSize: 12),)),
-          DataCell(Text(_data[index].lastName, style: TextStyle(fontSize: 12),)),
-          DataCell(Text(_data[index].firstName, style: TextStyle(fontSize: 12),)),
-          DataCell(Text(_data[index].email ?? "None", style: TextStyle(fontSize: 12),)),
-          DataCell(Text(_data[index].phoneNumber ?? "None", style: TextStyle(fontSize: 12),)),
+          DataCell(Text(data[index].id, style: const TextStyle(fontSize: 12),)),
+          DataCell(Text(data[index].lastName, style: const TextStyle(fontSize: 12),)),
+          DataCell(Text(data[index].firstName, style: const TextStyle(fontSize: 12),)),
+          DataCell(Text(data[index].email ?? "None", style: const TextStyle(fontSize: 12),)),
+          DataCell(Text(data[index].phoneNumber ?? "None", style: const TextStyle(fontSize: 12),)),
           DataCell(
             Row(
               children: [
                 IconButton(
                   onPressed: () {
                     if (onViewButtonPressed is Function) {
-                      onViewButtonPressed!(_data[index]);
+                      onViewButtonPressed!(data[index]);
                     }
                   },
                   icon: const Icon(Icons.visibility),
@@ -148,7 +186,7 @@ class StudentDataSource extends DataTableSource {
                 IconButton(
                   onPressed: () {
                     if (onEditButtonPressed is Function) {
-                      onEditButtonPressed!(_data[index]);
+                      onEditButtonPressed!(data[index]);
                     }
                   },
                   icon: const Icon(Icons.edit),
@@ -157,9 +195,9 @@ class StudentDataSource extends DataTableSource {
             ),
           ),
         ],
-        selected: _map[_data[index]] ?? false,
+        selected: _map[data[index]] ?? false,
         onSelectChanged: (value) {
-          _map[_data[index]] = value ?? false;
+          _map[data[index]] = value ?? false;
           notifyListeners();
         });
   }
@@ -168,7 +206,7 @@ class StudentDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => _data.length;
+  int get rowCount => _filtered ? _filteredData.length : _data.length;
 
   @override
   int get selectedRowCount =>

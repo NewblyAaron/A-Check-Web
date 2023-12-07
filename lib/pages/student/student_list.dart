@@ -52,7 +52,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
               label: const Text("Phone Number"),
               onSort: (columnIndex, ascending) => state.sort(
                   (s) => s.phoneNumber ?? "Z_None", columnIndex, ascending),
-              size: ColumnSize.L),
+              size: ColumnSize.M),
           const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
         ];
 

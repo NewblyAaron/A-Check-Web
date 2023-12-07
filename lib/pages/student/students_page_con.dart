@@ -10,7 +10,7 @@ class StudentsPageState extends State<StudentsPage> {
   @override
   Widget build(BuildContext context) => StudentsPageView(this);
 
-  onListRowTap(Student student) {
-    setState(() => studentProfile = StudentProfile(studentId: student.id));
+  onListRowTap(Student? student) {
+    setState(() => studentProfile = student != null ? StudentProfile(studentId: student.id) : null);
   }
 }

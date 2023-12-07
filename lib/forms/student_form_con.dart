@@ -54,7 +54,7 @@ class StudentFormState extends State<StudentForm> {
     studentsRef.doc(student.id).set(student).then((_) {
       snackbarKey.currentState!.showSnackBar(
           SnackBar(content: Text("Successfully added ${student.fullName}!")));
-      Navigator.pop(context);
+      Navigator.pop(context, student);
     });
   }
 }

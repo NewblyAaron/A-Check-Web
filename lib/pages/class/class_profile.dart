@@ -44,12 +44,12 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
 
   Widget buildTabBar() {
     return const TabBar(
-      indicatorColor: Colors.black,
+      indicatorColor: Color(0xff153faa),
       tabs: [
-        Tab(child: Text("Student List", style: TextStyle(color: Colors.black))),
+        Tab(child: Text("Student List", style: TextStyle(color: Color(0xff153faa)))),
         Tab(
             child: Text("Attendance Records",
-                style: TextStyle(color: Colors.black)))
+                style: TextStyle(color: Color(0xff153faa))))
       ],
     );
   }
@@ -67,11 +67,6 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
     return Container(
       padding: const EdgeInsets.only(top: 50),
       margin: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0x1fffffff),
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.zero,
-      ),
       child: FutureBuilder(
         future: schoolClass.teacher,
         builder: (context, snapshot) => snapshot.hasData
@@ -88,7 +83,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w900,
+                          fontWeight: FontWeight.w600,
                           fontSize: 24,
                           color: Colors.black87,
                         ),
@@ -99,9 +94,9 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Colors.black87,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: Color(0xff153faa),
                         ),
                       )
                     ],
@@ -114,18 +109,21 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 14,
-                      color: Colors.green,
+                      color:Color(0xff153faa),
                     ),
                   ),
-                  Text(
-                    schoolClass.getSchedule(),
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.clip,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14,
-                      color: Colors.green,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      schoolClass.getSchedule(),
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color:Colors.black87,
+                      ),
                     ),
                   ),
                   Padding(
@@ -136,7 +134,8 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            color: Colors.green.shade900),
+                          color:Color(0xff153faa),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(

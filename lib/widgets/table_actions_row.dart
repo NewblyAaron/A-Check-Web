@@ -18,7 +18,7 @@ class TableActionsRow extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(
-            Icons.person_add,
+            Icons.playlist_add_rounded,
             color: Color(0xff153faa),
           ),
           splashRadius: 25,

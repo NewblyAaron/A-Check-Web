@@ -43,11 +43,14 @@ void main() async {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color(0xff153faa),
+            primary: const Color(0xff153faa),
             secondary: Colors.black,
             onPrimary: Colors.white,
             onSecondary: Colors.white),
         highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
+        disabledColor: const Color(0xff153faa),
+        hoverColor:  Colors.blueAccent.shade100.withOpacity(0.2),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: const Color(0xff353535)),
         ),
@@ -55,7 +58,7 @@ void main() async {
           fillColor: MaterialStateColor.resolveWith(
             (states) {
               if (states.contains(MaterialState.selected)) {
-                return Colors.purple; // the color when checkbox is selected;
+                return const Color(0xff153faa); // the color when checkbox is selected;
               }
               return Colors.white; //the color when checkbox is unselected;
             },

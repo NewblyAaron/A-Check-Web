@@ -49,11 +49,24 @@ class StudentsFormView extends WidgetView<StudentsFormPage, StudentsFormState> {
           isHorizontalScrollBarVisible: true,
         ),
         Container(
-            alignment: Alignment.bottomRight,
-            padding: const EdgeInsets.only(bottom: 16, right: 16),
-            child: FloatingActionButton(
-              onPressed: state.addSelectedStudents,
-              child: const Icon(Icons.check),
+            alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: SearchBar(
+                    controller: state.searchController,
+                    hintText: "Search here...",
+                  ),
+                ),
+                FloatingActionButton(
+                  onPressed: state.finalize,
+                  child: const Icon(Icons.check),
+                ),
+              ],
             ))
       ]),
     );

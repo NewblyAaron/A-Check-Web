@@ -21,7 +21,9 @@ class TeacherListState extends State<TeacherList> {
         onEditButtonPressed: (t) => openForm(teacher: t));
 
     teachersRef.snapshots().listen((event) {
-      rows.updateData(event.docs.map((e) => e.data).toList());
+      if (context.mounted) {
+        setState(() => rows.updateData(event.docs.map((e) => e.data).toList()));
+      }
     });
 
     widget.searchController?.addListener(filter);

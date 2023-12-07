@@ -12,8 +12,8 @@ class CellActions extends StatelessWidget {
   final dynamic data;
   final String? viewTooltip;
   final String? editTooltip;
-  final Function(dynamic o)? onViewButtonPressed;
-  final Function(dynamic o)? onEditButtonPressed;
+  final Function(dynamic e)? onViewButtonPressed;
+  final Function(dynamic e)? onEditButtonPressed;
 
   @override
   Widget build(BuildContext context) {

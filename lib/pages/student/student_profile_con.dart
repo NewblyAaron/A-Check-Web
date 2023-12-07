@@ -19,7 +19,7 @@ class StudentState extends State<StudentProfile> {
     student = widget.student;
 
     studentsRef.doc(widget.student.id).snapshots().listen((event) {
-      setState(() => student = event.data!);
+      if (context.mounted) setState(() => student = event.data!);
     });
   }
 

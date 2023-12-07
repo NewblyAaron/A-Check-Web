@@ -1360,8 +1360,8 @@ Map<String, dynamic> _$AttendanceRecordToJson(AttendanceRecord instance) =>
 
 const _$AttendanceStatusEnumMap = {
   AttendanceStatus.unknown: -1,
-  AttendanceStatus.absent: 0,
-  AttendanceStatus.present: 1,
-  AttendanceStatus.late: 2,
-  AttendanceStatus.excused: 3,
+  AttendanceStatus.Absent: 0,
+  AttendanceStatus.Present: 1,
+  AttendanceStatus.Late: 2,
+  AttendanceStatus.Excused: 3,
 };

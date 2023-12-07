@@ -116,7 +116,8 @@ class TeacherDataSource extends DataTableSource {
     return selectedRows;
   }
 
-  selectAll(bool value) {
+  selectAll(bool? value) {
+    _map.updateAll((_, v) => v = value ?? false);
     notifyListeners();
   }
 

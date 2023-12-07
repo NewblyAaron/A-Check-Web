@@ -117,7 +117,8 @@ class ClassDataSource extends DataTableSource {
     return selectedRows;
   }
 
-  selectAll(bool value) {
+  selectAll(bool? value) {
+    _map.updateAll((_, v) => v = value ?? false);
     notifyListeners();
   }
 
@@ -164,25 +165,31 @@ class ClassDataSource extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
+    var data = _filtered ? _filteredData : _data;
+
     return DataRow(
         cells: [
-          DataCell(Text(_data[index].subjectCode, style: const TextStyle(fontSize: 12))),
-          DataCell(Text(_data[index].name, style: const TextStyle(fontSize: 12))),
-          DataCell(Text(_data[index].section, style: const TextStyle(fontSize: 12))),
+          DataCell(Text(data[index].subjectCode,
+              style: const TextStyle(fontSize: 12))),
+          DataCell(
+              Text(data[index].name, style: const TextStyle(fontSize: 12))),
+          DataCell(
+              Text(data[index].section, style: const TextStyle(fontSize: 12))),
           DataCell(FutureBuilder(
-            future: _data[index].teacher,
+            future: data[index].teacher,
             builder: (context, snapshot) => snapshot.hasData
-                ? Text(snapshot.data!.fullName, style: const TextStyle(fontSize: 12))
+                ? Text(snapshot.data!.fullName,
+                    style: const TextStyle(fontSize: 12))
                 : const CircularProgressIndicator(),
           )),
-          DataCell(Text(_data[index].getSchedule())),
+          DataCell(Text(data[index].getSchedule())),
           DataCell(
             Row(
               children: [
                 IconButton(
                   onPressed: () {
                     if (onViewButtonPressed is Function) {
-                      onViewButtonPressed!(_data[index]);
+                      onViewButtonPressed!(data[index]);
                     }
                   },
                   icon: const Icon(Icons.visibility),
@@ -190,7 +197,7 @@ class ClassDataSource extends DataTableSource {
                 IconButton(
                   onPressed: () {
                     if (onEditButtonPressed is Function) {
-                      onEditButtonPressed!(_data[index]);
+                      onEditButtonPressed!(data[index]);
                     }
                   },
                   icon: const Icon(Icons.edit),
@@ -199,9 +206,9 @@ class ClassDataSource extends DataTableSource {
             ),
           ),
         ],
-        selected: _map[_data[index]] ?? false,
+        selected: _map[data[index]] ?? false,
         onSelectChanged: (value) {
-          _map[_data[index]] = value ?? false;
+          _map[data[index]] = value ?? false;
           notifyListeners();
         });
   }

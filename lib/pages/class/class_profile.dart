@@ -1,6 +1,7 @@
 import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/pages/class/class_profile_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/widgets/attendance_record_card.dart';
 import 'package:a_check_web/widgets/student_card.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
           Stack(children: [
             buildHeader(state.schoolClass),
             Container(
-              padding: const EdgeInsets.only(top: 16, right: 16),
+              padding: const EdgeInsets.only(top: 16, right: 64),
               alignment: Alignment.topRight,
               child: IconButton(
                   onPressed: state.openSettings,
@@ -57,14 +58,14 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
     return TabBarView(
       children: [
         buildStudentsListView(schoolClass),
-        const Placeholder(),
-        // buildReportsListView(schoolClass)
+        buildReportsListView(schoolClass)
       ],
     );
   }
 
   Widget buildHeader(SchoolClass schoolClass) {
     return Container(
+      padding: const EdgeInsets.only(top: 50),
       margin: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: Color(0x1fffffff),
@@ -154,44 +155,58 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
   }
 
   Widget buildStudentsListView(SchoolClass schoolClass) {
-    return FutureBuilder(
-      future: schoolClass.getStudents(),
-      builder: (context, snapshot) => snapshot.hasData
-          ? ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              children: snapshot.data!
-                  .map((e) => StudentCard(
-                        student: e,
-                        studentClass: schoolClass,
-                      ))
-                  .toList())
-          : const Center(child: CircularProgressIndicator()),
-    );
+    return Stack(children: [
+      FutureBuilder(
+        future: schoolClass.getStudents(),
+        builder: (context, snapshot) => snapshot.hasData
+            ? ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                children: snapshot.data!
+                    .map((e) => StudentCard(
+                          student: e,
+                          studentClass: schoolClass,
+                        ))
+                    .toList())
+            : const Center(child: CircularProgressIndicator()),
+      ),
+      Container(
+          alignment: Alignment.bottomRight,
+          padding: const EdgeInsets.only(bottom: 16, right: 16),
+          child: FloatingActionButton(
+            onPressed: state.addStudent,
+            child: const Icon(Icons.person_add_alt),
+          ))
+    ]);
   }
 
-  // Widget buildReportsListView(SchoolClass schoolClass) {
-  //   return FirestoreBuilder(
-  //     ref: attendancesRef.whereClassId(isEqualTo: schoolClass.id),
-  //     builder: (context, snapshot, child) => FutureBuilder(
-  //       future: schoolClass.getAttendanceRecords(),
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           final records = snapshot.data!;
+  Widget buildReportsListView(SchoolClass schoolClass) {
+    return FutureBuilder(
+      future: schoolClass.getAttendanceRecords(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            final records = snapshot.data!;
 
-  //           return ListView(
-  //             shrinkWrap: true,
-  //             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-  //             children: records.entries
-  //                 .map((e) => AttendanceRecordCard(
-  //                     dateTime: e.key, attendanceRecords: e.value))
-  //                 .toList(),
-  //           );
-  //         } else {
-  //           return const CircularProgressIndicator();
-  //         }
-  //       },
-  //     ),
-  //   );
-  // }
+            return ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              children: records.entries
+                  .map((e) => AttendanceRecordCard(
+                      dateTime: e.key, attendanceRecords: e.value))
+                  .toList(),
+            );
+          } else {
+            return const Center(
+              child: Text("No records found!"),
+            );
+          }
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
 }

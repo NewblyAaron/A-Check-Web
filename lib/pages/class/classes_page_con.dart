@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ClassesPageState extends State<ClassesPage>
     with AutomaticKeepAliveClientMixin {
-  ClassProfile? classProfile;
+  ClassProfile? classProfileWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +17,11 @@ class ClassesPageState extends State<ClassesPage>
   bool get wantKeepAlive => true;
 
   onListRowTap(SchoolClass schoolClass) {
-    setState(() => classProfile = ClassProfile(schoolClass: schoolClass));
+    setState(() => classProfileWidget = ClassProfile(
+        schoolClass: schoolClass, key: ValueKey<SchoolClass>(schoolClass)));
+  }
+
+  void closeProfile() {
+    setState(() => classProfileWidget = null);
   }
 }

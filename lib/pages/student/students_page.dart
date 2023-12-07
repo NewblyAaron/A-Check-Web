@@ -30,13 +30,20 @@ class StudentsPageView extends WidgetView<StudentsPage, StudentsPageState> {
           color: Colors.black,
           thickness: 0.1,
         ),
-        Flexible(
-          flex: 1,
-          child: state.studentProfile ??
-              Container(
-                  alignment: Alignment.center,
-                  child: const Text('Select a student to show profile.')),
-        ),
+        state.studentProfileWidget != null
+            ? Flexible(
+                flex: 1,
+                child: Stack(children: [
+                  state.studentProfileWidget!,
+                  Container(
+                    padding: const EdgeInsets.only(top: 16, right: 16),
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                        onPressed: state.closeProfile,
+                        icon: const Icon(Icons.close)),
+                  )
+                ]))
+            : Container(),
       ],
     );
   }

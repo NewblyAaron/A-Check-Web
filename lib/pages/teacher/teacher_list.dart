@@ -33,7 +33,7 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
               label: const Text("ID"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.id, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.S),
           DataColumn2(
               label: const Text("Last Name"),
               onSort: (columnIndex, ascending) =>
@@ -76,6 +76,7 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
           empty: const Center(
             child: Text("No entries found!"),
           ),
+          onSelectAll: state.rows.selectAll,
         );
       },
     );

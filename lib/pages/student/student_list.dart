@@ -9,7 +9,7 @@ class StudentList extends StatefulWidget {
   const StudentList({super.key, required this.onRowTap, this.searchController});
 
   final SearchController? searchController;
-  final Function(Student? student) onRowTap;
+  final Function(Student student) onRowTap;
 
   @override
   State<StudentList> createState() => StudentListState();
@@ -32,7 +32,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
               label: const Text("ID"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.id, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.S),
           DataColumn2(
               label: const Text("Last Name"),
               onSort: (columnIndex, ascending) =>
@@ -68,6 +68,7 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
                 onPressed: state.deleteStudents,
                 icon: const Icon(Icons.delete_sweep)),
           ],
+          onSelectAll: state.rows.selectAll,
           rowsPerPage: 15,
           sortColumnIndex: state.sortColumnIndex,
           sortAscending: state.sortAscending,

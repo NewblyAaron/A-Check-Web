@@ -63,7 +63,7 @@ class StudentListState extends State<StudentList> {
     }
   }
 
-  viewStudent(Student? student) async {
+  viewStudent(Student student) async {
     widget.onRowTap(student);
   }
 
@@ -118,7 +118,8 @@ class StudentDataSource extends DataTableSource {
     return selectedRows;
   }
 
-  selectAll(bool value) {
+  selectAll(bool? value) {
+    _map.updateAll((_, v) => v = value ?? false);
     notifyListeners();
   }
 
@@ -167,33 +168,48 @@ class StudentDataSource extends DataTableSource {
 
     return DataRow(
         cells: [
-          DataCell(Text(data[index].id, style: const TextStyle(fontSize: 12),)),
-          DataCell(Text(data[index].lastName, style: const TextStyle(fontSize: 12),)),
-          DataCell(Text(data[index].firstName, style: const TextStyle(fontSize: 12),)),
-          DataCell(Text(data[index].email ?? "None", style: const TextStyle(fontSize: 12),)),
-          DataCell(Text(data[index].phoneNumber ?? "None", style: const TextStyle(fontSize: 12),)),
-          DataCell(
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    if (onViewButtonPressed is Function) {
-                      onViewButtonPressed!(data[index]);
-                    }
-                  },
-                  icon: const Icon(Icons.visibility),
-                ),
-                IconButton(
-                  onPressed: () {
-                    if (onEditButtonPressed is Function) {
-                      onEditButtonPressed!(data[index]);
-                    }
-                  },
-                  icon: const Icon(Icons.edit),
-                ),
-              ],
-            ),
-          ),
+          DataCell(Text(
+            data[index].id,
+            style: const TextStyle(fontSize: 12),
+          )),
+          DataCell(Text(
+            data[index].lastName,
+            style: const TextStyle(fontSize: 12),
+          )),
+          DataCell(Text(
+            data[index].firstName,
+            style: const TextStyle(fontSize: 12),
+          )),
+          DataCell(Text(
+            data[index].email ?? "None",
+            style: const TextStyle(fontSize: 12),
+          )),
+          DataCell(Text(
+            data[index].phoneNumber ?? "None",
+            style: const TextStyle(fontSize: 12),
+          )),
+          if (onViewButtonPressed is Function ||
+              onEditButtonPressed is Function)
+            DataCell(
+              Row(
+                children: [
+                  if (onViewButtonPressed is Function)
+                    IconButton(
+                      onPressed: () {
+                        onViewButtonPressed!(data[index]);
+                      },
+                      icon: const Icon(Icons.visibility),
+                    ),
+                  if (onEditButtonPressed is Function)
+                    IconButton(
+                      onPressed: () {
+                        onEditButtonPressed!(data[index]);
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
+                ],
+              ),
+            )
         ],
         selected: _map[data[index]] ?? false,
         onSelectChanged: (value) {

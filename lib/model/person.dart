@@ -77,16 +77,16 @@ class Student extends Person {
     int present = 0, absent = 0, late = 0, excused = 0;
     for (var record in attendances) {
       switch (record.status) {
-        case AttendanceStatus.present:
+        case AttendanceStatus.Present:
           present++;
           break;
-        case AttendanceStatus.absent:
+        case AttendanceStatus.Absent:
           absent++;
           break;
-        case AttendanceStatus.late:
+        case AttendanceStatus.Late:
           late++;
           break;
-        case AttendanceStatus.excused:
+        case AttendanceStatus.Excused:
           excused++;
           break;
         default:

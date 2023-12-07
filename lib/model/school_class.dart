@@ -99,11 +99,13 @@ class SchoolClass {
 
     final Map<DateTime, List<AttendanceRecord>> map = {};
     for (var record in attendanceRecords) {
-      if (!map.containsKey(record.dateTime)) {
-        map[record.dateTime] = [];
+      final date = DateTime(
+          record.dateTime.year, record.dateTime.month, record.dateTime.day);
+      if (!map.containsKey(date)) {
+        map[date] = [];
       }
 
-      map[record.dateTime]!.add(record);
+      map[date]!.add(record);
     }
 
     return map;

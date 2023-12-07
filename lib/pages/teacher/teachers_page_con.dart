@@ -21,4 +21,8 @@ class TeachersPageState extends State<TeachersPage>
     setState(() => teacherProfileWidget =
         TeacherProfile(teacher: teacher, key: ValueKey<Teacher>(teacher)));
   }
+
+  void closeProfile() {
+    setState(() => teacherProfileWidget = null);
+  }
 }

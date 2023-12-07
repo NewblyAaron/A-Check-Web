@@ -38,12 +38,12 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
               label: const Text("Name"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.name, columnIndex, ascending),
-              size: ColumnSize.L),
+              size: ColumnSize.M),
           DataColumn2(
               label: const Text("Section"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.section, columnIndex, ascending),
-              size: ColumnSize.M),
+              size: ColumnSize.S),
           DataColumn2(
               label: const Text("Teacher"),
               onSort: (columnIndex, ascending) =>
@@ -53,7 +53,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
               label: const Text("Schedule"),
               onSort: (columnIndex, ascending) =>
                   state.sort((s) => s.getSchedule(), columnIndex, ascending),
-              size: ColumnSize.L),
+              size: ColumnSize.M),
           const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
         ];
 
@@ -76,6 +76,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           empty: const Center(
             child: Text("No entries found!"),
           ),
+          onSelectAll: state.rows.selectAll,
         );
       },
     );

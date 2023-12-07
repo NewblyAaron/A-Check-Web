@@ -42,7 +42,7 @@ void main() async {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff153faa),
           onPrimary: Colors.white,
-          onSecondary: Colors.black
+          onSecondary: Colors.white
         ),
         highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,

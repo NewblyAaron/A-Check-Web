@@ -1,16 +1,24 @@
 import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/pages/teacher/teacher_info.dart';
+import 'package:a_check_web/pages/teacher/teacher_profile.dart';
 
 import './teachers_page.dart';
 import 'package:flutter/material.dart';
 
-class TeachersPageState extends State<TeachersPage> {
-  TeacherInfo? teacherInfoWidget;
+class TeachersPageState extends State<TeachersPage>
+    with AutomaticKeepAliveClientMixin {
+  TeacherProfile? teacherProfileWidget;
 
   @override
-  Widget build(BuildContext context) => TeachersPageView(this);
+  Widget build(BuildContext context) {
+    super.build(context);
+    return TeachersPageView(this);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 
   onListRowTap(Teacher teacher) {
-    setState(() => teacherInfoWidget = TeacherInfo(teacher: teacher));
+    setState(() => teacherProfileWidget = TeacherProfile(teacher: teacher));
   }
 }

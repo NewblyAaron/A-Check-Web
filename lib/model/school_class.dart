@@ -76,8 +76,12 @@ class SchoolClass {
 
   String getSchedule() {
     StringBuffer buffer = StringBuffer();
-    for (ClassSchedule s in schedule) {
-      buffer.writeln(s.toString());
+    for (var i = 0; i < schedule.length; i++) {
+      buffer.write(schedule[i].toString());
+
+      if (i != schedule.length - 1) {
+        buffer.writeln();
+      }
     }
 
     return buffer.toString();

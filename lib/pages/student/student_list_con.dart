@@ -13,8 +13,10 @@ class StudentListState extends State<StudentList> {
   void initState() {
     super.initState();
 
-    rows =
-        StudentDataSource(data: [], onViewButtonPressed: viewStudent);
+    rows = StudentDataSource(
+        data: [],
+        onViewButtonPressed: viewStudent,
+        onEditButtonPressed: (s) => openForm(student: s));
 
     studentsRef.snapshots().listen((event) {
       rows.updateData(event.docs.map((e) => e.data).toList());
@@ -35,22 +37,22 @@ class StudentListState extends State<StudentList> {
     });
   }
 
-  openForm({String? studentId}) async {
-    final Student? result = await showDialog(
-      context: context,
-      builder: (context) => const Dialog(
-        child: StudentForm(),
-      ),
-    );
-
-    if (result != null) {}
+  openForm({Student? student}) async {
+    if (context.mounted) {
+      await showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: StudentForm(
+            student: student,
+          ),
+        ),
+      );
+    }
   }
 
   viewStudent(Student? student) async {
     widget.onRowTap(student);
   }
-
-  deleteStudent(String studentId) {}
 
   deleteStudents() async {
     int count = rows.selectedRowCount;
@@ -63,7 +65,8 @@ class StudentListState extends State<StudentList> {
     List<Student> students = rows.selectedData;
     final result = await Dialogs.showConfirmDialog(
         context,
-        Text("Deleting ${count == rows.rowCount ? "ALL" : count} students"),
+        Text(
+            "Deleting ${count == rows.rowCount ? "ALL" : count} student${count > 1 ? 's' : ''}"),
         Text(
             "Are you sure you want to delete $count student${count > 1 ? 's' : ''}?"));
     if (result == true) {
@@ -78,13 +81,17 @@ class StudentListState extends State<StudentList> {
 }
 
 class StudentDataSource extends DataTableSource {
-  StudentDataSource({required List<Student> data, this.onViewButtonPressed}) {
+  StudentDataSource(
+      {required List<Student> data,
+      this.onViewButtonPressed,
+      this.onEditButtonPressed}) {
     updateData(data);
   }
 
   late Map<Student, bool> _map;
   List<Student> _data = [];
   final Function(Student student)? onViewButtonPressed;
+  final Function(Student student)? onEditButtonPressed;
 
   List<Student> get selectedData {
     List<Student> selectedRows = [
@@ -128,13 +135,25 @@ class StudentDataSource extends DataTableSource {
           DataCell(Text(_data[index].email ?? "None")),
           DataCell(Text(_data[index].phoneNumber ?? "None")),
           DataCell(
-            IconButton(
-              onPressed: () {
-                if (onViewButtonPressed is Function) {
-                  onViewButtonPressed!(_data[index]);
-                }
-              },
-              icon: const Icon(Icons.visibility),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    if (onViewButtonPressed is Function) {
+                      onViewButtonPressed!(_data[index]);
+                    }
+                  },
+                  icon: const Icon(Icons.visibility),
+                ),
+                IconButton(
+                  onPressed: () {
+                    if (onEditButtonPressed is Function) {
+                      onEditButtonPressed!(_data[index]);
+                    }
+                  },
+                  icon: const Icon(Icons.edit),
+                ),
+              ],
             ),
           ),
         ],

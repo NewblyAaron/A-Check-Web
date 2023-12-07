@@ -1,48 +1,40 @@
-import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/pages/student/student_profile_con.dart';
+import 'package:a_check_web/pages/teacher/teacher_profile_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:flutter/material.dart';
 
-class StudentProfile extends StatefulWidget {
-  const StudentProfile({Key? key, required this.student, this.studentClass})
-      : super(key: key);
+class TeacherProfile extends StatefulWidget {
+  const TeacherProfile({Key? key, required this.teacher}) : super(key: key);
 
-  final Student student;
-  final SchoolClass? studentClass;
+  final Teacher teacher;
 
   @override
-  State<StudentProfile> createState() => StudentState();
+  State<TeacherProfile> createState() => TeacherState();
 }
 
-class StudentView extends WidgetView<StudentProfile, StudentState> {
-  const StudentView(state, {Key? key}) : super(state, key: key);
+class TeacherView extends WidgetView<TeacherProfile, TeacherState> {
+  const TeacherView(state, {Key? key}) : super(state, key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildHeader(widget.student),
+        buildHeader(widget.teacher),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               children: [
-                buildStudentInfo(widget.student),
+                buildTeacherInfo(widget.teacher),
                 const SizedBox(height: 24),
-                // student.guardian != null
-                //     ? buildGuardianInfo(student)
-                //     : const Text("No guardian!"),
-                widget.studentClass != null
-                    ? buildClassInfo(widget.student)
-                    : buildEnrolledClasses(),
+                buildEnrolledClasses(),
               ],
             )),
       ],
     );
   }
 
-  Widget buildHeader(Student student) {
+  Widget buildHeader(Teacher teacher) {
     return Card(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 32),
@@ -53,7 +45,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: buildStudentPhoto(),
+              child: buildTeacherPhoto(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -68,7 +60,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        student.fullName.toString(),
+                        teacher.fullName.toString(),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.clip,
@@ -79,7 +71,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
                         ),
                       ),
                       Text(
-                        student.id,
+                        teacher.id,
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
                         style: const TextStyle(
@@ -99,7 +91,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
     );
   }
 
-  GestureDetector buildStudentPhoto() {
+  GestureDetector buildTeacherPhoto() {
     return GestureDetector(
       child: Stack(
         clipBehavior: Clip.antiAlias,
@@ -119,10 +111,10 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
               borderRadius: BorderRadius.all(Radius.circular(35.0)),
               border: Border.fromBorderSide(BorderSide()),
             ),
-            // TODO: display image of student from firebase
+            // TODO: display image of teacher from firebase
             child: const Placeholder(),
-            // child: state.student.facePhotoBytes != null
-            //     ? Image.memory(state.student.facePhotoBytes!)
+            // child: state.teacher.facePhotoBytes != null
+            //     ? Image.memory(state.teacher.facePhotoBytes!)
             //     : const Icon(Icons.person_add_alt),
           ),
           Container(
@@ -140,23 +132,23 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
     );
   }
 
-  Widget buildStudentInfo(Student student) {
+  Widget buildTeacherInfo(Teacher teacher) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Student Information",
+          "Teacher Information",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         ListView(
           shrinkWrap: true,
           children: [
             ListTile(
-              title: Text(student.email!),
+              title: Text(teacher.email!),
               leading: const Icon(Icons.email),
             ),
             ListTile(
-              title: Text(student.phoneNumber!),
+              title: Text(teacher.phoneNumber!),
               leading: const Icon(Icons.phone),
             ),
           ],
@@ -176,7 +168,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
           final classes = snapshot.data!.docs.map((e) => e.data).toList();
 
           if (classes.isEmpty) {
-            return const Text("No enrolled classes!");
+            return const Text("No handled classes!");
           }
 
           return Column(
@@ -186,7 +178,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "Enrolled Classes",
+                      "Handled Classes",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -208,59 +200,5 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
                 ),
               ]);
         });
-  }
-
-  Widget buildGuardianInfo(Student student) {
-    return const Placeholder();
-    // TODO: guardian information using firebase stuff
-    // return Padding(
-    //   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 30),
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     children: [
-    //       const Text(
-    //         "Guardian Information",
-    //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    //       ),
-    //       Text(
-    //         student.guardian.toString(),
-    //         style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    //       ),
-    //       TextField(
-    //         enabled: false,
-    //         decoration: const InputDecoration(
-    //             labelText: "Contact Number", isDense: true),
-    //         controller: TextEditingController(text: student.guardian?.phone),
-    //       ),
-    //       TextField(
-    //         enabled: false,
-    //         decoration:
-    //             const InputDecoration(labelText: "E-mail", isDense: true),
-    //         controller: TextEditingController(text: student.guardian?.email),
-    //       )
-    //     ],
-    //   ),
-    // );
-  }
-
-  Widget buildClassInfo(Student student) {
-    final paleMap = student.getPALEValues(widget.studentClass!.id);
-    return FutureBuilder(
-      future: paleMap,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Column(
-            children: [
-              Text("Present: ${snapshot.data!['present']}"),
-              Text("Absent: ${snapshot.data!['absent']}"),
-              Text("Late: ${snapshot.data!['late']}"),
-              Text("Excused: ${snapshot.data!['excused']}"),
-            ],
-          );
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
-    );
   }
 }

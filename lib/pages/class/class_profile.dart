@@ -6,8 +6,8 @@ import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:flutter/material.dart';
 
 class ClassProfile extends StatefulWidget {
-  const ClassProfile({Key? key, required this.classId}) : super(key: key);
-  final String classId;
+  const ClassProfile({Key? key, required this.schoolClass}) : super(key: key);
+  final SchoolClass schoolClass;
 
   @override
   State<ClassProfile> createState() => ClassProfileState();
@@ -20,20 +20,15 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: FirestoreBuilder(
-        ref: classesRef.doc(widget.classId),
-        builder: (context, snapshot, child) => snapshot.hasData
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  buildHeader(snapshot.data!.data!),
-                  buildTabBar(),
-                  Expanded(child: buildTabBarView(snapshot.data!.data!))
-                ],
-              )
-            : const Center(child: CircularProgressIndicator()),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          buildHeader(widget.schoolClass),
+          buildTabBar(),
+          Expanded(child: buildTabBarView(widget.schoolClass))
+        ],
       ),
     );
   }
@@ -153,18 +148,17 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
   Widget buildStudentsListView(SchoolClass schoolClass) {
     return FutureBuilder(
       future: schoolClass.getStudents(),
-      builder: (context, snapshot) => ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        children: snapshot.hasData
-            ? snapshot.data!
-                .map((e) => StudentCard(
-                      student: e,
-                      studentClass: schoolClass,
-                    ))
-                .toList()
-            : [const CircularProgressIndicator()],
-      ),
+      builder: (context, snapshot) => snapshot.hasData
+          ? ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              children: snapshot.data!
+                  .map((e) => StudentCard(
+                        student: e,
+                        studentClass: schoolClass,
+                      ))
+                  .toList())
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 

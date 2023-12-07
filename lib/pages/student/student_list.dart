@@ -74,12 +74,6 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
     );
   }
 
-  Center buildEmpty() {
-    return const Center(
-      child: Text("No entries!"),
-    );
-  }
-
   Container buildHeader() {
     return Container(
         height: 48,

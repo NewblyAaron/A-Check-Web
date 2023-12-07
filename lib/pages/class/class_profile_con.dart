@@ -32,41 +32,6 @@ class ClassProfileState extends State<ClassProfile> {
     // TODO: edit class
   }
 
-  void deleteClass() async {
-    final result = await Dialogs.showConfirmDialog(
-        context,
-        const Text("Delete Class"),
-        const Text(
-            "This will delete the class and its related data. Continue?"));
-    if (result == null || !result) {
-      return;
-    }
-
-    (await schoolClass.getAttendanceRecords())
-        .forEach((_, attendanceRecords) async {
-      for (var record in attendanceRecords) {
-        await attendancesRef.doc(record.id).delete();
-      }
-    });
-
-    if (context.mounted) {
-      classesRef.doc(schoolClass.id).delete().then((_) {
-        snackbarKey.currentState!.showSnackBar(
-            SnackBar(content: Text("Deleted ${schoolClass.id}.")));
-        Navigator.pop(context);
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      schoolClass = (await classesRef.doc(widget.classId).get()).data!;
-    });
-  }
-
   @override
   Widget build(BuildContext context) => ClassView(this);
 }

@@ -10,9 +10,13 @@ class StudentsFormState extends State<StudentsFormPage> {
 
     studentsMap = widget.studentsMap;
     dataSource = StudentDataSource(data: studentsMap);
+    searchController = SearchController();
 
     dataSource.addListener(() => setState(() {}));
+    searchController.addListener(filter);
   }
+
+  late SearchController searchController;
 
   late Map<Student, bool> studentsMap;
   late StudentDataSource dataSource;
@@ -29,11 +33,15 @@ class StudentsFormState extends State<StudentsFormPage> {
     });
   }
 
+  filter() {
+    setState(() => dataSource.filter(searchController.text));
+  }
+
   void checkBoxOnChanged(Student key, bool? value) {
     setState(() => studentsMap[key] = value!);
   }
 
-  void addSelectedStudents() {
+  void finalize() {
     List<String> selectedStudents =
         dataSource.selectedData.map((e) => e.id).toList();
 
@@ -51,6 +59,8 @@ class StudentDataSource extends DataTableSource {
 
   late Map<Student, bool> _map;
   List<Student> _data = [];
+  bool _filtered = false;
+  List<Student> _filteredData = [];
 
   List<Student> get selectedData {
     List<Student> selectedRows = [
@@ -85,9 +95,29 @@ class StudentDataSource extends DataTableSource {
     notifyListeners();
   }
 
+  void filter<T>(String contains) {
+    _filteredData = List.empty(growable: true);
+    String filter = contains.toLowerCase().trim();
+    if (filter.isEmpty) {
+      _filtered = false;
+      updateData(_map);
+      return;
+    }
+
+    _filtered = true;
+    for (var s in _data) {
+      if (s.id.toLowerCase().contains(filter) ||
+          s.fullName.toLowerCase().contains(filter)) {
+        _filteredData.add(s);
+      }
+    }
+
+    notifyListeners();
+  }
+
   @override
   DataRow2? getRow(int index) {
-    var data = _data;
+    var data = _filtered ? _filteredData : _data;
 
     return DataRow2(
         cells: [
@@ -116,7 +146,7 @@ class StudentDataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => _data.length;
+  int get rowCount => _filtered ? _filteredData.length : _data.length;
 
   @override
   int get selectedRowCount =>

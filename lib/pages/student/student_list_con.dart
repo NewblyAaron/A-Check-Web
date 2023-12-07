@@ -20,7 +20,9 @@ class StudentListState extends State<StudentList> {
         onEditButtonPressed: (s) => openForm(student: s));
 
     studentsRef.snapshots().listen((event) {
-      setState(() => rows.updateData(event.docs.map((e) => e.data).toList()));
+      if (context.mounted) {
+        setState(() => rows.updateData(event.docs.map((e) => e.data).toList()));
+      }
     });
 
     widget.searchController?.addListener(filter);

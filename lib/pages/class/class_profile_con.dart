@@ -17,14 +17,14 @@ class ClassProfileState extends State<ClassProfile> {
     schoolClass = widget.schoolClass;
 
     classesRef.doc(widget.schoolClass.id).snapshots().listen((event) {
-      setState(() => schoolClass = event.data!);
+      if (context.mounted) setState(() => schoolClass = event.data!);
     });
 
     attendancesRef
         .whereClassId(isEqualTo: widget.schoolClass.id)
         .snapshots()
         .listen((event) {
-      setState(() {});
+      if (context.mounted) setState(() {});
     });
   }
 
@@ -33,7 +33,7 @@ class ClassProfileState extends State<ClassProfile> {
   int sortColumnIndex = 0;
   bool sortAscending = false;
 
-  void addStudent() async {
+  void addStudents() async {
     final students = (await studentsRef.get()).docs.map((e) => e.data).toList();
     final enrolledStudents = await schoolClass.getStudents();
 
@@ -65,6 +65,31 @@ class ClassProfileState extends State<ClassProfile> {
 
     final newStudentIds = schoolClass.studentIds;
     newStudentIds.addAll(result);
+
+    classesRef
+        .doc(schoolClass.id)
+        .update(studentIds: newStudentIds)
+        .whenComplete(() => setState(() {}));
+  }
+
+  void removeStudents() async {
+    final map = {
+      for (var element in await schoolClass.getStudents()) element: true
+    };
+
+    if (!context.mounted) return;
+
+    final List<String>? result = await showDialog(
+        context: context,
+        builder: (context) => Dialog(
+              child: StudentsFormPage(
+                  studentsMap: map, key: ValueKey(schoolClass.id)),
+            ));
+
+    if (result == null || result.isEmpty) return;
+
+    final newStudentIds = schoolClass.studentIds;
+    newStudentIds.removeAll(result);
 
     classesRef
         .doc(schoolClass.id)

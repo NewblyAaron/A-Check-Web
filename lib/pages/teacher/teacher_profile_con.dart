@@ -16,7 +16,7 @@ class TeacherState extends State<TeacherProfile> {
     teacher = widget.teacher;
 
     teachersRef.doc(widget.teacher.id).snapshots().listen((event) {
-      setState(() => teacher = event.data!);
+      if (context.mounted) setState(() => teacher = event.data!);
     });
   }
 

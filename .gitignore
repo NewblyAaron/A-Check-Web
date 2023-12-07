@@ -45,3 +45,5 @@ app.*.map.json
 /.firebaserc
 /firebase.json
 /storage.rules
+
+.firebase-data

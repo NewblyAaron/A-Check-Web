@@ -24,7 +24,7 @@ void main() async {
   setDefaultPrefs();
 
   if (kDebugMode) {
-    bypassLogin = true;
+    bypassLogin = false;
     try {
       print("Connecting to local Firebase emulator");
       // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!

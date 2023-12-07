@@ -1,3 +1,4 @@
+import 'package:a_check_web/forms/settings.dart';
 import 'package:a_check_web/main.dart';
 import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:a_check_web/pages/class/classes_page.dart';
@@ -54,6 +55,17 @@ class MainScreenState extends State<MainScreen> {
 
   void clearSearch() {
     searchController.clear();
+  }
+
+  void openSettings() async {
+    await showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: SettingsForm(),
+      ),
+    );
+
+    if (context.mounted) setState(() {});
   }
 }
 
@@ -218,6 +230,24 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
                         ),
                       ],
                     ),
+                    PopupMenuButton<String>(
+                      offset: Offset.zero,
+                      position: PopupMenuPosition.under,
+                      icon: const Icon(Icons.arrow_drop_down, size: 25),
+                      tooltip: 'Profile',
+                      itemBuilder: (BuildContext context) {
+                        return [
+                          PopupMenuItem(
+                            onTap: state.openSettings,
+                            child: const Text(
+                              "Settings",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 15),
+                            ),
+                          ),
+                        ];
+                      },
+                    ),
                   ])
             ],
           )
@@ -297,7 +327,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
             label: const Text(
               "Log out",
               style: TextStyle(
-                letterSpacing: 2,
+                  letterSpacing: 2,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xff353535)),

@@ -1,6 +1,7 @@
 import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/pages/student/student_list_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/widgets/table_actions_row.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
@@ -61,16 +62,12 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
           source: state.rows,
           header: buildHeader(),
           actions: [
-            IconButton(
-                tooltip: "Add a student from the list",
-                splashRadius: 15,
-                onPressed: state.openForm, icon: const Icon(Icons.person_add)),
-            const SizedBox(width: 10),
-            IconButton(
-                tooltip: "Delete selected students from the list",
-                splashRadius: 15,
-                onPressed: state.deleteStudents,
-                icon: const Icon(Icons.delete_sweep)),
+            TableActionsRow(
+              onAddButtonPressed: state.openForm,
+              onDeleteAllButtonPressed: state.deleteSelected,
+              addTooltip: "Add new student",
+              deleteAllTooltip: "Delete selected rows",
+            ),
           ],
           onSelectAll: state.rows.selectAll,
           rowsPerPage: 15,

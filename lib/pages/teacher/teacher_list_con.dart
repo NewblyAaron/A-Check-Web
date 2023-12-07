@@ -67,7 +67,7 @@ class TeacherListState extends State<TeacherList> {
     });
   }
 
-  void deleteStudents() async {
+  void deleteSelected() async {
     int count = rows.selectedRowCount;
     if (count == 0) {
       snackbarKey.currentState!.showSnackBar(

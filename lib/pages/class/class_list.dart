@@ -1,6 +1,7 @@
 import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/pages/class/class_list_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/widgets/table_actions_row.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
@@ -62,16 +63,11 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           source: state.rows,
           header: buildHeader(),
           actions: [
-            IconButton(
-                tooltip: "Add a class from the list",
-                splashRadius: 15,
-                onPressed: state.openForm, icon: const Icon(Icons.person_add)),
-            const SizedBox(width: 10,),
-            IconButton(
-              tooltip: "Delete selected classes from the list",
-              splashRadius: 15,
-                onPressed: state.deleteClasses,
-                icon: const Icon(Icons.delete_sweep),
+            TableActionsRow(
+              onAddButtonPressed: state.openForm,
+              onDeleteAllButtonPressed: state.deleteSelected,
+              addTooltip: "Add new class",
+              deleteAllTooltip: "Delete selected rows",
             ),
           ],
           rowsPerPage: 15,
@@ -81,7 +77,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
           empty: const Center(
             child: Text("No entries found!"),
           ),
-          headingCheckboxTheme:Theme.of(context).checkboxTheme,
+          headingCheckboxTheme: Theme.of(context).checkboxTheme,
           onSelectAll: state.rows.selectAll,
         );
       },
@@ -95,7 +91,8 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("List of Classes",style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+            Text("List of Classes",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ],
         ));
   }

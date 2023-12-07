@@ -68,7 +68,7 @@ class StudentListState extends State<StudentList> {
     widget.onRowTap(student);
   }
 
-  deleteStudents() async {
+  deleteSelected() async {
     int count = rows.selectedRowCount;
     if (count == 0) {
       snackbarKey.currentState!.showSnackBar(

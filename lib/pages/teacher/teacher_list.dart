@@ -5,6 +5,8 @@ import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/table_actions_row.dart';
+
 class TeacherList extends StatefulWidget {
   const TeacherList(
       {super.key, required this.onListRowTap, this.searchController});
@@ -62,15 +64,12 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
           source: state.rows,
           header: buildHeader(),
           actions: [
-            IconButton(
-              splashRadius: 25,
-                onPressed: state.openForm,
-                icon: const Icon(Icons.person_add, color: Color(0xff153faa),)),
-            const SizedBox(width: 10,),
-            IconButton(
-                splashRadius: 25,
-                onPressed: state.deleteStudents,
-                icon: const Icon(Icons.delete_sweep, color: Colors.black54,)),
+            TableActionsRow(
+              onAddButtonPressed: state.openForm,
+              onDeleteAllButtonPressed: state.deleteSelected,
+              addTooltip: "Add new teacher",
+              deleteAllTooltip: "Delete selected rows",
+            ),
           ],
           rowsPerPage: 15,
           sortColumnIndex: state.sortColumnIndex,
@@ -92,7 +91,8 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("List of Teachers",style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+            Text("List of Teachers",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
           ],
         ));
   }

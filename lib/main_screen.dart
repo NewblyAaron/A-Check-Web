@@ -1,18 +1,18 @@
-import 'package:a_check_web/dashboard.dart';
+import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:a_check_web/pages/student/students_page.dart';
 import 'package:a_check_web/pages/teacher/teachers_page.dart';
 import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/widgets/sidenavbar.dart';
 import 'package:flutter/material.dart';
 
-class Splash extends StatefulWidget {
-  const Splash({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => SplashState();
+  State<StatefulWidget> createState() => MainScreenState();
 }
 
-class SplashState extends State<Splash> {
+class MainScreenState extends State<MainScreen> {
   List<Widget> views = const [
     Dashboard(),
     TeachersPage(),
@@ -31,6 +31,22 @@ class SplashState extends State<Splash> {
     }
 
     return Scaffold(
+      backgroundColor: const Color(0xff000000),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 0),
+              child: Image(
+                  image: AssetImage("assets/images/logo.png"), height: 55),
+            ),
+          ],
+        ),
+      ),
       body: Row(
         children: [
           SideNavBar(onIndexChange: sideNavbarChanged),

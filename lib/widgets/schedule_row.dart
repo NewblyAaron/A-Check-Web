@@ -23,7 +23,7 @@ class ScheduleRow extends StatelessWidget {
               flex: 1,
               child: Container(
                   decoration: const BoxDecoration(
-                    color: Colors.green,
+                    color: Color(0xff153faa),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(4),
                         bottomLeft: Radius.circular(4)),

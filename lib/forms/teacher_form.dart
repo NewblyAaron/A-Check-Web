@@ -50,6 +50,7 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                         margin: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextFormField(
                           controller: state.idCon,
+                          enabled: widget.teacher == null,
                           validator: Validators.hasValue,
                           obscureText: false,
                           textAlign: TextAlign.start,
@@ -188,7 +189,7 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                           validator: Validators.isAnEmail,
                           obscureText: false,
                           textAlign: TextAlign.start,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           maxLines: 1,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
@@ -208,53 +209,63 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Material(
-                          color: Colors.grey.shade200,
-                          child: InkWell(
-                            hoverColor: Colors.red.withOpacity(0.4),
-                            highlightColor: Colors.red.withOpacity(0.4),
-                            splashColor: Colors.red.withOpacity(0.5),
-                            onTap: state.cancel,
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 24),
-                              width:300,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(35),
-                                // adding color will hide the splash effect
-                                // color: Colors.blueGrey.shade200,
-                              ),
-                              child: const Text("Cancel", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
-                            ),
-                          ),
-                        ),
-                        Material(
-                          color: Colors.lightGreen.shade200,
-                          child: InkWell(
-                            hoverColor: Colors.green.withOpacity(0.4),
-                            highlightColor: Colors.green.withOpacity(0.4),
-                            splashColor: Colors.green.withOpacity(0.5),
-                            onTap: state.finalize,
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 24),
-                              width:300,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(35),
-                                // adding color will hide the splash effect
-                                // color: Colors.blueGrey.shade200,
-                              ),
-                              child: const Text("Confirm", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500), ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+        Row(
+          children: [
+            Material(
+              color: Colors.grey.shade100,
+              child: InkWell(
+                hoverColor: Colors.grey.withOpacity(0.4),
+                highlightColor: Colors.grey.withOpacity(0.4),
+                splashColor: Colors.grey.withOpacity(0.5),
+                onTap: state.cancel,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35),
+                    // adding color will hide the splash effect
+                    // color: Colors.blueGrey.shade200,
+                  ),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ),
+            Material(
+              color: const Color(0xff153faa).withOpacity(0.6),
+              child: InkWell(
+                hoverColor: const Color(0xff153faa).withOpacity(0.8),
+                highlightColor: const Color(0xff153faa).withOpacity(0.4),
+                splashColor: const Color(0xff153faa).withOpacity(1),
+                onTap: state.finalize,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35),
+                    // adding color will hide the splash effect
+                    // color: Colors.blueGrey.shade200,
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Confirm",
+                        style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
                   ],
                 ),
               ),

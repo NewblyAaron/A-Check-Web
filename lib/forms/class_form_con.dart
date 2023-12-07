@@ -27,6 +27,7 @@ class ClassFormState extends State<ClassForm> {
       nameCon.text = widget.schoolClass!.name;
       sectionCon.text = widget.schoolClass!.section;
       schedules = widget.schoolClass!.schedule;
+      widget.schoolClass!.teacher.then((value) => setState(() => selectedTeacher = value));
     }
   }
 
@@ -57,6 +58,16 @@ class ClassFormState extends State<ClassForm> {
     setState(() {
       schedules[index] = result;
     });
+  }
+
+  Future<List<Teacher>> getSearchedItems(text) async {
+    final items = (await teachersRef.get()).docs.map((e) => e.data).toList();
+
+    return items
+        .where(
+          (e) => e.id.contains(text) && e.id.startsWith(text),
+        )
+        .toList();
   }
 
   void onDropdownChanged(Teacher? teacher) {
@@ -122,7 +133,9 @@ class ClassFormState extends State<ClassForm> {
         name: nameCon.text,
         section: sectionCon.text,
         teacherId: selectedTeacher!.id,
-        schedule: schedules);
+        schedule: schedules,
+        maxAbsences: widget.schoolClass?.maxAbsences,
+        studentIds: widget.schoolClass?.studentIds);
 
     classesRef.doc(schoolClass.id).set(schoolClass).then((_) {
       snackbarKey.currentState!.showSnackBar(

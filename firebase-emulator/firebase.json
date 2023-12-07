@@ -26,7 +26,28 @@
     },
     "ui": {
       "enabled": true,
+      "host": "0.0.0.0",
       "port": 4000
+    },
+    "auth": {
+      "host": "0.0.0.0",
+      "port": 9099
+    },
+    "singleProjectMode": true,
+    "storage": {
+      "host": "0.0.0.0",
+      "port": 9199
     }
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

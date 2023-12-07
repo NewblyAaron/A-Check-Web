@@ -1,14 +1,18 @@
 import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/pages/teacher/teacher_list_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
-import 'package:a_check_web/widgets/list_row.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/table_actions_row.dart';
+
 class TeacherList extends StatefulWidget {
-  const TeacherList({super.key, required this.onListRowTap});
+  const TeacherList(
+      {super.key, required this.onListRowTap, this.searchController});
 
   final Function(Teacher teacher) onListRowTap;
+  final SearchController? searchController;
 
   @override
   State<TeacherList> createState() => TeacherListState();
@@ -19,65 +23,77 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(50, 70, 70, 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const Text(
-                "List of Teachers",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 25,
-                  color: Color(0xff000000),
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: state.openForm,
-                icon: const Icon(
-                    Icons.group_add_rounded), //icon data for elevated button
-                label: const Text("Add a teacher"), //label text
-                style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.green,
-                    backgroundColor: Colors.white
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(50, 20, 70, 0),
-          child: FirestoreBuilder(
-            ref: teachersRef,
-            builder: (context, snapshot, child) {
-              if (snapshot.hasData) {
-                final teachers =
-                    snapshot.data!.docs.map((doc) => doc.data).toList();
+    return FirestoreBuilder(
+      ref: teachersRef,
+      builder: (context, snapshot, child) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-                return ListView(
-                  shrinkWrap: true,
-                  children: teachers
-                      .map((teacher) => GestureDetector(
-                        onTap: () => state.onListRowTap(teacher),
-                        child: ListRow(
-                              object: teacher,
-                            ),
-                      ))
-                      .toList(),
-                );
-              } else {
-                return const Text("Loading...");
-              }
-            },
+        List<DataColumn2> columns = [
+          DataColumn2(
+              label: const Text("ID"),
+              onSort: (columnIndex, ascending) =>
+                  state.sort((s) => s.id, columnIndex, ascending),
+              size: ColumnSize.S),
+          DataColumn2(
+              label: const Text("Last Name"),
+              onSort: (columnIndex, ascending) =>
+                  state.sort((s) => s.lastName, columnIndex, ascending),
+              size: ColumnSize.L),
+          DataColumn2(
+              label: const Text("First Name"),
+              onSort: (columnIndex, ascending) =>
+                  state.sort((s) => s.firstName, columnIndex, ascending),
+              size: ColumnSize.L),
+          DataColumn2(
+              label: const Text("E-mail"),
+              onSort: (columnIndex, ascending) => state.sort(
+                  (s) => s.email ?? "Z_None", columnIndex, ascending),
+              size: ColumnSize.L),
+          DataColumn2(
+              label: const Text("Phone Number"),
+              onSort: (columnIndex, ascending) => state.sort(
+                  (s) => s.phoneNumber ?? "Z_None", columnIndex, ascending),
+              size: ColumnSize.M),
+          const DataColumn2(label: Text("Actions"), size: ColumnSize.S)
+        ];
+
+        return PaginatedDataTable2(
+          columns: columns,
+          source: state.rows,
+          header: buildHeader(),
+          actions: [
+            TableActionsRow(
+              onAddButtonPressed: state.openForm,
+              onDeleteAllButtonPressed: state.deleteSelected,
+              addTooltip: "Add new teacher",
+              deleteAllTooltip: "Delete selected rows",
+            ),
+          ],
+          rowsPerPage: 15,
+          sortColumnIndex: state.sortColumnIndex,
+          sortAscending: state.sortAscending,
+          renderEmptyRowsInTheEnd: false,
+          empty: const Center(
+            child: Text("No entries found!"),
           ),
-        ),
-      ],
+          onSelectAll: state.rows.selectAll,
+        );
+      },
     );
+  }
+
+  Container buildHeader() {
+    return Container(
+        height: 48,
+        padding: const EdgeInsets.all(8.0),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text("List of Teachers",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+          ],
+        ));
   }
 }

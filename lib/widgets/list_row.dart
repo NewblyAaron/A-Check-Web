@@ -11,6 +11,7 @@ class ListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     String title = "";
     String subtitle = "";
+    Icon icon = const Icon(Icons.account_circle_rounded, size: 32);
 
     if (object is Person) {
       title = (object as Person).fullName;
@@ -26,15 +27,13 @@ class ListRow extends StatelessWidget {
 
     if (object is SchoolClass) {
       title = (object as SchoolClass).name;
-      subtitle = "${(object as SchoolClass).subjectCode} ${(object as SchoolClass).section}";
+      subtitle = "${(object as SchoolClass).subjectCode} (${(object as SchoolClass).section})";
+      icon = const Icon(Icons.school, size: 32,);
     }
 
     return Card(
       child: ListTile(
-        leading: const Icon(
-          Icons.account_circle_rounded,
-          size: 40,
-        ),
+        leading: icon,
         dense: false,
         contentPadding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
         selectedTileColor: Colors.blue.shade100,

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import './teachers_page_con.dart';
 
 class TeachersPage extends StatefulWidget {
-  const TeachersPage({super.key});
+  const TeachersPage({super.key, this.searchController});
+
+  final SearchController? searchController;
 
   @override
   State<TeachersPage> createState() => TeachersPageState();
@@ -16,30 +18,34 @@ class TeachersPageView extends WidgetView<TeachersPage, TeachersPageState> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Row(
-          children: [
-            Flexible(
-              flex: 2,
-              child: TeacherList(
-                onListRowTap: state.onListRowTap,
-              ),
-            ),
-            const VerticalDivider(
-              color: Colors.black,
-              thickness: 0.1,
-            ),
-            Flexible(
-              flex: 1,
-              child:
-                state.teacherInfoWidget ?? Container(
-                  alignment: Alignment.center,
-                  child:
-                    const Text('Select a teacher to show profile.')
-              ),
-            ),
-          ],
-        )
+    return Row(
+      children: [
+        Flexible(
+          flex: 2,
+          child: TeacherList(
+            onListRowTap: state.onListRowTap,
+            searchController: widget.searchController,
+          ),
+        ),
+        const VerticalDivider(
+          color: Colors.black,
+          thickness: 0.1,
+        ),
+        state.teacherProfileWidget != null
+            ? Flexible(
+                flex: 1,
+                child: Stack(children: [
+                  state.teacherProfileWidget!,
+                  Container(
+                    padding: const EdgeInsets.only(top: 16, right: 16),
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                        onPressed: state.closeProfile,
+                        icon: const Icon(Icons.close)),
+                  )
+                ]))
+            : Container(),
+      ],
     );
   }
 }

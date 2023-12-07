@@ -45,7 +45,6 @@ class StudentState extends State<StudentProfile> {
       studentsRef.doc(student.id).update(photoPath: fsRef.fullPath).then(
           (value) => snackbarKey.currentState!.showSnackBar(SnackBar(
               content: Text("Uploaded photo of ${student.fullName}!"))));
-      print('uploaded to ${fsRef.fullPath}');
     });
   }
 

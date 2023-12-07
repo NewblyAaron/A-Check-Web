@@ -66,10 +66,12 @@ void main() async {
 }
 
 void setDefaultPrefs() async {
-  if (!prefs.containsKey('school_name'))
+  if (!prefs.containsKey('school_name')) {
     await prefs.setString('school_name', "School Name");
-  if (!prefs.containsKey('office_name'))
+  }
+  if (!prefs.containsKey('office_name')) {
     await prefs.setString('office_name', "Office Name");
+  }
 }
 
 class MainApp extends StatelessWidget {

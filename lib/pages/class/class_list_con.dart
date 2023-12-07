@@ -133,7 +133,9 @@ class ClassDataSource extends DataTableSource {
   }
 
   void sort<T>(Comparable<T> Function(SchoolClass s) getField, bool ascending) {
-    _data.sort((a, b) {
+    var data = _filtered ? _filteredData : _data;
+
+    data.sort((a, b) {
       final aValue = getField(a);
       final bValue = getField(b);
       return ascending

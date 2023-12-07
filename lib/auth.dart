@@ -17,10 +17,10 @@ class AuthGate extends StatelessWidget {
               EmailAuthProvider(),
             ],
             headerBuilder: (context, constraints, shrinkOffset) => const Image(
-                image: AssetImage("assets/images/logo.png"), height: 60),
+                image: AssetImage("assets/images/logo_blue.png"), height: 60),
             sideBuilder: (context, constraints) => const AspectRatio(
               aspectRatio: 1,
-              child: Image(image: AssetImage("assets/images/logo.png")),
+              child: Image(image: AssetImage("assets/images/logo_blue.png")),
             ),
           );
         }

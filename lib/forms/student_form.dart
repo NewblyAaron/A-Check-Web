@@ -50,6 +50,7 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                         margin: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextFormField(
                           controller: state.idCon,
+                          enabled: widget.student == null,
                           validator: Validators.hasValue,
                           obscureText: false,
                           textAlign: TextAlign.start,

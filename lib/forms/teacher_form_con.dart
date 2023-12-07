@@ -25,7 +25,8 @@ class TeacherFormState extends State<TeacherForm> {
         middleName: mNameCon.text,
         lastName: lNameCon.text,
         email: emailCon.text,
-        phoneNumber: phoneNumCon.text);
+        phoneNumber: phoneNumCon.text,
+        photoPath: widget.teacher?.photoPath);
 
     teachersRef.doc(teacher.id).set(teacher).then((value) {
       snackbarKey.currentState!.showSnackBar(

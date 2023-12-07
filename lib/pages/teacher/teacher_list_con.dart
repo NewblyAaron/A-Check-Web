@@ -13,7 +13,10 @@ class TeacherListState extends State<TeacherList> {
   void initState() {
     super.initState();
 
-    rows = TeacherDataSource(data: [], onViewButtonPressed: viewTeacher);
+    rows = TeacherDataSource(
+        data: [],
+        onViewButtonPressed: viewTeacher,
+        onEditButtonPressed: (t) => openForm(teacher: t));
 
     teachersRef.snapshots().listen((event) {
       rows.updateData(event.docs.map((e) => e.data).toList());
@@ -162,11 +165,19 @@ class TeacherDataSource extends DataTableSource {
 
     return DataRow(
         cells: [
-          DataCell(Text(data[index].id, style: const TextStyle(fontSize: 12),)),
-          DataCell(Text(data[index].lastName,style: const TextStyle(fontSize: 12)),),
-          DataCell(Text(data[index].firstName,style: const TextStyle(fontSize: 12))),
-          DataCell(Text(data[index].email ?? "None",style: const TextStyle(fontSize: 12))),
-          DataCell(Text(data[index].phoneNumber ?? "None",style: const TextStyle(fontSize: 12))),
+          DataCell(Text(
+            data[index].id,
+            style: const TextStyle(fontSize: 12),
+          )),
+          DataCell(
+            Text(data[index].lastName, style: const TextStyle(fontSize: 12)),
+          ),
+          DataCell(Text(data[index].firstName,
+              style: const TextStyle(fontSize: 12))),
+          DataCell(Text(data[index].email ?? "None",
+              style: const TextStyle(fontSize: 12))),
+          DataCell(Text(data[index].phoneNumber ?? "None",
+              style: const TextStyle(fontSize: 12))),
           DataCell(
             Row(
               mainAxisSize: MainAxisSize.min,

@@ -49,7 +49,9 @@ class StudentFormState extends State<StudentForm> {
         middleName: mNameCon.text,
         lastName: lNameCon.text,
         email: emailCon.text,
-        phoneNumber: phoneNumCon.text);
+        phoneNumber: phoneNumCon.text,
+        faceArray: widget.student?.faceArray,
+        photoPath: widget.student?.photoPath);
 
     studentsRef.doc(student.id).set(student).then((_) {
       snackbarKey.currentState!.showSnackBar(

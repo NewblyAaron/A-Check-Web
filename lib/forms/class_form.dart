@@ -120,6 +120,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
                 controller: state.codeCon,
+                enabled: widget.schoolClass == null,
                 validator: Validators.hasValue,
                 obscureText: false,
                 textAlign: TextAlign.start,
@@ -174,6 +175,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
                 controller: state.sectionCon,
+                enabled: widget.schoolClass == null,
                 validator: Validators.hasValue,
                 obscureText: false,
                 textAlign: TextAlign.start,
@@ -200,33 +202,6 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
   }
 
   Widget buildTeacherDropdown() {
-    SizedBox(
-      width: 600,
-      child: Container(
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        child: TextFormField(
-          controller: state.codeCon,
-          validator: Validators.hasValue,
-          obscureText: false,
-          textAlign: TextAlign.start,
-          textInputAction: TextInputAction.next,
-          maxLines: 1,
-          style: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            fontSize: 14,
-            color: Colors.black54,
-          ),
-          decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              hintText: 'e.g. MTH101',
-              labelText: "Class Code"),
-        ),
-      ),
-    );
-
     return SizedBox(
       width: 600,
       child: Container(
@@ -257,6 +232,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
           itemAsString: (item) => "${item.fullName} (${item.id})",
           compareFn: (item1, item2) => item1.id == item2.id,
           onChanged: state.onDropdownChanged,
+          selectedItem: state.selectedTeacher,
         ),
       ),
     );

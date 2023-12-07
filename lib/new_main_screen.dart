@@ -1,3 +1,4 @@
+import 'package:a_check_web/main.dart';
 import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/pages/student/students_page.dart';
@@ -16,6 +17,11 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) => MainScreenView(this);
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   int selectedIndex = 0;
   PageController pageController = PageController(
@@ -187,7 +193,7 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
             children: [
               buildSearchBar(context),
               const SizedBox(width: 48),
-              const Row(
+              Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -197,15 +203,15 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Ateneo De Naga University",
-                          style: TextStyle(
+                          prefs.getString('school_name') ?? "SCHOOL_NAME",
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          "Administrator",
-                          style: TextStyle(
+                          prefs.getString('office_name') ?? "OFFICE_NAME",
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
                               fontWeight: FontWeight.w400),

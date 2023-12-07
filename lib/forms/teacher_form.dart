@@ -50,6 +50,7 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                         margin: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextFormField(
                           controller: state.idCon,
+                          enabled: widget.teacher == null,
                           validator: Validators.hasValue,
                           obscureText: false,
                           textAlign: TextAlign.start,

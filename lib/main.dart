@@ -7,7 +7,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:google_fonts/google_fonts.dart';
+
+late final SharedPreferences prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +18,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+
+  prefs = await SharedPreferences.getInstance();
+  setDefaultPrefs();
 
   if (kDebugMode) {
     try {
@@ -35,7 +41,8 @@ void main() async {
         useMaterial3: false,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff153faa),
-          secondary: Colors.transparent,
+          onPrimary: Colors.white,
+          onSecondary: Colors.black
         ),
         highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
@@ -44,6 +51,11 @@ void main() async {
         ),
       ),
       home: const MainApp()));
+}
+
+void setDefaultPrefs() async {
+  if (!prefs.containsKey('school_name')) await prefs.setString('school_name', "School Name");
+  if (!prefs.containsKey('office_name')) await prefs.setString('office_name', "Office Name");
 }
 
 class MainApp extends StatelessWidget {

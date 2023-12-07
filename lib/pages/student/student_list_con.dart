@@ -97,13 +97,13 @@ class StudentListState extends State<StudentList> {
 class StudentDataSource extends DataTableSource {
   StudentDataSource(
       {required List<Student> data,
-      this.onViewButtonPressed,
-      this.onEditButtonPressed}) {
+      required this.onViewButtonPressed,
+      required this.onEditButtonPressed}) {
     updateData(data);
   }
 
-  final Function(Student student)? onViewButtonPressed;
-  final Function(Student student)? onEditButtonPressed;
+  final Function(Student student) onViewButtonPressed;
+  final Function(Student student) onEditButtonPressed;
 
   late Map<Student, bool> _map;
   List<Student> _data = [];
@@ -192,8 +192,8 @@ class StudentDataSource extends DataTableSource {
           DataCell(
             CellActions(
               data: data[index],
-              onViewButtonPressed: (o) => onViewButtonPressed,
-              onEditButtonPressed: (o) => onEditButtonPressed,
+              onViewButtonPressed: (o) => onViewButtonPressed(o),
+              onEditButtonPressed: (o) => onEditButtonPressed(o),
               viewTooltip: "View student info",
               editTooltip: "Edit student info",
             ),

@@ -84,6 +84,7 @@ class Student extends Person {
   late final List<String> guardianIds;
   late final List faceArray;
 
+  @override
   Map<String, Object?> toJson() => _$StudentToJson(this);
 
   Future<String> getPhotoUrl() async {
@@ -151,6 +152,7 @@ class Teacher extends Person {
 
   late final String photoPath;
 
+  @override
   Map<String, Object?> toJson() => _$TeacherToJson(this);
 
   Future<String> getPhotoUrl() async {

@@ -158,7 +158,7 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    var icon;
+                    IconData icon;
                     switch (snapshot.data![index].status) {
                       case AttendanceStatus.Absent:
                         icon = Icons.close;

@@ -134,7 +134,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                          color:Color(0xff153faa),
+                          color:const Color(0xff153faa),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

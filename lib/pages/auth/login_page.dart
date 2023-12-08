@@ -94,30 +94,35 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                           children: [
                             const Padding(
                               padding: EdgeInsets.only(top: 35, bottom: 30),
-                              child:
-                                  Image(
-                                      image: AssetImage("assets/images/small_logo_blue.png"),
-                                      height: 100),
-                                  ),
-                            const Text("Log in to A-Check", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
-                            const SizedBox(height: 20,),
+                              child: Image(
+                                  image: AssetImage(
+                                      "assets/images/small_logo_blue.png"),
+                                  height: 100),
+                            ),
+                            const Text(
+                              "Log in to A-Check",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 24),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             buildForm(),
-                            const SizedBox(height: 25,),
-
+                            const SizedBox(
+                              height: 25,
+                            ),
                             Column(
                               children: [
                                 const Row(
                                   children: [
-                                    Expanded(
-                                        child: Divider()
-                                    ),
+                                    Expanded(child: Divider()),
                                     Text("     or     "),
-                                    Expanded(
-                                        child: Divider()
-                                    ),
+                                    Expanded(child: Divider()),
                                   ],
                                 ),
-                                const SizedBox(height: 20,),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                                 InkWell(
                                   customBorder: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
@@ -128,7 +133,8 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                   onTap: state.studentLogin,
                                   child: Container(
                                     alignment: Alignment.center,
-                                    padding: const EdgeInsets.symmetric(vertical: 8),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     width: 350,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(35),
@@ -141,23 +147,26 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                     ),
                                     child: const Text(
                                       "Log in as a Student",
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xff153faa)),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 25,),
+                                const SizedBox(
+                                  height: 25,
+                                ),
                                 const Row(
                                   children: [
-                                    Expanded(
-                                        child: Divider()
-                                    ),
+                                    Expanded(child: Divider()),
                                     Text("     or     "),
-                                    Expanded(
-                                        child: Divider()
-                                    ),
+                                    Expanded(child: Divider()),
                                   ],
                                 ),
-                                const SizedBox(height: 25,),
+                                const SizedBox(
+                                  height: 25,
+                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -165,11 +174,15 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                     MaterialButton(
                                         onPressed: state.register,
                                         hoverColor: Colors.transparent,
-                                        child: const Text("Register", style: TextStyle(color: Color(0xff153faa), fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),)
-                                    ),
+                                        child: const Text(
+                                          "Register",
+                                          style: TextStyle(
+                                              color: Color(0xff153faa),
+                                              fontWeight: FontWeight.w400,
+                                              fontStyle: FontStyle.italic),
+                                        )),
                                   ],
                                 ),
-
                               ],
                             )
                           ],
@@ -195,13 +208,18 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
               controller: state.emailCon,
               validator: Validators.isAnEmail,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email_rounded,color:Colors.black54, size: 20,),
-                  labelText: "Email",
-                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(
+                  Icons.email_rounded,
+                  color: Colors.black54,
+                  size: 20,
+                ),
+                labelText: "Email",
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               ),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             TextFormField(
               controller: state.passwordCon,
               validator: Validators.hasValue,
@@ -209,11 +227,14 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
               obscuringCharacter: '●',
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.key,color:Colors.black54, size: 20,),
-                  labelText: "Password"
-              ),
+                  prefixIcon: Icon(
+                    Icons.key,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "Password"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             InkWell(
               // hoverColor: const Color(0xff153faa).withOpacity(0.8),
               // highlightColor: const Color(0xff153faa).withOpacity(0.4),
@@ -230,7 +251,10 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                 ),
                 child: const Text(
                   "Log in",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
               ),
             ),

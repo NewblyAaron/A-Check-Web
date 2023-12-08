@@ -21,4 +21,8 @@ class Person {
   final String? email, phoneNumber;
 
   String get fullName => "$firstName ${middleName[0]}. $lastName";
+  String get initials => "${firstName.splitMapJoin(
+        ' ',
+        onNonMatch: (p0) => p0[0],
+      )}${lastName[0]}";
 }

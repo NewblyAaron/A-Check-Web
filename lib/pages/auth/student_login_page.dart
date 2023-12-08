@@ -87,7 +87,6 @@ class StudentLoginPageView
           child: SizedBox(
             width: 350,
             height: 600,
-            height: 600,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [

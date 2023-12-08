@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
 
@@ -17,11 +19,19 @@ class StudentState extends State<StudentProfile> {
 
     student = widget.student;
 
-    studentsRef.doc(widget.student.id).snapshots().listen((event) {
+    studentsStream = studentsRef.doc(widget.student.id).snapshots().listen((event) {
       if (context.mounted) setState(() => student = event.data!);
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+
+    studentsStream.cancel();
+  }
+
+  late StreamSubscription studentsStream;
   late Student student;
   final _picker = ImagePicker();
 

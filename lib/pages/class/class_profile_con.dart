@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/forms/class_settings_form.dart';
 import 'package:a_check_web/forms/students_form_page.dart';
 import 'package:a_check_web/globals.dart';
@@ -16,11 +18,11 @@ class ClassProfileState extends State<ClassProfile> {
 
     schoolClass = widget.schoolClass;
 
-    classesRef.doc(widget.schoolClass.id).snapshots().listen((event) {
+    classesStream = classesRef.doc(widget.schoolClass.id).snapshots().listen((event) {
       if (context.mounted) setState(() => schoolClass = event.data!);
     });
 
-    attendancesRef
+    attendancesStream = attendancesRef
         .whereClassId(isEqualTo: widget.schoolClass.id)
         .snapshots()
         .listen((event) {
@@ -28,8 +30,16 @@ class ClassProfileState extends State<ClassProfile> {
     });
   }
 
-  late SchoolClass schoolClass;
+  @override
+  void dispose() {
+    super.dispose();
 
+    classesStream.cancel();
+    attendancesStream.cancel();
+  }
+
+  late StreamSubscription classesStream, attendancesStream;
+  late SchoolClass schoolClass;
   int sortColumnIndex = 0;
   bool sortAscending = false;
 

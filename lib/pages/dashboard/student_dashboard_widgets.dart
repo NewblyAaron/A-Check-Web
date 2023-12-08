@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/model/school.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -80,17 +82,26 @@ class AttendanceRecords extends StatefulWidget {
 }
 
 class _AttendanceRecordsState extends State<AttendanceRecords> {
+  late StreamSubscription recordsStream;
+
   @override
   void initState() {
     super.initState();
 
-    widget.school.ref.attendances
+    recordsStream = widget.school.ref.attendances
         .whereStudentId(isEqualTo: widget.studentId)
         .whereClassId(isEqualTo: widget.classId)
         .snapshots()
         .listen((event) {
       if (context.mounted) setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  
+    recordsStream.cancel();
   }
 
   Future<List<AttendanceRecord>> getRecords() {

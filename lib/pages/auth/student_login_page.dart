@@ -86,7 +86,7 @@ class StudentLoginPageView
           padding: const EdgeInsets.all(30.0),
           child: SizedBox(
             width: 350,
-            height: 500,
+            height: 600,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -98,7 +98,7 @@ class StudentLoginPageView
                     children: [
                       SizedBox(
                         width: 450,
-                        height: 500,
+                        height: 600,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -235,10 +235,12 @@ class StudentLoginPageView
               compareFn: (item1, item2) => item1.id == item2.id,
               onChanged: state.onDropdownChanged,
               selectedItem: state.selectedSchool,
+              validator: state.validateDropdown,
             ),
             const SizedBox(height:12),
             TextFormField(
               controller: state.idCon,
+              validator: Validators.hasValue,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.account_circle_rounded,color:Colors.black54, size: 20,),

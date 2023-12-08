@@ -63,6 +63,8 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.perm_identity_rounded,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),
@@ -90,6 +92,8 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle_outlined,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),
@@ -117,6 +121,8 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle_outlined,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),
@@ -144,6 +150,8 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle_outlined,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),
@@ -171,6 +179,8 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.call_end_rounded,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),
@@ -198,6 +208,8 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.alternate_email_rounded,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),

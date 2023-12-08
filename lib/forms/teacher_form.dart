@@ -49,6 +49,7 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                         padding: const EdgeInsets.all(8.0),
                         margin: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextFormField(
+                          autofocus: true,
                           controller: state.idCon,
                           enabled: widget.teacher == null,
                           validator: Validators.hasValue,
@@ -63,6 +64,8 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.perm_identity_rounded,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                               hintText: 'e.g. 202010824',
@@ -90,6 +93,8 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle_outlined,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                               hintText: 'e.g. Aaron',
@@ -117,6 +122,8 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle_outlined,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                               hintText: 'e.g. Marcos',
@@ -144,6 +151,8 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle_outlined,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                               hintText: 'e.g. De La Cruz',
@@ -171,6 +180,8 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.call_end_rounded,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                               hintText: 'e.g. 09123456789',
@@ -198,6 +209,8 @@ class TeacherFormView extends WidgetView<TeacherForm, TeacherFormState> {
                             color: Colors.black54,
                           ),
                           decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.alternate_email_rounded,color:Colors.black54, size: 20,),
+                              disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                               hintText: 'e.g. adelacruz@gmail.com',

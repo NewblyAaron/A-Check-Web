@@ -26,7 +26,7 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
       ref: classesRef,
       builder: (context, snapshot, child) {
         if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: Color(0xff153faa),));
         }
 
         List<DataColumn2> columns = [
@@ -78,6 +78,10 @@ class ClassListView extends WidgetView<ClassList, ClassListState> {
             child: Text("No entries found!"),
           ),
           headingCheckboxTheme: Theme.of(context).checkboxTheme,
+          headingTextStyle: const TextStyle(color: Colors.black),
+          headingRowColor: MaterialStateColor.resolveWith((states) {return const Color(0xffFAF9FE);},),
+          datarowCheckboxTheme: Theme.of(context).checkboxTheme,
+          checkboxAlignment: Alignment.center,
           onSelectAll: state.rows.selectAll,
           sortArrowIcon: Icons.keyboard_arrow_up_sharp,
         );

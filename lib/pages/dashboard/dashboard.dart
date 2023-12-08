@@ -16,11 +16,12 @@ class DashboardView extends WidgetView<Dashboard, DashboardState> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
+      body:SingleChildScrollView(
+        child:
+          Column(
+          mainAxisAlignment:MainAxisAlignment.start,
+          crossAxisAlignment:CrossAxisAlignment.center,
+          mainAxisSize:MainAxisSize.max,
           children: [
             GridView(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),

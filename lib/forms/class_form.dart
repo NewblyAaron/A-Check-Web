@@ -132,6 +132,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   color: Colors.black54,
                 ),
                 decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.class_rounded,color:Colors.black54, size: 20,),
+                    disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                     border: OutlineInputBorder(),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -159,6 +161,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   color: Colors.black54,
                 ),
                 decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.label_important_rounded,color:Colors.black54, size: 20,),
+                    disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                     border: OutlineInputBorder(),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -187,6 +191,8 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                   color: Colors.black54,
                 ),
                 decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.label_important_rounded,color:Colors.black54, size: 20,),
+                    disabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.transparent)),
                     border: OutlineInputBorder(),
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -222,6 +228,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                 color: Colors.black54,
               ),
               dropdownSearchDecoration: InputDecoration(
+                  prefixIcon: Icon(Icons.face,color:Colors.black54, size: 20,),
                   border: OutlineInputBorder(),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 8, horizontal: 12),

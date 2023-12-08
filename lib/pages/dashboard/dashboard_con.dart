@@ -1,6 +1,4 @@
-import 'package:a_check_web/model/attendance_record.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 

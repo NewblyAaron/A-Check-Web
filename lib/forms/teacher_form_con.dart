@@ -1,6 +1,6 @@
 import 'package:a_check_web/forms/teacher_form.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:flutter/material.dart';
 
 class TeacherFormState extends State<TeacherForm> {

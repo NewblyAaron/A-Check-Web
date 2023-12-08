@@ -1,7 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart' hide Student, Teacher;
+import 'package:a_check_web/model/person.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -15,10 +18,19 @@ const firestoreSerializable = JsonSerializable(
     createPerFieldToJson: true);
 
 final schoolsRef = SchoolCollectionReference();
+final studentsRef = schoolRef.students;
+final classesRef = schoolRef.classes;
+final teachersRef = schoolRef.teachers;
+final attendancesRef = schoolRef.attendances;
+
+SchoolDocumentReference get schoolRef {
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+
+  return schoolsRef.doc(uid);
+}
 
 @Collection<School>('schools')
 @Collection<SchoolClass>('schools/*/classes')
-@Collection<ClassSchedule>('schools/*/classes/*/schedule')
 @Collection<Teacher>('schools/*/teachers')
 @Collection<Student>('schools/*/students')
 @Collection<AttendanceRecord>('schools/*/attendances')
@@ -33,6 +45,12 @@ class School {
 
   @Id()
   final String id;
+
+  static Future<Map<String, String>> get info async {
+    final school = (await schoolRef.get()).data!;
+
+    return {'school_name': school.name, 'office_name': school.officeName};
+  }
 
   Map<String, Object?> toJson() => _$SchoolToJson(this);
 }
@@ -73,9 +91,8 @@ class Student extends Person {
     return url;
   }
 
-  Future<Map<String, int>> getPALEValues(
-      String schoolId, String classId) async {
-    final attendances = (await schoolsRef.doc(schoolId).attendances.get())
+  Future<Map<String, int>> getPALEValues(String classId) async {
+    final attendances = (await attendancesRef.get())
         .docs
         .map((e) => e.data)
         .where(
@@ -141,14 +158,8 @@ class Teacher extends Person {
     return url;
   }
 
-  Future<int> getTotalClasses(String schoolId) async {
-    return (await schoolsRef
-            .doc(schoolId)
-            .classes
-            .whereTeacherId(isEqualTo: id)
-            .get())
-        .docs
-        .length;
+  Future<int> getTotalClasses() async {
+    return (await classesRef.whereTeacherId(isEqualTo: id).get()).docs.length;
   }
 }
 
@@ -183,8 +194,8 @@ class SchoolClass {
 
   Map<String, Object?> toJson() => _$SchoolClassToJson(this);
 
-  Future<Teacher> getTeacher(String schoolId) async {
-    return (await schoolsRef.doc(schoolId).teachers.doc(teacherId).get()).data!;
+  Future<Teacher> getTeacher() async {
+    return (await teachersRef.doc(teacherId).get()).data!;
   }
 
   @override
@@ -199,11 +210,10 @@ class SchoolClass {
     return classInfo + classSchedBuf.toString();
   }
 
-  Future<List<Student>> getStudents(String schoolId) async {
+  Future<List<Student>> getStudents() async {
     List<Student> studentsList = [];
     for (var id in studentIds) {
-      final student =
-          (await schoolsRef.doc(schoolId).students.doc(id).get()).data!;
+      final student = (await studentsRef.doc(id).get()).data!;
       studentsList.add(student);
     }
 
@@ -227,11 +237,8 @@ class SchoolClass {
     return buffer.toString();
   }
 
-  Future<Map<DateTime, List<AttendanceRecord>>> getAttendanceRecords(
-      String schoolId) async {
-    final attendanceRecords = await schoolsRef
-        .doc(schoolId)
-        .attendances
+  Future<Map<DateTime, List<AttendanceRecord>>> getAttendanceRecords() async {
+    final attendanceRecords = await attendancesRef
         .whereClassId(isEqualTo: id)
         .orderByDateTime()
         .get()
@@ -355,8 +362,8 @@ class AttendanceRecord {
 
   Map<String, Object?> toJson() => _$AttendanceRecordToJson(this);
 
-  Future<Student> getStudent(String schoolId) async {
-    return (await schoolsRef.doc(schoolId).students.doc(studentId).get()).data!;
+  Future<Student> getStudent() async {
+    return (await studentsRef.doc(studentId).get()).data!;
   }
 }
 

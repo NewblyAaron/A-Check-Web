@@ -1,6 +1,5 @@
 import 'package:a_check_web/forms/class_form_con.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:a_check_web/widgets/schedule_row.dart';
@@ -242,7 +241,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
     return Row(
       children: [
         Material(
-            color: Colors.grey.shade100,
+          color: Colors.grey.shade100,
           child: InkWell(
             hoverColor: Colors.grey.withOpacity(0.4),
             highlightColor: Colors.grey.withOpacity(0.4),
@@ -287,7 +286,10 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                 children: [
                   Text(
                     "Confirm",
-                    style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
                   ),
                 ],
               ),

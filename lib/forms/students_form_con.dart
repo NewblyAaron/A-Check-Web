@@ -1,6 +1,6 @@
 import 'package:a_check_web/forms/students_form_page.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 

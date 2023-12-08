@@ -1,4 +1,4 @@
-import 'package:a_check_web/model/attendance_record.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/controllers/student_attendance_record_card_con.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,7 @@ class SARCView extends WidgetView<StudentAttendanceRecordCard, SARCState> {
               child: Row(
                 children: [
                   FutureBuilder(
-                    future: widget.record.student,
+                    future: widget.record.getStudent(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         final student = snapshot.data!;

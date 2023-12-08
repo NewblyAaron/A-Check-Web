@@ -1,9 +1,8 @@
 import 'package:a_check_web/forms/class_settings_form.dart';
 import 'package:a_check_web/forms/students_form_page.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/attendance_record.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
+
 import 'package:a_check_web/pages/class/class_profile.dart';
 import 'package:flutter/material.dart';
 

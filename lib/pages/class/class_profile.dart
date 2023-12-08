@@ -1,4 +1,4 @@
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/class/class_profile_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/attendance_record_card.dart';
@@ -73,7 +73,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
         borderRadius: BorderRadius.zero,
       ),
       child: FutureBuilder(
-        future: schoolClass.teacher,
+        future: schoolClass.getTeacher(),
         builder: (context, snapshot) => snapshot.hasData
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,

@@ -1,6 +1,7 @@
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/controllers/schedule_dialog_con.dart';
-import 'package:a_check_web/model/school_class.dart';
+
 import 'package:flutter/material.dart';
 
 class ScheduleDialog extends StatefulWidget {

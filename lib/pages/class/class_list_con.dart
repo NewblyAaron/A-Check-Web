@@ -1,7 +1,6 @@
 import 'package:a_check_web/forms/class_form.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/school_class.dart';
-
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/class/class_list.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:a_check_web/widgets/cell_actions.dart';
@@ -181,7 +180,7 @@ class ClassDataSource extends DataTableSource {
           DataCell(
               Text(data[index].section, style: const TextStyle(fontSize: 12))),
           DataCell(FutureBuilder(
-            future: data[index].teacher,
+            future: data[index].getTeacher(),
             builder: (context, snapshot) => snapshot.hasData
                 ? Text(snapshot.data!.fullName,
                     style: const TextStyle(fontSize: 12))

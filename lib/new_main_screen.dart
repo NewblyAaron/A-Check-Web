@@ -60,7 +60,7 @@ class MainScreenState extends State<MainScreen> {
   void openSettings() async {
     await showDialog(
       context: context,
-      builder: (context) => Dialog(
+      builder: (context) => const Dialog(
         child: SettingsForm(),
       ),
     );

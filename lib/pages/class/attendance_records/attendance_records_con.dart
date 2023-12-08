@@ -106,15 +106,47 @@ class AttendanceRecordDataSource extends DataTableSource {
   DataRow2? getRow(int index) {
     return DataRow2(cells: [
       DataCell(FutureBuilder(
-        future: _data[index].student,
-        builder: (context, snapshot) => Text(snapshot.data?.lastName ?? "",
-            style: const TextStyle(fontSize: 12)),
-      )),
+          future: _data[index].student,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data!.lastName,
+                    style: const TextStyle(fontSize: 12));
+              } else {
+                return const Center(child: Icon(Icons.close));
+              }
+            } else {
+              return const Center(
+                  child: Row(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 16),
+                  Icon(Icons.person_search)
+                ],
+              ));
+            }
+          })),
       DataCell(FutureBuilder(
-        future: _data[index].student,
-        builder: (context, snapshot) => Text(snapshot.data?.firstName ?? "",
-            style: const TextStyle(fontSize: 12)),
-      )),
+          future: _data[index].student,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data!.firstName,
+                    style: const TextStyle(fontSize: 12));
+              } else {
+                return const Center(child: Icon(Icons.close));
+              }
+            } else {
+              return const Center(
+                  child: Row(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 16),
+                  Icon(Icons.person_search)
+                ],
+              ));
+            }
+          })),
       DataCell(Text(
           DateFormat(DateFormat.HOUR_MINUTE).format(_data[index].dateTime),
           style: const TextStyle(fontSize: 12))),

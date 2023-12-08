@@ -236,6 +236,8 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.passwordCon,
               validator: Validators.hasValue,
+              obscureText: true,
+              obscuringCharacter: '•',
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.key_rounded,color:Colors.black54, size: 20,),
@@ -246,6 +248,8 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.confirmCon,
               validator: state.confirmPassword,
+              obscureText: true,
+              obscuringCharacter: '•',
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.password_rounded,color:Colors.black54, size: 20,),

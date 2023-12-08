@@ -242,7 +242,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
               controller: state.passwordCon,
               validator: Validators.hasValue,
               obscureText: true,
-              obscuringCharacter: '●',
+              obscuringCharacter: '•',
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(

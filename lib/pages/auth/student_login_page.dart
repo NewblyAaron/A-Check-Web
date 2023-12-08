@@ -138,13 +138,13 @@ class StudentLoginPageView
                                       // adding color will hide the splash effect
                                       color: Colors.transparent,
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.keyboard_backspace_rounded, color: const Color(0xff153faa),size: 23,),
+                                        Icon(Icons.keyboard_backspace_rounded, color: Color(0xff153faa),size: 23,),
                                         SizedBox(width: 9,),
-                                        const Text(
+                                        Text(
                                           "Back to Login",
                                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
                                         ),
@@ -168,19 +168,52 @@ class StudentLoginPageView
     );
   }
 
+  Widget _customDropDownSchool(BuildContext context, item) {
+    return Container(
+        child: (item == null)
+            ? const ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: Row(
+                  children: [
+                    Icon(Icons.search_rounded, color: Color(0xff153faa),size: 23,),
+                    SizedBox(width: 9,),
+                    Text("Find your school",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff828282)
+                        )
+                    ),
+                  ],
+                ),
+              )
+            : ListTile(
+            contentPadding: const EdgeInsets.all(0),
+            title: Text(
+              item.title,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13.5, color: Colors.black),
+            )
+        )
+    );
+  }
   Form buildForm() {
     return Form(
         child: Column(
           children: [
             DropdownSearch<School>(
+              dropdownBuilder: _customDropDownSchool,
               popupProps: const PopupProps.menu(
                   title: Text("Search school", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                   showSearchBox: true,
                   showSelectedItems: true,
                   searchFieldProps: TextFieldProps(
                       decoration: InputDecoration(
+                          isDense: true,
                           border: OutlineInputBorder(),
-                          labelText: "School",
+                          // labelText: "School",
                       )
                   )
               ),

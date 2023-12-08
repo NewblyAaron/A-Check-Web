@@ -102,8 +102,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                             const Text("Log in to A-Check", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
                             const SizedBox(height: 20,),
                             buildForm(),
-                            const SizedBox(height: 25,),
-
+                            const SizedBox(height: 20,),
                             Column(
                               children: [
                                 const Row(
@@ -163,9 +162,10 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                   children: [
                                     const Text("Don't have a school account?"),
                                     MaterialButton(
+                                        minWidth: 30,
                                         onPressed: state.register,
                                         hoverColor: Colors.transparent,
-                                        child: const Text("Register", style: TextStyle(color: Color(0xff153faa), fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),)
+                                        child: const Text("Register", style: TextStyle(color: Color(0xff153faa), fontWeight: FontWeight.w500, decoration: TextDecoration.underline),)
                                     ),
                                   ],
                                 ),

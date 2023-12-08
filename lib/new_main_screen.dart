@@ -310,13 +310,27 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
   }
 }
 
-class ProfileDropdown extends StatelessWidget {
+class ProfileDropdown extends StatefulWidget {
   const ProfileDropdown({
     super.key,
     required this.onSettingsTap,
   });
 
   final Function()? onSettingsTap;
+
+  @override
+  State<ProfileDropdown> createState() => _ProfileDropdownState();
+}
+
+class _ProfileDropdownState extends State<ProfileDropdown> {
+  @override
+  void initState() {
+    super.initState();
+
+    schoolRef.snapshots().listen((event) {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -326,28 +340,36 @@ class ProfileDropdown extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           FutureBuilder(
-            future: School.info,
-            builder: (context, snapshot) => Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  snapshot.data?['school_name'] ?? "SCHOOL_NAME",
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  snapshot.data?['office_name'] ?? "OFFICE_NAME",
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-          ),
+              future: School.info,
+              builder: (context, snapshot) {
+                final schoolName =
+                    snapshot.data?['school_name'] ?? "SCHOOL_NAME";
+                final officeName =
+                    snapshot.data?['office_name'] ?? "OFFICE_NAME";
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      schoolName,
+                      key: ValueKey(schoolName),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      officeName,
+                      key: ValueKey(schoolName),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                );
+              }),
           PopupMenuButton<String>(
             offset: Offset.zero,
             position: PopupMenuPosition.under,
@@ -356,7 +378,7 @@ class ProfileDropdown extends StatelessWidget {
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem(
-                  onTap: onSettingsTap,
+                  onTap: widget.onSettingsTap,
                   child: const Text(
                     "Settings",
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),

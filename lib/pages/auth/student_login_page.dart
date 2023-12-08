@@ -87,6 +87,7 @@ class StudentLoginPageView
           child: SizedBox(
             width: 350,
             height: 600,
+            height: 600,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -187,7 +188,7 @@ class StudentLoginPageView
                 contentPadding: EdgeInsets.all(0),
                 title: Row(
                   children: [
-                    Icon(Icons.search_rounded, color: Color(0xff153faa),size: 23,),
+                    Icon(Icons.search_rounded, color: Color(0xff828282),size: 23,),
                     SizedBox(width: 9,),
                     Text("Find your school",
                         textAlign: TextAlign.start,

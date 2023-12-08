@@ -46,6 +46,8 @@ class School {
   @Id()
   final String id;
 
+  SchoolDocumentReference get ref => schoolsRef.doc(id);
+
   static Future<Map<String, String>> get info async {
     final school = (await schoolRef.get()).data!;
 

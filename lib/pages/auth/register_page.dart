@@ -82,6 +82,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: buildBody(),
     );
   }

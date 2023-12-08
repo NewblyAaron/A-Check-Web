@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/model/school.dart';
 import 'package:flutter/material.dart';
 
@@ -17,16 +19,25 @@ class StudentDashboard extends StatefulWidget {
 int selectedIndex = 0;
 
 class StudentDashboardState extends State<StudentDashboard> {
+  late StreamSubscription classesStream;
+
   @override
   void initState() {
     super.initState();
 
-    widget.school.ref.classes
+    classesStream = widget.school.ref.classes
         .whereStudentIds(arrayContains: widget.student.id)
         .snapshots()
         .listen((event) {
       if (context.mounted) setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    classesStream.cancel();
   }
 
   AttendanceRecords? attendancesWidget;

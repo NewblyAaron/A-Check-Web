@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/forms/settings.dart';
 import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/dashboard/dashboard.dart';
@@ -323,13 +325,22 @@ class ProfileDropdown extends StatefulWidget {
 }
 
 class _ProfileDropdownState extends State<ProfileDropdown> {
+  late StreamSubscription schoolStream;
+
   @override
   void initState() {
     super.initState();
 
-    schoolRef.snapshots().listen((event) {
+    schoolStream = schoolRef.snapshots().listen((event) {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    schoolStream.cancel();
   }
 
   @override

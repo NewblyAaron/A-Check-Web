@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/forms/class_form.dart';
 import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
@@ -19,7 +21,7 @@ class ClassListState extends State<ClassList> {
         onViewButtonPressed: viewClass,
         onEditButtonPressed: (s) => openForm(schoolClass: s));
 
-    classesRef.snapshots().listen((event) {
+    classesStream = classesRef.snapshots().listen((event) {
       if (context.mounted) {
         setState(() => rows.updateData(event.docs.map((e) => e.data).toList()));
       }
@@ -32,9 +34,11 @@ class ClassListState extends State<ClassList> {
   void dispose() {
     super.dispose();
 
+    classesStream.cancel();
     widget.searchController?.removeListener(filter);
   }
 
+  late StreamSubscription classesStream;
   late final ClassDataSource rows;
   int sortColumnIndex = 0;
   bool sortAscending = false;

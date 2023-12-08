@@ -1,3 +1,4 @@
+import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/pages/auth/register_page.dart';
 import 'package:a_check_web/pages/auth/student_login_page.dart';
 import 'package:a_check_web/utils/abstracts.dart';
@@ -27,10 +28,16 @@ class LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   late TextEditingController emailCon, passwordCon;
 
-  void login() {
+  void login() async {
     final auth = FirebaseAuth.instance;
 
-    auth.signInWithEmailAndPassword(email: emailCon.text, password: passwordCon.text);
+    try {
+      await auth.signInWithEmailAndPassword(
+          email: emailCon.text, password: passwordCon.text);
+    } on FirebaseAuthException catch (e) {
+      snackbarKey.currentState!.showSnackBar(
+          SnackBar(content: Text(e.message ?? "Error! ${e.code}")));
+    }
   }
 
   void register() {
@@ -97,26 +104,26 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
 
   Form buildForm() {
     return Form(
-      key: state.formKey,
+        key: state.formKey,
         child: Column(
-      children: [
-        TextFormField(
-          controller: state.emailCon,
-          validator: Validators.isAnEmail,
-          decoration: InputDecoration(labelText: "E-mail"),
-        ),
-        TextFormField(
-          controller: state.passwordCon,
-          validator: Validators.hasValue,
-          obscureText: true,
-          obscuringCharacter: '●',
-          decoration: InputDecoration(labelText: "Password"),
-        ),
-        MaterialButton(
-          onPressed: state.login,
-          child: Text("Log in"),
-        )
-      ],
-    ));
+          children: [
+            TextFormField(
+              controller: state.emailCon,
+              validator: Validators.isAnEmail,
+              decoration: InputDecoration(labelText: "E-mail"),
+            ),
+            TextFormField(
+              controller: state.passwordCon,
+              validator: Validators.hasValue,
+              obscureText: true,
+              obscuringCharacter: '●',
+              decoration: InputDecoration(labelText: "Password"),
+            ),
+            MaterialButton(
+              onPressed: state.login,
+              child: Text("Log in"),
+            )
+          ],
+        ));
   }
 }

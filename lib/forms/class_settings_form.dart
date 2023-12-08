@@ -1,5 +1,5 @@
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:flutter/material.dart';

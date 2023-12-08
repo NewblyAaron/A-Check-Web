@@ -1,4 +1,4 @@
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/student/student_profile.dart';
 
 import './students_page.dart';

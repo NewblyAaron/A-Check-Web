@@ -1,7 +1,6 @@
 import 'package:a_check_web/forms/class_form.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,7 @@ class ClassFormState extends State<ClassForm> {
       nameCon.text = widget.schoolClass!.name;
       sectionCon.text = widget.schoolClass!.section;
       schedules = widget.schoolClass!.schedule;
-      widget.schoolClass!.teacher.then((value) => setState(() => selectedTeacher = value));
+      widget.schoolClass!.getTeacher().then((value) => setState(() => selectedTeacher = value));
     }
   }
 

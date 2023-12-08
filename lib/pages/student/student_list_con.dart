@@ -1,6 +1,6 @@
 import 'package:a_check_web/forms/student_form.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/student/student_list.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:a_check_web/widgets/cell_actions.dart';

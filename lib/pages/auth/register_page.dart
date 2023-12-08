@@ -69,9 +69,9 @@ class RegisterPageState extends State<RegisterPage> {
           Navigator.pop(context);
         });
       });
-    } catch (e) {
-      snackbarKey.currentState!
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+    } on FirebaseAuthException catch (e) {
+      snackbarKey.currentState!.showSnackBar(
+          SnackBar(content: Text(e.message ?? "Error! ${e.code}")));
     }
   }
 }

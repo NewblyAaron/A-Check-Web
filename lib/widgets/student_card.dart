@@ -1,5 +1,5 @@
-import 'package:a_check_web/model/school_class.dart';
-import 'package:a_check_web/model/person.dart';
+
+import 'package:a_check_web/model/school.dart';
 import 'package:flutter/material.dart';
 
 class StudentCard extends StatelessWidget {

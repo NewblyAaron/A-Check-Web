@@ -1,4 +1,4 @@
-import 'package:a_check_web/model/attendance_record.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/class/attendance_records/attendance_records_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:data_table_2/data_table_2.dart';

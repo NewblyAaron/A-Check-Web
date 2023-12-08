@@ -1,5 +1,4 @@
-import 'package:a_check_web/model/attendance_record.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/class/attendance_records/attendance_records_page.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -68,7 +67,7 @@ class AttendanceRecordDataSource extends DataTableSource {
 
   updateData(List<AttendanceRecord> data) async {
     _data = data;
-    _studentMap = {for (var e in data) e.studentId: await e.student};
+    _studentMap = {for (var e in data) e.studentId: await e.getStudent()};
 
     notifyListeners();
   }
@@ -106,7 +105,7 @@ class AttendanceRecordDataSource extends DataTableSource {
   DataRow2? getRow(int index) {
     return DataRow2(cells: [
       DataCell(FutureBuilder(
-          future: _data[index].student,
+          future: _data[index].getStudent(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
@@ -127,7 +126,7 @@ class AttendanceRecordDataSource extends DataTableSource {
             }
           })),
       DataCell(FutureBuilder(
-          future: _data[index].student,
+          future: _data[index].getStudent(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {

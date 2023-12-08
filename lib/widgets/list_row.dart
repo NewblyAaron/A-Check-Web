@@ -1,5 +1,6 @@
 import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
+
 import 'package:flutter/material.dart';
 
 class ListRow extends StatelessWidget {
@@ -20,8 +21,8 @@ class ListRow extends StatelessWidget {
         subtitle = (object as Student).id;
       } else if (object is Teacher) {
         subtitle = (object as Teacher).email!;
-      } else if (object is Guardian) {
-        subtitle = "Guardian of a student lol";
+      } else {
+        subtitle = "random person";
       }
     }
 

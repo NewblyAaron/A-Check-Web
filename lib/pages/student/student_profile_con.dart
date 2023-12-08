@@ -2,7 +2,6 @@ import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/person.dart';
 import 'package:a_check_web/model/school_class.dart';
 import 'package:a_check_web/pages/student/student_profile.dart';
-import 'package:a_check_web/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -45,27 +44,6 @@ class StudentState extends State<StudentProfile> {
       studentsRef.doc(student.id).update(photoPath: fsRef.fullPath).then(
           (value) => snackbarKey.currentState!.showSnackBar(SnackBar(
               content: Text("Uploaded photo of ${student.fullName}!"))));
-    });
-  }
-
-  void removeFromClass() async {
-    final result = await Dialogs.showConfirmDialog(
-        context,
-        const Text("Warning"),
-        Text(
-            "${widget.student.firstName} will be removed to class ${widget.studentClass!.id}. Continue?"));
-    if (result == null || !result) {
-      return;
-    }
-
-    final newStudentIds = widget.studentClass!.studentIds;
-    newStudentIds.remove(widget.student.id);
-
-    classesRef
-        .doc(widget.studentClass!.id)
-        .update(studentIds: newStudentIds)
-        .then((_) {
-      Navigator.pop(context);
     });
   }
 }

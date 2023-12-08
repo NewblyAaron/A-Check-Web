@@ -138,9 +138,17 @@ class StudentLoginPageView
                                       // adding color will hide the splash effect
                                       color: Colors.transparent,
                                     ),
-                                    child: const Text(
-                                      "Back to Login",
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.keyboard_backspace_rounded, color: const Color(0xff153faa),size: 23,),
+                                        SizedBox(width: 9,),
+                                        const Text(
+                                          "Back to Login",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

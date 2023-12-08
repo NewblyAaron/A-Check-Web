@@ -138,9 +138,17 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                       // adding color will hide the splash effect
                                       color: Colors.transparent,
                                     ),
-                                    child: const Text(
-                                      "Log in as a Student",
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                    child: const Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.account_circle_rounded, color: Color(0xff153faa), size: 23,),
+                                        SizedBox(width: 9,),
+                                        Text(
+                                          "Log in as a Student",
+                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

@@ -76,7 +76,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
           padding: const EdgeInsets.all(30.0),
           child: SizedBox(
             width: 350,
-            height: 600,
+            height: 570,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -88,7 +88,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                     children: [
                       SizedBox(
                         width: 450,
-                        height: 600,
+                        height: 570,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -109,7 +109,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                             ),
                             buildForm(),
                             const SizedBox(
-                              height: 25,
+                              height: 20,
                             ),
                             Column(
                               children: [
@@ -145,12 +145,28 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                       // adding color will hide the splash effect
                                       color: Colors.transparent,
                                     ),
-                                    child: const Text(
-                                      "Log in as a Student",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xff153faa)),
+                                    child: const Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.account_circle_rounded,
+                                          color: Color(0xff153faa),
+                                          size: 23,
+                                        ),
+                                        SizedBox(
+                                          width: 9,
+                                        ),
+                                        Text(
+                                          "Log in as a Student",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xff153faa)),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -172,14 +188,16 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                   children: [
                                     const Text("Don't have a school account?"),
                                     MaterialButton(
+                                        minWidth: 30,
                                         onPressed: state.register,
                                         hoverColor: Colors.transparent,
                                         child: const Text(
                                           "Register",
                                           style: TextStyle(
                                               color: Color(0xff153faa),
-                                              fontWeight: FontWeight.w400,
-                                              fontStyle: FontStyle.italic),
+                                              fontWeight: FontWeight.w500,
+                                              decoration:
+                                                  TextDecoration.underline),
                                         )),
                                   ],
                                 ),
@@ -236,6 +254,9 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
             ),
             const SizedBox(height: 12),
             InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               // hoverColor: const Color(0xff153faa).withOpacity(0.8),
               // highlightColor: const Color(0xff153faa).withOpacity(0.4),
               // splashColor: const Color(0xff153faa).withOpacity(1),

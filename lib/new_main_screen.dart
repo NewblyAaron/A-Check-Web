@@ -38,8 +38,8 @@ class MainScreenState extends State<MainScreen> {
     });
   }
 
-  void logout() {
-    FirebaseAuth.instance.signOut();
+  void logout() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   String getSearchName() {
@@ -353,7 +353,6 @@ class _ProfileDropdownState extends State<ProfileDropdown> {
                   children: [
                     Text(
                       schoolName,
-                      key: ValueKey(schoolName),
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -361,7 +360,6 @@ class _ProfileDropdownState extends State<ProfileDropdown> {
                     ),
                     Text(
                       officeName,
-                      key: ValueKey(schoolName),
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 12,

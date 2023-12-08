@@ -116,3 +116,25 @@ node_modules/
 # exported data
 .firebase-data
 \#run_firebase_emulator.bat
+/data/auth_export/accounts.json
+/data/firestore_export/all_namespaces/all_kinds/all_namespaces_all_kinds.export_metadata
+/data/storage_export/buckets.json
+/data/auth_export/config.json
+/linux/flutter/ephemeral/.plugin_symlinks/desktop_webview_auth/
+/linux/flutter/ephemeral/.plugin_symlinks/file_selector_linux/
+/data/firebase-export-metadata.json
+/data/firestore_export/firestore_export.overall_export_metadata
+/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+/ios/Flutter/flutter_export_environment.sh
+/macos/Flutter/ephemeral/flutter_export_environment.sh
+/ios/Flutter/Generated.xcconfig
+/linux/flutter/generated_plugin_registrant.cc
+/linux/flutter/generated_plugin_registrant.h
+/linux/flutter/generated_plugins.cmake
+/ios/Runner/GeneratedPluginRegistrant.h
+/ios/Runner/GeneratedPluginRegistrant.m
+/macos/Flutter/GeneratedPluginRegistrant.swift
+/linux/flutter/ephemeral/.plugin_symlinks/image_picker_linux/
+/data/firestore_export/all_namespaces/all_kinds/output-0
+/linux/flutter/ephemeral/.plugin_symlinks/path_provider_linux/
+/linux/flutter/ephemeral/.plugin_symlinks/shared_preferences_linux/

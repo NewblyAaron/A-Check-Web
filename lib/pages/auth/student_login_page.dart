@@ -193,6 +193,9 @@ class StudentLoginPageView
             ),
             const SizedBox(height:12),
             InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               // hoverColor: const Color(0xff153faa).withOpacity(0.8),
               // highlightColor: const Color(0xff153faa).withOpacity(0.4),
               // splashColor: const Color(0xff153faa).withOpacity(1),

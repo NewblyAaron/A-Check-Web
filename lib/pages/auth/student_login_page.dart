@@ -166,10 +166,16 @@ class StudentLoginPageView
           children: [
             DropdownSearch<School>(
               popupProps: const PopupProps.menu(
+                  title: Text("Search school", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                   showSearchBox: true,
                   showSelectedItems: true,
                   searchFieldProps: TextFieldProps(
-                      decoration: InputDecoration(labelText: "School"))),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "School",
+                      )
+                  )
+              ),
               asyncItems: state.getSearchedItems,
               itemAsString: (item) => item.name,
               compareFn: (item1, item2) => item1.id == item2.id,

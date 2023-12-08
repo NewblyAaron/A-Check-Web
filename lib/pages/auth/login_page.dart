@@ -76,7 +76,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
           padding: const EdgeInsets.all(30.0),
           child: SizedBox(
             width: 350,
-            height: 600,
+            height: 570,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -88,7 +88,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                     children: [
                       SizedBox(
                         width: 450,
-                        height: 600,
+                        height: 570,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

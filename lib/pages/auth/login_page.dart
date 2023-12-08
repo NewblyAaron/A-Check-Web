@@ -102,11 +102,10 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                             const Text("Log in to A-Check", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
                             const SizedBox(height: 20,),
                             buildForm(),
-                            const SizedBox(height: 20,),
+                            const SizedBox(height: 25,),
 
                             Column(
                               children: [
-                                const SizedBox(height: 25,),
                                 const Row(
                                   children: [
                                     Expanded(
@@ -118,7 +117,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 25,),
+                                const SizedBox(height: 20,),
                                 InkWell(
                                   customBorder: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),

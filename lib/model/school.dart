@@ -24,15 +24,10 @@ final schoolsRef = SchoolCollectionReference();
 @Collection<AttendanceRecord>('schools/*/attendances')
 @firestoreSerializable
 class School {
-  School(
-      {required this.id,
-      required this.name,
-      required this.officeName,
-      required this.accountUid});
+  School({required this.id, required this.name, required this.officeName});
 
   final String name;
   final String officeName;
-  final String accountUid;
 
   factory School.fromJson(Map<String, Object?> json) => _$SchoolFromJson(json);
 
@@ -361,7 +356,7 @@ class AttendanceRecord {
   Map<String, Object?> toJson() => _$AttendanceRecordToJson(this);
 
   Future<Student> getStudent(String schoolId) async {
-     return (await schoolsRef.doc(schoolId).students.doc(studentId).get()).data!;
+    return (await schoolsRef.doc(schoolId).students.doc(studentId).get()).data!;
   }
 }
 

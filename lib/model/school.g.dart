@@ -150,8 +150,6 @@ abstract class SchoolDocumentReference
     FieldValue nameFieldValue,
     String officeName,
     FieldValue officeNameFieldValue,
-    String accountUid,
-    FieldValue accountUidFieldValue,
   });
 
   /// Updates fields in the current document using the transaction API.
@@ -163,8 +161,6 @@ abstract class SchoolDocumentReference
     FieldValue nameFieldValue,
     String officeName,
     FieldValue officeNameFieldValue,
-    String accountUid,
-    FieldValue accountUidFieldValue,
   });
 }
 
@@ -219,8 +215,6 @@ class _$SchoolDocumentReference
     FieldValue? nameFieldValue,
     Object? officeName = _sentinel,
     FieldValue? officeNameFieldValue,
-    Object? accountUid = _sentinel,
-    FieldValue? accountUidFieldValue,
   }) async {
     assert(
       name == _sentinel || nameFieldValue == null,
@@ -229,10 +223,6 @@ class _$SchoolDocumentReference
     assert(
       officeName == _sentinel || officeNameFieldValue == null,
       "Cannot specify both officeName and officeNameFieldValue",
-    );
-    assert(
-      accountUid == _sentinel || accountUidFieldValue == null,
-      "Cannot specify both accountUid and accountUidFieldValue",
     );
     final json = {
       if (name != _sentinel)
@@ -243,11 +233,6 @@ class _$SchoolDocumentReference
             _$SchoolPerFieldToJson.officeName(officeName as String),
       if (officeNameFieldValue != null)
         _$SchoolFieldMap['officeName']!: officeNameFieldValue,
-      if (accountUid != _sentinel)
-        _$SchoolFieldMap['accountUid']!:
-            _$SchoolPerFieldToJson.accountUid(accountUid as String),
-      if (accountUidFieldValue != null)
-        _$SchoolFieldMap['accountUid']!: accountUidFieldValue,
     };
 
     return reference.update(json);
@@ -259,8 +244,6 @@ class _$SchoolDocumentReference
     FieldValue? nameFieldValue,
     Object? officeName = _sentinel,
     FieldValue? officeNameFieldValue,
-    Object? accountUid = _sentinel,
-    FieldValue? accountUidFieldValue,
   }) {
     assert(
       name == _sentinel || nameFieldValue == null,
@@ -269,10 +252,6 @@ class _$SchoolDocumentReference
     assert(
       officeName == _sentinel || officeNameFieldValue == null,
       "Cannot specify both officeName and officeNameFieldValue",
-    );
-    assert(
-      accountUid == _sentinel || accountUidFieldValue == null,
-      "Cannot specify both accountUid and accountUidFieldValue",
     );
     final json = {
       if (name != _sentinel)
@@ -283,11 +262,6 @@ class _$SchoolDocumentReference
             _$SchoolPerFieldToJson.officeName(officeName as String),
       if (officeNameFieldValue != null)
         _$SchoolFieldMap['officeName']!: officeNameFieldValue,
-      if (accountUid != _sentinel)
-        _$SchoolFieldMap['accountUid']!:
-            _$SchoolPerFieldToJson.accountUid(accountUid as String),
-      if (accountUidFieldValue != null)
-        _$SchoolFieldMap['accountUid']!: accountUidFieldValue,
     };
 
     transaction.update(reference, json);
@@ -411,17 +385,6 @@ abstract class SchoolQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
-  SchoolQuery whereAccountUid({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
-  });
 
   SchoolQuery orderByDocumentId({
     bool descending = false,
@@ -448,18 +411,6 @@ abstract class SchoolQuery
   });
 
   SchoolQuery orderByOfficeName({
-    bool descending = false,
-    String startAt,
-    String startAfter,
-    String endAt,
-    String endBefore,
-    SchoolDocumentSnapshot? startAtDocument,
-    SchoolDocumentSnapshot? endAtDocument,
-    SchoolDocumentSnapshot? endBeforeDocument,
-    SchoolDocumentSnapshot? startAfterDocument,
-  });
-
-  SchoolQuery orderByAccountUid({
     bool descending = false,
     String startAt,
     String startAfter,
@@ -729,48 +680,6 @@ class _$SchoolQuery extends QueryReference<School, SchoolQuerySnapshot>
     );
   }
 
-  SchoolQuery whereAccountUid({
-    String? isEqualTo,
-    String? isNotEqualTo,
-    String? isLessThan,
-    String? isLessThanOrEqualTo,
-    String? isGreaterThan,
-    String? isGreaterThanOrEqualTo,
-    bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
-  }) {
-    return _$SchoolQuery(
-      _collection,
-      $referenceWithoutCursor: $referenceWithoutCursor.where(
-        _$SchoolFieldMap['accountUid']!,
-        isEqualTo: isEqualTo != null
-            ? _$SchoolPerFieldToJson.accountUid(isEqualTo)
-            : null,
-        isNotEqualTo: isNotEqualTo != null
-            ? _$SchoolPerFieldToJson.accountUid(isNotEqualTo)
-            : null,
-        isLessThan: isLessThan != null
-            ? _$SchoolPerFieldToJson.accountUid(isLessThan)
-            : null,
-        isLessThanOrEqualTo: isLessThanOrEqualTo != null
-            ? _$SchoolPerFieldToJson.accountUid(isLessThanOrEqualTo)
-            : null,
-        isGreaterThan: isGreaterThan != null
-            ? _$SchoolPerFieldToJson.accountUid(isGreaterThan)
-            : null,
-        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != null
-            ? _$SchoolPerFieldToJson.accountUid(isGreaterThanOrEqualTo)
-            : null,
-        isNull: isNull,
-        whereIn: whereIn?.map((e) => _$SchoolPerFieldToJson.accountUid(e)),
-        whereNotIn:
-            whereNotIn?.map((e) => _$SchoolPerFieldToJson.accountUid(e)),
-      ),
-      $queryCursor: $queryCursor,
-    );
-  }
-
   SchoolQuery orderByDocumentId({
     bool descending = false,
     Object? startAt = _sentinel,
@@ -928,78 +837,6 @@ class _$SchoolQuery extends QueryReference<School, SchoolQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor
         .orderBy(_$SchoolFieldMap['officeName']!, descending: descending);
-    var queryCursor = $queryCursor;
-
-    if (startAtDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        startAt: const [],
-        startAtDocumentSnapshot: startAtDocument.snapshot,
-      );
-    }
-    if (startAfterDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        startAfter: const [],
-        startAfterDocumentSnapshot: startAfterDocument.snapshot,
-      );
-    }
-    if (endAtDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        endAt: const [],
-        endAtDocumentSnapshot: endAtDocument.snapshot,
-      );
-    }
-    if (endBeforeDocument != null) {
-      queryCursor = queryCursor.copyWith(
-        endBefore: const [],
-        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
-      );
-    }
-
-    if (startAt != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        startAt: [...queryCursor.startAt, startAt],
-        startAtDocumentSnapshot: null,
-      );
-    }
-    if (startAfter != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        startAfter: [...queryCursor.startAfter, startAfter],
-        startAfterDocumentSnapshot: null,
-      );
-    }
-    if (endAt != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        endAt: [...queryCursor.endAt, endAt],
-        endAtDocumentSnapshot: null,
-      );
-    }
-    if (endBefore != _sentinel) {
-      queryCursor = queryCursor.copyWith(
-        endBefore: [...queryCursor.endBefore, endBefore],
-        endBeforeDocumentSnapshot: null,
-      );
-    }
-
-    return _$SchoolQuery(
-      _collection,
-      $referenceWithoutCursor: query,
-      $queryCursor: queryCursor,
-    );
-  }
-
-  SchoolQuery orderByAccountUid({
-    bool descending = false,
-    Object? startAt = _sentinel,
-    Object? startAfter = _sentinel,
-    Object? endAt = _sentinel,
-    Object? endBefore = _sentinel,
-    SchoolDocumentSnapshot? startAtDocument,
-    SchoolDocumentSnapshot? endAtDocument,
-    SchoolDocumentSnapshot? endBeforeDocument,
-    SchoolDocumentSnapshot? startAfterDocument,
-  }) {
-    final query = $referenceWithoutCursor
-        .orderBy(_$SchoolFieldMap['accountUid']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -9315,13 +9152,11 @@ School _$SchoolFromJson(Map<String, dynamic> json) => School(
       id: json['id'] as String,
       name: json['name'] as String,
       officeName: json['officeName'] as String,
-      accountUid: json['accountUid'] as String,
     );
 
 const _$SchoolFieldMap = <String, String>{
   'name': 'name',
   'officeName': 'officeName',
-  'accountUid': 'accountUid',
   'id': 'id',
 };
 
@@ -9332,15 +9167,12 @@ abstract class _$SchoolPerFieldToJson {
   // ignore: unused_element
   static Object? officeName(String instance) => instance;
   // ignore: unused_element
-  static Object? accountUid(String instance) => instance;
-  // ignore: unused_element
   static Object? id(String instance) => instance;
 }
 
 Map<String, dynamic> _$SchoolToJson(School instance) => <String, dynamic>{
       'name': instance.name,
       'officeName': instance.officeName,
-      'accountUid': instance.accountUid,
       'id': instance.id,
     };
 

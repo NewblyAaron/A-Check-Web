@@ -38,8 +38,8 @@ class MainScreenState extends State<MainScreen> {
     });
   }
 
-  void logout() async {
-    await FirebaseAuth.instance.signOut();
+  void logout() {
+    FirebaseAuth.instance.signOut();
   }
 
   String getSearchName() {

@@ -197,6 +197,12 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
           if (snapshot.hasData) {
             final records = snapshot.data!;
 
+            if (records.isEmpty) {
+              return const Center(
+              child: Text("No records found!"),
+            );
+            }
+
             return ListView(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -207,7 +213,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
             );
           } else {
             return const Center(
-              child: Text("No records found!"),
+              child: Text("Failed to get attendances of class"),
             );
           }
         } else {

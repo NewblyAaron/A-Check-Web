@@ -2,6 +2,7 @@ import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/dashboard/student_dashboard.dart';
 import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/utils/validators.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
@@ -16,10 +17,13 @@ class StudentLoginPageState extends State<StudentLoginPage> {
   @override
   Widget build(BuildContext context) => StudentLoginPageView(this);
 
+  final formKey = GlobalKey<FormState>();
   TextEditingController idCon = TextEditingController();
   School? selectedSchool;
 
   void login() {
+    if (!formKey.currentState!.validate()) return;
+
     if (selectedSchool == null) {
       snackbarKey.currentState!
           .showSnackBar(const SnackBar(content: Text("Select a school!")));
@@ -52,6 +56,14 @@ class StudentLoginPageState extends State<StudentLoginPage> {
   void onDropdownChanged(School? value) {
     setState(() => selectedSchool = value);
   }
+
+  String? validateDropdown(School? value) {
+    if (value == null) {
+      return "This field cannot be left blank!";
+    }
+
+    return null;
+  }
 }
 
 class StudentLoginPageView
@@ -74,7 +86,7 @@ class StudentLoginPageView
           padding: const EdgeInsets.all(30.0),
           child: SizedBox(
             width: 350,
-            height: 500,
+            height: 600,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -84,78 +96,74 @@ class StudentLoginPageView
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      SizedBox(
-                        width: 450,
-                        height: 500,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 35, bottom: 30),
-                              child:
-                              Image(
-                                  image: AssetImage("assets/images/small_logo_blue.png"),
-                                  height: 100),
-                            ),
-                            const Text("Log in as a Student", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
-                            const SizedBox(height: 25,),
-                            buildForm(),
-                            const SizedBox(height: 25,),
-                            Column(
-                              children: [
-                                const Row(
-                                  children: [
-                                    Expanded(
-                                        child: Divider()
-                                    ),
-                                    Text("     or     "),
-                                    Expanded(
-                                        child: Divider()
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 25,),
-                                InkWell(
-                                  customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 35, bottom: 30),
+                            child:
+                            Image(
+                                image: AssetImage("assets/images/small_logo_blue.png"),
+                                height: 100),
+                          ),
+                          const Text("Log in as a Student", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
+                          const SizedBox(height: 25,),
+                          buildForm(),
+                          const SizedBox(height: 25,),
+                          Column(
+                            children: [
+                              const Row(
+                                children: [
+                                  Expanded(
+                                      child: Divider()
                                   ),
-                                  // hoverColor: const Color(0xff153faa).withOpacity(0.8),
-                                  // highlightColor: const Color(0xff153faa).withOpacity(0.4),
-                                  // splashColor: const Color(0xff153faa).withOpacity(1),
-                                  onTap: (){
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.symmetric(vertical: 8),
-                                    width: 350,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      border: Border.all(
-                                        color: const Color(0xff153faa),
-                                        width: 1,
+                                  Text("     or     "),
+                                  Expanded(
+                                      child: Divider()
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 25,),
+                              InkWell(
+                                customBorder: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                // hoverColor: const Color(0xff153faa).withOpacity(0.8),
+                                // highlightColor: const Color(0xff153faa).withOpacity(0.4),
+                                // splashColor: const Color(0xff153faa).withOpacity(1),
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  width: 350,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(35),
+                                    border: Border.all(
+                                      color: const Color(0xff153faa),
+                                      width: 1,
+                                    ),
+                                    // adding color will hide the splash effect
+                                    color: Colors.transparent,
+                                  ),
+                                  child: const Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.keyboard_backspace_rounded, color: Color(0xff153faa),size: 23,),
+                                      SizedBox(width: 9,),
+                                      Text(
+                                        "Back to Login",
+                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
                                       ),
-                                      // adding color will hide the splash effect
-                                      color: Colors.transparent,
-                                    ),
-                                    child: const Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.keyboard_backspace_rounded, color: Color(0xff153faa),size: 23,),
-                                        SizedBox(width: 9,),
-                                        Text(
-                                          "Back to Login",
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
-                                        ),
-                                      ],
-                                    ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -168,7 +176,7 @@ class StudentLoginPageView
     );
   }
 
-  Widget _customDropDownSchool(BuildContext context, item) {
+  Widget _customDropDownSchool(BuildContext context, School? item) {
     return Container(
         child: (item == null)
             ? const ListTile(
@@ -191,7 +199,7 @@ class StudentLoginPageView
             : ListTile(
             contentPadding: const EdgeInsets.all(0),
             title: Text(
-              item.title,
+              item.name,
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 13.5, color: Colors.black),
@@ -201,6 +209,7 @@ class StudentLoginPageView
   }
   Form buildForm() {
     return Form(
+      key: state.formKey,
         child: Column(
           children: [
             DropdownSearch<School>(
@@ -222,10 +231,12 @@ class StudentLoginPageView
               compareFn: (item1, item2) => item1.id == item2.id,
               onChanged: state.onDropdownChanged,
               selectedItem: state.selectedSchool,
+              validator: state.validateDropdown,
             ),
             const SizedBox(height:12),
             TextFormField(
               controller: state.idCon,
+              validator: Validators.hasValue,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.account_circle_rounded,color:Colors.black54, size: 20,),

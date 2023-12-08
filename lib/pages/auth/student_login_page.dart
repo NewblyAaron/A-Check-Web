@@ -86,7 +86,7 @@ class StudentLoginPageView
           padding: const EdgeInsets.all(30.0),
           child: SizedBox(
             width: 350,
-            height: 500,
+            height: 600,
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -97,8 +97,8 @@ class StudentLoginPageView
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(
-                        width: 450,
-                        height: 500,
+                        width: 350,
+                        height: 600,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -187,7 +187,7 @@ class StudentLoginPageView
                 contentPadding: EdgeInsets.all(0),
                 title: Row(
                   children: [
-                    Icon(Icons.search_rounded, color: Color(0xff153faa),size: 23,),
+                    Icon(Icons.search_rounded, color: Color(0xff828282),size: 23,),
                     SizedBox(width: 9,),
                     Text("Find your school",
                         textAlign: TextAlign.start,

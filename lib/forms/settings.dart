@@ -64,7 +64,7 @@ class SettingsFormView extends WidgetView<SettingsForm, SettingsFormState> {
         children: [
           buildForm(),
           const SizedBox(
-            height: 32,
+            height: 48,
           ),
           buildButtons()
         ],

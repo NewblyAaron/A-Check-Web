@@ -1,4 +1,4 @@
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/class/class_profile_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/widgets/attendance_record_card.dart';
@@ -68,7 +68,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
       padding: const EdgeInsets.only(top: 50),
       margin: const EdgeInsets.all(16),
       child: FutureBuilder(
-        future: schoolClass.teacher,
+        future: schoolClass.getTeacher(),
         builder: (context, snapshot) => snapshot.hasData
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -134,7 +134,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                          color:Color(0xff153faa),
+                          color:const Color(0xff153faa),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -197,6 +197,12 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
           if (snapshot.hasData) {
             final records = snapshot.data!;
 
+            if (records.isEmpty) {
+              return const Center(
+              child: Text("No records found!"),
+            );
+            }
+
             return ListView(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -207,7 +213,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
             );
           } else {
             return const Center(
-              child: Text("No records found!"),
+              child: Text("Failed to get attendances of class"),
             );
           }
         } else {

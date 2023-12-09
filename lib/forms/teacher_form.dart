@@ -1,5 +1,5 @@
 import 'package:a_check_web/forms/teacher_form_con.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:flutter/material.dart';

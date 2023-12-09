@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:a_check_web/forms/student_form.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/student/student_list.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:a_check_web/widgets/cell_actions.dart';
@@ -19,7 +21,7 @@ class StudentListState extends State<StudentList> {
         onViewButtonPressed: viewStudent,
         onEditButtonPressed: (s) => openForm(student: s));
 
-    studentsRef.snapshots().listen((event) {
+    studentsStream = studentsRef.snapshots().listen((event) {
       if (context.mounted) {
         setState(() => rows.updateData(event.docs.map((e) => e.data).toList()));
       }
@@ -32,9 +34,11 @@ class StudentListState extends State<StudentList> {
   void dispose() {
     super.dispose();
 
+    studentsStream.cancel();
     widget.searchController?.removeListener(filter);
   }
 
+  late StreamSubscription studentsStream;
   late final StudentDataSource rows;
   int sortColumnIndex = 0;
   bool sortAscending = false;

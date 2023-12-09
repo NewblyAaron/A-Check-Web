@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:a_check_web/forms/settings.dart';
-import 'package:a_check_web/main.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:a_check_web/pages/class/classes_page.dart';
 import 'package:a_check_web/pages/student/students_page.dart';
@@ -39,7 +41,7 @@ class MainScreenState extends State<MainScreen> {
   }
 
   void logout() async {
-    await FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut().then((value) => print('logged out'));
   }
 
   String getSearchName() {
@@ -60,7 +62,7 @@ class MainScreenState extends State<MainScreen> {
   void openSettings() async {
     await showDialog(
       context: context,
-      builder: (context) => Dialog(
+      builder: (context) => const Dialog(
         child: SettingsForm(),
       ),
     );
@@ -205,50 +207,9 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
             children: [
               buildSearchBar(context),
               const SizedBox(width: 48),
-              Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          prefs.getString('school_name') ?? "SCHOOL_NAME",
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          prefs.getString('office_name') ?? "OFFICE_NAME",
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                    PopupMenuButton<String>(
-                      offset: Offset.zero,
-                      position: PopupMenuPosition.under,
-                      icon: const Icon(Icons.arrow_drop_down, size: 25),
-                      tooltip: 'Profile',
-                      itemBuilder: (BuildContext context) {
-                        return [
-                          PopupMenuItem(
-                            onTap: state.openSettings,
-                            child: const Text(
-                              "Settings",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 15),
-                            ),
-                          ),
-                        ];
-                      },
-                    ),
-                  ])
+              ProfileDropdown(
+                onSettingsTap: state.openSettings,
+              )
             ],
           )
         ]));
@@ -348,5 +309,93 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
         children: views,
       ),
     );
+  }
+}
+
+class ProfileDropdown extends StatefulWidget {
+  const ProfileDropdown({
+    super.key,
+    required this.onSettingsTap,
+  });
+
+  final Function()? onSettingsTap;
+
+  @override
+  State<ProfileDropdown> createState() => _ProfileDropdownState();
+}
+
+class _ProfileDropdownState extends State<ProfileDropdown> {
+  late StreamSubscription schoolStream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    schoolStream = schoolRef.snapshots().listen((event) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    schoolStream.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          FutureBuilder(
+              future: School.info,
+              builder: (context, snapshot) {
+                final schoolName =
+                    snapshot.data?['school_name'] ?? "SCHOOL_NAME";
+                final officeName =
+                    snapshot.data?['office_name'] ?? "OFFICE_NAME";
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      schoolName,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      officeName,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                );
+              }),
+          PopupMenuButton<String>(
+            offset: Offset.zero,
+            position: PopupMenuPosition.under,
+            icon: const Icon(Icons.arrow_drop_down, size: 25),
+            tooltip: 'Profile',
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  onTap: widget.onSettingsTap,
+                  child: const Text(
+                    "Settings",
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
+                  ),
+                ),
+              ];
+            },
+          ),
+        ]);
   }
 }

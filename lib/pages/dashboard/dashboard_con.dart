@@ -1,6 +1,6 @@
-import 'package:a_check_web/model/attendance_record.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'dart:async';
+
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -12,21 +12,33 @@ class DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
 
-    attendancesRef.snapshots().listen((event) {
+    recordsStream = attendancesRef.snapshots().listen((event) {
       if (context.mounted) setState(() {});
     });
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  
+    recordsStream.cancel();
+  }
+
+  late StreamSubscription recordsStream;
 
   Future<Map<Student, int>> getTotalAbsentStudents() async {
     final students = (await studentsRef.get()).docs.map((e) => e.data).toList();
     Map<Student, int> absentMap = {};
 
     for (var s in students) {
-      final absentValue =
-          (await attendancesRef.whereStudentId(isEqualTo: s.id).get())
-              .docs
-              .length;
-      absentMap.addAll({s: absentValue});
+      final absentValue = (await attendancesRef
+              .whereStudentId(isEqualTo: s.id)
+              .get())
+          .docs
+          .where((element) => element.data.status == AttendanceStatus.Absent)
+          .length;
+
+      if (absentValue > 0) absentMap.addAll({s: absentValue});
     }
 
     return Map.fromEntries(absentMap.entries.toList()
@@ -40,11 +52,14 @@ class DashboardState extends State<Dashboard> {
     Map<SchoolClass, int> absentMap = {};
 
     for (var c in classes) {
-      final absentValue =
-          (await attendancesRef.whereClassId(isEqualTo: c.id).get())
-              .docs
-              .length;
-      absentMap.addAll({c: absentValue});
+      final absentValue = (await attendancesRef
+              .whereClassId(isEqualTo: c.id)
+              .get())
+          .docs
+          .where((element) => element.data.status == AttendanceStatus.Absent)
+          .length;
+
+      if (absentValue > 0) absentMap.addAll({c: absentValue});
     }
 
     return Map.fromEntries(absentMap.entries.toList()
@@ -66,12 +81,13 @@ class DashboardState extends State<Dashboard> {
                 .whereStudentId(isEqualTo: s.id)
                 .get())
             .docs
+            .where((element) => element.data.status == AttendanceStatus.Absent)
             .length;
 
         if (absentValue >= c.maxAbsences) count++;
       }
 
-      absentMap.addAll({s: count});
+      if (count > 0) absentMap.addAll({s: count});
     }
 
     return Map.fromEntries(absentMap.entries.toList()
@@ -98,7 +114,7 @@ class DashboardState extends State<Dashboard> {
         if (absentValue >= c.maxAbsences) count++;
       }
 
-      absentMap.addAll({c: count});
+      if (count > 0) absentMap.addAll({c: count});
     }
 
     return Map.fromEntries(absentMap.entries.toList()

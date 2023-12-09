@@ -1,5 +1,6 @@
 import 'package:a_check_web/forms/students_form_page.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/globals.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,8 @@ class StudentsFormState extends State<StudentsFormPage> {
     super.initState();
 
     studentsMap = widget.studentsMap;
-    dataSource = StudentDataSource(data: studentsMap);
+    dataSource =
+        StudentDataSource(data: studentsMap, toRemove: widget.toRemove);
     searchController = SearchController();
 
     dataSource.addListener(() => setState(() {}));
@@ -53,11 +55,20 @@ class StudentsFormState extends State<StudentsFormPage> {
 }
 
 class StudentDataSource extends DataTableSource {
-  StudentDataSource({required Map<Student, bool> data}) {
-    updateData(data);
+  StudentDataSource({required Map<Student, bool> data, bool? toRemove}) {
+    final temp = Map.fromEntries(data.entries);
+    updateData(temp);
+
+    if (toRemove == null || toRemove == false) {
+      temp.removeWhere((key, value) => value == false);
+      _alreadyAdded = Map.fromEntries(temp.entries);
+    } else {
+      _alreadyAdded = {};
+    }
   }
 
   late Map<Student, bool> _map;
+  late Map<Student, bool> _alreadyAdded;
   List<Student> _data = [];
   bool _filtered = false;
   List<Student> _filteredData = [];
@@ -136,6 +147,12 @@ class StudentDataSource extends DataTableSource {
         ],
         selected: _map[data[index]] ?? false,
         onSelectChanged: (value) {
+          if (_alreadyAdded.containsKey(data[index])) {
+            snackbarKey.currentState!.showSnackBar(const SnackBar(
+                content: Text("This student is already added!")));
+            return;
+          }
+
           _map[data[index]] = value ?? false;
 
           notifyListeners();

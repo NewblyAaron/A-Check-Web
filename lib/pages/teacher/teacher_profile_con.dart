@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/model/school.dart';
+
 import 'package:a_check_web/pages/teacher/teacher_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,11 +17,19 @@ class TeacherState extends State<TeacherProfile> {
 
     teacher = widget.teacher;
 
-    teachersRef.doc(widget.teacher.id).snapshots().listen((event) {
+    teachersStream = teachersRef.doc(widget.teacher.id).snapshots().listen((event) {
       if (context.mounted) setState(() => teacher = event.data!);
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+
+    teachersStream.cancel();
+  }
+
+  late StreamSubscription teachersStream;
   final _picker = ImagePicker();
   late Teacher teacher;
 

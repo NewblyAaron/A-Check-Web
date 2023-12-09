@@ -1,40 +1,60 @@
-import 'package:a_check_web/globals.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/new_main_screen.dart';
+import 'package:a_check_web/pages/auth/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
-class AuthGate extends StatelessWidget {
+class Auth {
+  static FirebaseAuth get auth => FirebaseAuth.instance;
+
+  static User? get currentUser => auth.currentUser;
+
+  static Future<IdTokenResult>? get idTokenResult =>
+      currentUser?.getIdTokenResult(true);
+}
+
+class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    if (bypassLogin) {
-      return const MainScreen();
-    }
+  State<AuthGate> createState() => _AuthGateState();
+}
 
+class _AuthGateState extends State<AuthGate> {
+  final authStateChanges = FirebaseAuth.instance.authStateChanges();
+
+  @override
+  void initState() {
+    super.initState();
+
+    authStateChanges.listen((event) {
+      event?.reload();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      stream: authStateChanges,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return SignInScreen(
-            providers: [
-              EmailAuthProvider(),
-            ],
-            headerBuilder: (context, constraints, shrinkOffset) => const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Image(
-                  image: AssetImage("assets/images/logo_blue.png"), height: 60),
-            ),
-            sideBuilder: (context, constraints) => const AspectRatio(
-              aspectRatio: 1,
-              child: Image(image: AssetImage("assets/images/logo_blue.png")),
-            ),
-          );
+          return const LoginPage();
         }
 
         return const MainScreen();
       },
     );
   }
+}
+
+class SchoolWidget extends InheritedWidget {
+  const SchoolWidget({super.key, required super.child, required this.school});
+
+  final School school;
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
+
+  static SchoolWidget? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<SchoolWidget>();
 }

@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:a_check_web/forms/class_settings_form.dart';
 import 'package:a_check_web/forms/students_form_page.dart';
-import 'package:a_check_web/model/attendance_record.dart';
-import 'package:a_check_web/model/person.dart';
-import 'package:a_check_web/model/school_class.dart';
+import 'package:a_check_web/globals.dart';
+import 'package:a_check_web/model/school.dart';
+
 import 'package:a_check_web/pages/class/class_profile.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +18,11 @@ class ClassProfileState extends State<ClassProfile> {
 
     schoolClass = widget.schoolClass;
 
-    classesRef.doc(widget.schoolClass.id).snapshots().listen((event) {
+    classesStream = classesRef.doc(widget.schoolClass.id).snapshots().listen((event) {
       if (context.mounted) setState(() => schoolClass = event.data!);
     });
 
-    attendancesRef
+    attendancesStream = attendancesRef
         .whereClassId(isEqualTo: widget.schoolClass.id)
         .snapshots()
         .listen((event) {
@@ -28,8 +30,16 @@ class ClassProfileState extends State<ClassProfile> {
     });
   }
 
-  late SchoolClass schoolClass;
+  @override
+  void dispose() {
+    super.dispose();
 
+    classesStream.cancel();
+    attendancesStream.cancel();
+  }
+
+  late StreamSubscription classesStream, attendancesStream;
+  late SchoolClass schoolClass;
   int sortColumnIndex = 0;
   bool sortAscending = false;
 
@@ -69,12 +79,17 @@ class ClassProfileState extends State<ClassProfile> {
     classesRef
         .doc(schoolClass.id)
         .update(studentIds: newStudentIds)
-        .whenComplete(() => setState(() {}));
+        .whenComplete(() {
+      snackbarKey.currentState!.showSnackBar(SnackBar(
+          content: Text(
+              "Successfully added ${result.length} student${result.length > 1 ? 's' : ''}.")));
+      setState(() {});
+    });
   }
 
   void removeStudents() async {
     final map = {
-      for (var element in await schoolClass.getStudents()) element: true
+      for (var element in await schoolClass.getStudents()) element: false
     };
 
     if (!context.mounted) return;
@@ -83,7 +98,9 @@ class ClassProfileState extends State<ClassProfile> {
         context: context,
         builder: (context) => Dialog(
               child: StudentsFormPage(
-                  studentsMap: map, key: ValueKey(schoolClass.id)),
+                  studentsMap: map,
+                  toRemove: true,
+                  key: ValueKey(schoolClass.id)),
             ));
 
     if (result == null || result.isEmpty) return;
@@ -94,7 +111,12 @@ class ClassProfileState extends State<ClassProfile> {
     classesRef
         .doc(schoolClass.id)
         .update(studentIds: newStudentIds)
-        .whenComplete(() => setState(() {}));
+        .whenComplete(() {
+      snackbarKey.currentState!.showSnackBar(SnackBar(
+          content: Text(
+              "Successfully removed ${result.length} student${result.length > 1 ? 's' : ''}.")));
+      setState(() {});
+    });
   }
 
   void openSettings() async {

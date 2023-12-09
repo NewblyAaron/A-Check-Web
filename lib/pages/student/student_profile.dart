@@ -1,15 +1,12 @@
-import 'package:a_check_web/model/school_class.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/student/student_profile_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:flutter/material.dart';
 
 class StudentProfile extends StatefulWidget {
-  const StudentProfile({Key? key, required this.student, this.studentClass})
-      : super(key: key);
+  const StudentProfile({Key? key, required this.student}) : super(key: key);
 
   final Student student;
-  final SchoolClass? studentClass;
 
   @override
   State<StudentProfile> createState() => StudentState();
@@ -30,12 +27,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
               children: [
                 buildStudentInfo(state.student),
                 const SizedBox(height: 24),
-                // student.guardian != null
-                //     ? buildGuardianInfo(student)
-                //     : const Text("No guardian!"),
-                widget.studentClass != null
-                    ? buildClassInfo(state.student)
-                    : buildEnrolledClasses(),
+                buildEnrolledClasses()
               ],
             )),
       ],
@@ -112,7 +104,8 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
             decoration: const BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(35.0)),
-              border: Border.fromBorderSide(BorderSide(strokeAlign: BorderSide.strokeAlignOutside)),
+              border: Border.fromBorderSide(
+                  BorderSide(strokeAlign: BorderSide.strokeAlignOutside)),
             ),
             child: FutureBuilder(
                 future: state.student.getPhotoUrl(),
@@ -226,54 +219,5 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
   Widget buildGuardianInfo(Student student) {
     return const Placeholder();
     // TODO: guardian information using firebase stuff
-    // return Padding(
-    //   padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 30),
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     children: [
-    //       const Text(
-    //         "Guardian Information",
-    //         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    //       ),
-    //       Text(
-    //         student.guardian.toString(),
-    //         style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    //       ),
-    //       TextField(
-    //         enabled: false,
-    //         decoration: const InputDecoration(
-    //             labelText: "Contact Number", isDense: true),
-    //         controller: TextEditingController(text: student.guardian?.phone),
-    //       ),
-    //       TextField(
-    //         enabled: false,
-    //         decoration:
-    //             const InputDecoration(labelText: "E-mail", isDense: true),
-    //         controller: TextEditingController(text: student.guardian?.email),
-    //       )
-    //     ],
-    //   ),
-    // );
-  }
-
-  Widget buildClassInfo(Student student) {
-    final paleMap = student.getPALEValues(widget.studentClass!.id);
-    return FutureBuilder(
-      future: paleMap,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Column(
-            children: [
-              Text("Present: ${snapshot.data!['present']}"),
-              Text("Absent: ${snapshot.data!['absent']}"),
-              Text("Late: ${snapshot.data!['late']}"),
-              Text("Excused: ${snapshot.data!['excused']}"),
-            ],
-          );
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
-    );
   }
 }

@@ -1,14 +1,15 @@
 import 'package:a_check_web/forms/students_form_con.dart';
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 class StudentsFormPage extends StatefulWidget {
-  const StudentsFormPage({Key? key, required this.studentsMap})
+  const StudentsFormPage({Key? key, required this.studentsMap, this.toRemove})
       : super(key: key);
 
   final Map<Student, bool> studentsMap;
+  final bool? toRemove;
 
   @override
   State<StudentsFormPage> createState() => StudentsFormState();

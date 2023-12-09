@@ -1,4 +1,4 @@
-import 'package:a_check_web/model/person.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/teacher/teacher_list_con.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';

@@ -5,6 +5,8 @@ import 'package:a_check_web/utils/validators.dart';
 import 'package:flutter/material.dart';
 
 class SettingsForm extends StatefulWidget {
+  const SettingsForm({super.key});
+
   @override
   State<SettingsForm> createState() => SettingsFormState();
 }

@@ -65,6 +65,7 @@ class RegisterPageState extends State<RegisterPage> {
             officeName: officeNameCon.text);
         func.httpsCallable("addAdminRole").call({
           "email": value.user!.email,
+          "schoolId": ref.id,
         }).then((value) {
           if (!value.data) {
             throw FirebaseAuthException(code: 'set-admin-fail');

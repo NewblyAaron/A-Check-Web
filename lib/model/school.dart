@@ -18,13 +18,14 @@ const firestoreSerializable = JsonSerializable(
     createPerFieldToJson: true);
 
 final schoolsRef = SchoolCollectionReference();
-final studentsRef = schoolRef.students;
-final classesRef = schoolRef.classes;
-final teachersRef = schoolRef.teachers;
-final attendancesRef = schoolRef.attendances;
+StudentCollectionReference get studentsRef => schoolRef.students;
+SchoolClassCollectionReference get classesRef => schoolRef.classes;
+TeacherCollectionReference get teachersRef => schoolRef.teachers;
+AttendanceRecordCollectionReference get attendancesRef => schoolRef.attendances;
 
 SchoolDocumentReference get schoolRef {
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  print('reference of ${uid}');
 
   return schoolsRef.doc(uid);
 }

@@ -41,7 +41,7 @@ class MainScreenState extends State<MainScreen> {
   }
 
   void logout() async {
-    await FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut().then((value) => print('logged out'));
   }
 
   String getSearchName() {

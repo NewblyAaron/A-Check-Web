@@ -34,8 +34,11 @@ class LoginPageState extends State<LoginPage> {
     final auth = FirebaseAuth.instance;
 
     try {
-      await auth.signInWithEmailAndPassword(
-          email: emailCon.text, password: passwordCon.text);
+      await auth
+          .signInWithEmailAndPassword(
+              email: emailCon.text, password: passwordCon.text)
+          .then((value) =>
+              print('logged in as ${value.user?.email} ${value.user?.uid}'));
     } on FirebaseAuthException catch (e) {
       snackbarKey.currentState!.showSnackBar(
           SnackBar(content: Text(e.message ?? "Error! ${e.code}")));

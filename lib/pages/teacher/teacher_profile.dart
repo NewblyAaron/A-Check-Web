@@ -146,27 +146,29 @@ class TeacherView extends WidgetView<TeacherProfile, TeacherState> {
   }
 
   Widget buildTeacherInfo(Teacher teacher) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Teacher Information",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        ListView(
-          shrinkWrap: true,
-          children: [
-            ListTile(
-              title: Text(teacher.email!),
-              leading: const Icon(Icons.email),
-            ),
-            ListTile(
-              title: Text(teacher.phoneNumber!),
-              leading: const Icon(Icons.phone),
-            ),
-          ],
-        )
-      ],
+    return SelectionArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Teacher Information",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          ListView(
+            shrinkWrap: true,
+            children: [
+              ListTile(
+                title: Text(teacher.email!),
+                leading: const Icon(Icons.email),
+              ),
+              ListTile(
+                title: Text(teacher.phoneNumber!),
+                leading: const Icon(Icons.phone),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 

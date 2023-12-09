@@ -147,27 +147,29 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
   }
 
   Widget buildStudentInfo(Student student) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Student Information",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        ListView(
-          shrinkWrap: true,
-          children: [
-            ListTile(
-              title: Text(student.email!),
-              leading: const Icon(Icons.email),
-            ),
-            ListTile(
-              title: Text(student.phoneNumber!),
-              leading: const Icon(Icons.phone),
-            ),
-          ],
-        )
-      ],
+    return SelectionArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Student Information",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          ListView(
+            shrinkWrap: true,
+            children: [
+              ListTile(
+                title: Text(student.email!),
+                leading: const Icon(Icons.email),
+              ),
+              ListTile(
+                title: Text(student.phoneNumber!),
+                leading: const Icon(Icons.phone),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 

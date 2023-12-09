@@ -1,5 +1,5 @@
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/main.dart';
+import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +19,17 @@ class SettingsFormState extends State<SettingsForm> {
   void initState() {
     super.initState();
 
-    schoolNameCon = TextEditingController(text: prefs.getString('school_name'));
-    officeNameCon = TextEditingController(text: prefs.getString('office_name'));
+    schoolNameCon = TextEditingController();
+    officeNameCon = TextEditingController();
+
+    schoolRef.get().then((value) {
+      if (context.mounted) {
+        setState(() {
+          schoolNameCon.text = value.data!.name;
+          officeNameCon.text = value.data!.name;
+        });
+      }
+    });
   }
 
   final formKey = GlobalKey<FormState>();
@@ -33,11 +42,11 @@ class SettingsFormState extends State<SettingsForm> {
   void finalize() async {
     if (!formKey.currentState!.validate()) return;
 
-    await prefs.setString('school_name', schoolNameCon.text);
-    await prefs.setString('office_name', officeNameCon.text);
+    await schoolRef.update(name: schoolNameCon.text, officeName: officeNameCon.text);
 
     if (context.mounted) {
-      snackbarKey.currentState!.showSnackBar(const SnackBar(content: Text("Saved profile settings!")));
+      snackbarKey.currentState!.showSnackBar(
+          const SnackBar(content: Text("Saved profile settings!")));
       Navigator.pop(context);
     }
   }

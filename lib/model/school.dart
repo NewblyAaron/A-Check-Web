@@ -25,7 +25,6 @@ AttendanceRecordCollectionReference get attendancesRef => schoolRef.attendances;
 
 SchoolDocumentReference get schoolRef {
   final uid = FirebaseAuth.instance.currentUser!.uid;
-  print('reference of ${uid}');
 
   return schoolsRef.doc(uid);
 }

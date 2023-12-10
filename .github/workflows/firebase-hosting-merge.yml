@@ -20,6 +20,7 @@ jobs:
       - run: flutter build web --source-maps --web-renderer=canvaskit
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          entryPoint: ./
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_A_CHECK_C4182 }}'
           projectId: a-check-c4182

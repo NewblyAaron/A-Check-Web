@@ -63,20 +63,26 @@ class RegisterPageState extends State<RegisterPage> {
             id: ref.id,
             name: schoolNameCon.text,
             officeName: officeNameCon.text);
-        func.httpsCallable("addAdminRole").call({
-          "email": value.user!.email,
-          "schoolId": ref.id,
-        }).then((value) {
-          if (!value.data) {
-            throw FirebaseAuthException(code: 'set-admin-fail');
-          }
 
-          ref.set(school).whenComplete(() {
-            snackbarKey.currentState!
-                .showSnackBar(const SnackBar(content: Text("Registered!")));
-            Navigator.pop(context);
-          });
+        ref.set(school).whenComplete(() {
+          snackbarKey.currentState!
+              .showSnackBar(const SnackBar(content: Text("Registered!")));
+          Navigator.pop(context);
         });
+        // func.httpsCallable("addAdminRole").call({
+        //   "email": value.user!.email,
+        //   "schoolId": ref.id,
+        // }).then((value) {
+        //   if (!value.data) {
+        //     throw FirebaseAuthException(code: 'set-admin-fail');
+        //   }
+
+        //   ref.set(school).whenComplete(() {
+        //     snackbarKey.currentState!
+        //         .showSnackBar(const SnackBar(content: Text("Registered!")));
+        //     Navigator.pop(context);
+        //   });
+        // });
       });
     } on FirebaseAuthException catch (e) {
       snackbarKey.currentState!.showSnackBar(
@@ -122,30 +128,36 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const Padding(
-                            padding: EdgeInsets.only(top: 35, bottom: 30),
-                            child:
-                            Image(
-                                image: AssetImage("assets/images/small_logo_blue.png"),
-                                height: 100),
-                          ),
-                            const Text("Register a School", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
-                            const SizedBox(height: 20,),
+                              padding: EdgeInsets.only(top: 35, bottom: 30),
+                              child: Image(
+                                  image: AssetImage(
+                                      "assets/images/small_logo_blue.png"),
+                                  height: 100),
+                            ),
+                            const Text(
+                              "Register a School",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 24),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             buildForm(),
-                            const SizedBox(height: 20,),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             Column(
                               children: [
                                 const Row(
                                   children: [
-                                    Expanded(
-                                        child: Divider()
-                                    ),
+                                    Expanded(child: Divider()),
                                     Text("     or     "),
-                                    Expanded(
-                                        child: Divider()
-                                    ),
+                                    Expanded(child: Divider()),
                                   ],
                                 ),
-                                const SizedBox(height: 25,),
+                                const SizedBox(
+                                  height: 25,
+                                ),
                                 InkWell(
                                   customBorder: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
@@ -153,12 +165,13 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
                                   // hoverColor: const Color(0xff153faa).withOpacity(0.8),
                                   // highlightColor: const Color(0xff153faa).withOpacity(0.4),
                                   // splashColor: const Color(0xff153faa).withOpacity(1),
-                                  onTap: (){
+                                  onTap: () {
                                     Navigator.pop(context);
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
-                                    padding: const EdgeInsets.symmetric(vertical: 8),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
                                     width: 350,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(35),
@@ -170,14 +183,25 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
                                       color: Colors.transparent,
                                     ),
                                     child: const Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.keyboard_backspace_rounded, color: Color(0xff153faa),size: 23,),
-                                        SizedBox(width: 9,),
+                                        Icon(
+                                          Icons.keyboard_backspace_rounded,
+                                          color: Color(0xff153faa),
+                                          size: 23,
+                                        ),
+                                        SizedBox(
+                                          width: 9,
+                                        ),
                                         Text(
                                           "Back to Login",
-                                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color(0xff153faa)),
                                         ),
                                       ],
                                     ),
@@ -209,31 +233,40 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
               validator: Validators.hasValue,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.school_rounded,color:Colors.black54, size: 20,),
-                  labelText: "School Name"
-              ),
+                  prefixIcon: Icon(
+                    Icons.school_rounded,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "School Name"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             TextFormField(
               controller: state.officeNameCon,
               validator: Validators.hasValue,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.co_present_rounded,color:Colors.black54, size: 20,),
-                  labelText: "Office Name"
-              ),
+                  prefixIcon: Icon(
+                    Icons.co_present_rounded,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "Office Name"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             TextFormField(
               controller: state.emailCon,
               validator: Validators.isAnEmail,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email_rounded,color:Colors.black54, size: 20,),
-                  labelText: "E-mail"
-              ),
+                  prefixIcon: Icon(
+                    Icons.email_rounded,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "E-mail"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             TextFormField(
               controller: state.passwordCon,
               validator: Validators.hasValue,
@@ -241,11 +274,14 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
               obscuringCharacter: '•',
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.key_rounded,color:Colors.black54, size: 20,),
-                  labelText: "Password"
-              ),
+                  prefixIcon: Icon(
+                    Icons.key_rounded,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "Password"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             TextFormField(
               controller: state.confirmCon,
               validator: state.confirmPassword,
@@ -253,11 +289,14 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
               obscuringCharacter: '•',
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.password_rounded,color:Colors.black54, size: 20,),
-                  labelText: "Confirm Password"
-              ),
+                  prefixIcon: Icon(
+                    Icons.password_rounded,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "Confirm Password"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             InkWell(
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -277,7 +316,10 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
                 ),
                 child: const Text(
                   "Register",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
               ),
             ),

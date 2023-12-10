@@ -140,6 +140,7 @@ class Teacher extends Person {
       required super.lastName,
       super.email,
       super.phoneNumber,
+      required this.password,
       String? photoPath}) {
     this.photoPath = photoPath ?? "";
   }
@@ -150,6 +151,7 @@ class Teacher extends Person {
   @Id()
   final String id;
 
+  late final String password;
   late final String photoPath;
 
   @override

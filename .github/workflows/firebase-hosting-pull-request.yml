@@ -2,10 +2,7 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on PR
-'on': 
-  pull_request:
-    paths:
-      - "lib/**"
+on: pull_request
 jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
@@ -21,6 +18,7 @@ jobs:
       - run: flutter build web --source-maps --web-renderer=canvaskit
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          entryPoint: ./
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_A_CHECK_C4182 }}'
           projectId: a-check-c4182

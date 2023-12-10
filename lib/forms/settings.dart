@@ -26,7 +26,7 @@ class SettingsFormState extends State<SettingsForm> {
       if (context.mounted) {
         setState(() {
           schoolNameCon.text = value.data!.name;
-          officeNameCon.text = value.data!.name;
+          officeNameCon.text = value.data!.officeName;
         });
       }
     });

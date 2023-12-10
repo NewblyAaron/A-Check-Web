@@ -2935,6 +2935,8 @@ abstract class TeacherDocumentReference
   ///
   /// If no document exists yet, the update will fail.
   Future<void> update({
+    String password,
+    FieldValue passwordFieldValue,
     String photoPath,
     FieldValue photoPathFieldValue,
     String firstName,
@@ -2954,6 +2956,8 @@ abstract class TeacherDocumentReference
   /// The update will fail if applied to a document that does not exist.
   void transactionUpdate(
     Transaction transaction, {
+    String password,
+    FieldValue passwordFieldValue,
     String photoPath,
     FieldValue photoPathFieldValue,
     String firstName,
@@ -3003,6 +3007,8 @@ class _$TeacherDocumentReference
   }
 
   Future<void> update({
+    Object? password = _sentinel,
+    FieldValue? passwordFieldValue,
     Object? photoPath = _sentinel,
     FieldValue? photoPathFieldValue,
     Object? firstName = _sentinel,
@@ -3016,6 +3022,10 @@ class _$TeacherDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) async {
+    assert(
+      password == _sentinel || passwordFieldValue == null,
+      "Cannot specify both password and passwordFieldValue",
+    );
     assert(
       photoPath == _sentinel || photoPathFieldValue == null,
       "Cannot specify both photoPath and photoPathFieldValue",
@@ -3041,6 +3051,11 @@ class _$TeacherDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
+      if (password != _sentinel)
+        _$TeacherFieldMap['password']!:
+            _$TeacherPerFieldToJson.password(password as String),
+      if (passwordFieldValue != null)
+        _$TeacherFieldMap['password']!: passwordFieldValue,
       if (photoPath != _sentinel)
         _$TeacherFieldMap['photoPath']!:
             _$TeacherPerFieldToJson.photoPath(photoPath as String),
@@ -3077,6 +3092,8 @@ class _$TeacherDocumentReference
 
   void transactionUpdate(
     Transaction transaction, {
+    Object? password = _sentinel,
+    FieldValue? passwordFieldValue,
     Object? photoPath = _sentinel,
     FieldValue? photoPathFieldValue,
     Object? firstName = _sentinel,
@@ -3090,6 +3107,10 @@ class _$TeacherDocumentReference
     Object? phoneNumber = _sentinel,
     FieldValue? phoneNumberFieldValue,
   }) {
+    assert(
+      password == _sentinel || passwordFieldValue == null,
+      "Cannot specify both password and passwordFieldValue",
+    );
     assert(
       photoPath == _sentinel || photoPathFieldValue == null,
       "Cannot specify both photoPath and photoPathFieldValue",
@@ -3115,6 +3136,11 @@ class _$TeacherDocumentReference
       "Cannot specify both phoneNumber and phoneNumberFieldValue",
     );
     final json = {
+      if (password != _sentinel)
+        _$TeacherFieldMap['password']!:
+            _$TeacherPerFieldToJson.password(password as String),
+      if (passwordFieldValue != null)
+        _$TeacherFieldMap['password']!: passwordFieldValue,
       if (photoPath != _sentinel)
         _$TeacherFieldMap['photoPath']!:
             _$TeacherPerFieldToJson.photoPath(photoPath as String),
@@ -3245,6 +3271,17 @@ abstract class TeacherQuery
     List<String>? whereIn,
     List<String>? whereNotIn,
   });
+  TeacherQuery wherePassword({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  });
   TeacherQuery wherePhotoPath({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -3313,6 +3350,18 @@ abstract class TeacherQuery
   });
 
   TeacherQuery orderByDocumentId({
+    bool descending = false,
+    String startAt,
+    String startAfter,
+    String endAt,
+    String endBefore,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  });
+
+  TeacherQuery orderByPassword({
     bool descending = false,
     String startAt,
     String startAfter,
@@ -3568,6 +3617,47 @@ class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
         isNull: isNull,
         whereIn: whereIn,
         whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  TeacherQuery wherePassword({
+    Object? isEqualTo = notSetQueryParam,
+    Object? isNotEqualTo = notSetQueryParam,
+    Object? isLessThan = notSetQueryParam,
+    Object? isLessThanOrEqualTo = notSetQueryParam,
+    Object? isGreaterThan = notSetQueryParam,
+    Object? isGreaterThanOrEqualTo = notSetQueryParam,
+    bool? isNull,
+    List<String>? whereIn,
+    List<String>? whereNotIn,
+  }) {
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$TeacherFieldMap['password']!,
+        isEqualTo: isEqualTo != notSetQueryParam
+            ? _$TeacherPerFieldToJson.password(isEqualTo as String)
+            : notSetQueryParam,
+        isNotEqualTo: isNotEqualTo != notSetQueryParam
+            ? _$TeacherPerFieldToJson.password(isNotEqualTo as String)
+            : notSetQueryParam,
+        isLessThan: isLessThan != notSetQueryParam
+            ? _$TeacherPerFieldToJson.password(isLessThan as String)
+            : notSetQueryParam,
+        isLessThanOrEqualTo: isLessThanOrEqualTo != notSetQueryParam
+            ? _$TeacherPerFieldToJson.password(isLessThanOrEqualTo as String)
+            : notSetQueryParam,
+        isGreaterThan: isGreaterThan != notSetQueryParam
+            ? _$TeacherPerFieldToJson.password(isGreaterThan as String)
+            : notSetQueryParam,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo != notSetQueryParam
+            ? _$TeacherPerFieldToJson.password(isGreaterThanOrEqualTo as String)
+            : notSetQueryParam,
+        isNull: isNull,
+        whereIn: whereIn?.map((e) => _$TeacherPerFieldToJson.password(e)),
+        whereNotIn: whereNotIn?.map((e) => _$TeacherPerFieldToJson.password(e)),
       ),
       $queryCursor: $queryCursor,
     );
@@ -3841,6 +3931,78 @@ class _$TeacherQuery extends QueryReference<Teacher, TeacherQuerySnapshot>
   }) {
     final query = $referenceWithoutCursor.orderBy(FieldPath.documentId,
         descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$TeacherQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  TeacherQuery orderByPassword({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    TeacherDocumentSnapshot? startAtDocument,
+    TeacherDocumentSnapshot? endAtDocument,
+    TeacherDocumentSnapshot? endBeforeDocument,
+    TeacherDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$TeacherFieldMap['password']!, descending: descending);
     var queryCursor = $queryCursor;
 
     if (startAtDocument != null) {
@@ -7810,6 +7972,7 @@ Teacher _$TeacherFromJson(Map<String, dynamic> json) => Teacher(
       lastName: json['lastName'] as String,
       email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
+      password: json['password'] as String,
       photoPath: json['photoPath'] as String?,
     );
 
@@ -7820,6 +7983,7 @@ const _$TeacherFieldMap = <String, String>{
   'email': 'email',
   'phoneNumber': 'phoneNumber',
   'id': 'id',
+  'password': 'password',
   'photoPath': 'photoPath',
 };
 
@@ -7838,6 +8002,8 @@ abstract class _$TeacherPerFieldToJson {
   // ignore: unused_element
   static Object? id(String instance) => instance;
   // ignore: unused_element
+  static Object? password(String instance) => instance;
+  // ignore: unused_element
   static Object? photoPath(String instance) => instance;
 }
 
@@ -7848,6 +8014,7 @@ Map<String, dynamic> _$TeacherToJson(Teacher instance) => <String, dynamic>{
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'id': instance.id,
+      'password': instance.password,
       'photoPath': instance.photoPath,
     };
 

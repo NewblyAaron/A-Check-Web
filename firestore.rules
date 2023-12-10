@@ -2,6 +2,14 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+  	function isLoggedIn() {
+    	return request.auth != null;
+    }
+  
+  	function isOwner(userId) {
+    	return request.auth != null && request.auth.uid == userId;
+    }
+  
     function isAdmin(userId) {
       return request.auth != null && request.auth.uid == userId && request.auth.token.accountType == 'admin';
     }
@@ -15,24 +23,12 @@ service cloud.firestore {
     }
 
     match /schools/{userId}/{documents=**} {
-      allow read, write: if isAdmin(userId);
-    }
-
-    match /schools/{schoolId}/{documents=**} {
-      allow read: if isTeacher(schoolId);
-    }
-
-    match /schools/{schoolId}/students/{studentId} {
-      allow get;
-    }
-
-    match /schools/{schoolId}/classes/{documents=**} {
-      allow read;
+    	allow read;
+      allow write: if isOwner(userId);
     }
 
     match /schools/{schoolId}/attendances/{document} {
-      allow list;
-      allow write: if isTeacher(schoolId);
+      allow write;
     }
   }
 }

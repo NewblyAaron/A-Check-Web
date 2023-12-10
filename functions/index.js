@@ -82,30 +82,36 @@ export const addTeacherRole = https.onCall(async (data) => {
 //         });
 // });
 
-// export const signUpTeacher = https.onCall((data, context) => {
-//     admin.auth().createUser({
-//         email: data.email,
-//         password: data.password
-//     })
-//         .then(async (userRecord) => {
-//             console.log(`Successfully created new user: ${userRecord.email}`);
+export const signInTeacher = https.onCall((data, context) => {
+    admin.auth().getUserByEmail(data.email).then(async user => {
+        
+    })
+});
 
-//             await addTeacherRole({
-//                 email: userRecord.email,
-//                 schoolId: userRecord.uid
-//             });
+export const signUpTeacher = https.onCall((data, context) => {
+    admin.auth().createUser({
+        email: data.email,
+        password: data.password
+    })
+        .then(async (userRecord) => {
+            console.log(`Successfully created new user: ${userRecord.email}`);
 
-//             await firestore.collection('schools').doc(userRecord.uid).set({
-//                 name: data.schoolName,
-//                 officeName: data.officeName,
-//             });
-//             console.log(`Successfully created school record for ${userRecord.email}`);
-//         })
-//         .catch((error) => {
-//             console.log(`Error creating new user: ${error}`);
+            await addTeacherRole({
+                email: userRecord.email,
+                schoolId: data.schoolId
+            });
+            console.log(`Successfully set user ${userRecord.email} as teacher`);
 
-//             return {
-//                 message: error
-//             };
-//         });
-// });
+            // await firestore.collection('schools').doc(data.schoolId).collection('teachers').doc(userRecord.uid).set({
+                
+            // });
+            // console.log(`Successfully created teacher record for ${userRecord.email}`);
+        })
+        .catch((error) => {
+            console.log(`Error creating new user: ${error}`);
+
+            return {
+                message: error
+            };
+        });
+});

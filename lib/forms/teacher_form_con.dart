@@ -1,6 +1,7 @@
 import 'package:a_check_web/forms/teacher_form.dart';
 import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
+import 'package:a_check_web/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 
 class TeacherFormState extends State<TeacherForm> {
@@ -10,6 +11,7 @@ class TeacherFormState extends State<TeacherForm> {
       mNameCon,
       lNameCon,
       emailCon,
+      passwordCon,
       phoneNumCon;
 
   cancel() {
@@ -26,13 +28,22 @@ class TeacherFormState extends State<TeacherForm> {
         lastName: lNameCon.text,
         email: emailCon.text,
         phoneNumber: phoneNumCon.text,
-        photoPath: widget.teacher?.photoPath);
+        password: passwordCon.text,
+        photoPath: widget.teacher?.photoPath,);
 
     teachersRef.doc(teacher.id).set(teacher).then((value) {
       snackbarKey.currentState!.showSnackBar(
           SnackBar(content: Text("Successfully added ${teacher.fullName}!")));
       Navigator.pop(context);
     });
+  }
+
+  void resetPassword() async {
+    final result = await Dialogs.showConfirmDialog(context, const Text("Reset password"), const Text("Reset this teacher's password to 123?"));
+
+    if (result ?? false) {
+      passwordCon.text = "123";
+    }
   }
 
   @override
@@ -45,6 +56,7 @@ class TeacherFormState extends State<TeacherForm> {
     lNameCon = TextEditingController();
     emailCon = TextEditingController();
     phoneNumCon = TextEditingController();
+    passwordCon = TextEditingController();
 
     if (widget.teacher != null) {
       idCon.text = widget.teacher!.id;
@@ -52,6 +64,7 @@ class TeacherFormState extends State<TeacherForm> {
       mNameCon.text = widget.teacher!.middleName;
       lNameCon.text = widget.teacher!.lastName;
       emailCon.text = widget.teacher!.email ?? "";
+      passwordCon.text = widget.teacher!.password;
       phoneNumCon.text = widget.teacher!.phoneNumber ?? "";
     }
   }

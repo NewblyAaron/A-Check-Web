@@ -6,6 +6,8 @@ import 'package:a_check_web/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'forgot_password_form.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -58,6 +60,14 @@ class LoginPageState extends State<LoginPage> {
           builder: (context) => const StudentLoginPage(),
         ));
   }
+
+  void forgotPassword() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ForgotPassword(),
+        ));
+  }
 }
 
 class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
@@ -73,21 +83,6 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
   Widget buildBody() {
     return Container(
       color: Colors.transparent,
-      // decoration: const BoxDecoration(
-      //   // Box decoration takes a gradient
-      //   gradient: LinearGradient(
-      //     // Where the linear gradient begins and ends
-      //     begin: Alignment.topCenter,
-      //     end: Alignment.bottomCenter,
-      //     // Add one stop for each color. Stops should increase from 0 to 1
-      //     stops: [ 0.2, 0.7, 0.9],
-      //     colors:
-      //     [
-      //       Color(0xff5588ff),
-      //       Color(0xffbbeeff),
-      //       Color(0xff99ccff),
-      //     ],),
-      // ),
       child: Center(
         child: SingleChildScrollView(
           child: Card(
@@ -274,6 +269,24 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                     size: 20,
                   ),
                   labelText: "Password"),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                MaterialButton(
+                    minWidth: 30,
+                    onPressed: state.forgotPassword,
+                    hoverColor: Colors.transparent,
+                    child: const Text(
+                      "Forgot your password?",
+                      style: TextStyle(
+                          color: Color(0xff153faa),
+                          fontWeight: FontWeight.w400,
+                          decoration:
+                          TextDecoration.underline),
+                    )),
+              ],
             ),
             const SizedBox(height: 12),
             InkWell(

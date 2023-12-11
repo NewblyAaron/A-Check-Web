@@ -2,7 +2,6 @@ import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +51,6 @@ class RegisterPageState extends State<RegisterPage> {
     if (!formKey.currentState!.validate()) return;
 
     final auth = FirebaseAuth.instance;
-    final func = FirebaseFunctions.instance;
     try {
       auth
           .createUserWithEmailAndPassword(
@@ -290,6 +288,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.confirmCon,
               validator: state.confirmPassword,
+              onFieldSubmitted: (_) => state.register(),
               obscureText: true,
               obscuringCharacter: '•',
               decoration: const InputDecoration(

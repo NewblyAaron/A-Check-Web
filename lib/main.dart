@@ -1,12 +1,8 @@
 import 'package:a_check_web/auth.dart';
 import 'package:a_check_web/firebase_options.dart';
 import 'package:a_check_web/globals.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -24,21 +20,22 @@ void main() async {
   prefs = await SharedPreferences.getInstance();
   setDefaultPrefs();
 
-  if (kDebugMode) {
-    bypassLogin = false;
-    try {
-      print("Connecting to local Firebase emulator");
-      // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!
-      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-      await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
-      FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
-      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-    } catch (e) {
-      print(e);
-    }
-  }
+  // if (kDebugMode) {
+  //   bypassLogin = false;
+  //   try {
+  //     print("Connecting to local Firebase emulator");
+  //     // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!
+  //     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //     await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
+  //     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+  //     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   runApp(MaterialApp(
+      title: "A-Check Web",
       scaffoldMessengerKey: snackbarKey,
       theme: ThemeData(
         fontFamily: 'Inter',
@@ -52,7 +49,7 @@ void main() async {
         highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
         disabledColor: const Color(0xff153faa),
-        hoverColor:  Colors.blueAccent.shade100.withOpacity(0.2),
+        hoverColor: Colors.blueAccent.shade100.withOpacity(0.2),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: const Color(0xff353535)),
         ),
@@ -60,7 +57,8 @@ void main() async {
           fillColor: MaterialStateColor.resolveWith(
             (states) {
               if (states.contains(MaterialState.selected)) {
-                return const Color(0xff153faa); // the color when checkbox is selected;
+                return const Color(
+                    0xff153faa); // the color when checkbox is selected;
               }
               return Colors.white; //the color when checkbox is unselected;
             },

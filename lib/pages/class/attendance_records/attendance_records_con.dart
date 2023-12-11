@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/pages/class/attendance_records/attendance_records_page.dart';
 import 'package:a_check_web/utils/dialogs.dart';
@@ -16,6 +18,14 @@ class AttendanceRecordsState extends State<AttendanceRecordsPage> {
     dataSource = AttendanceRecordDataSource(data: widget.records);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+
+    attendancesStream.cancel();
+  }
+
+  late StreamSubscription attendancesStream;
   late AttendanceRecordDataSource dataSource;
   int sortColumnIndex = 0;
   bool sortAscending = false;

@@ -58,7 +58,7 @@ class AttendanceRecordsView
             child: FloatingActionButton(
               onPressed: state.close,
               child: const Icon(Icons.close),
-            ))
+            )),
       ]),
     );
   }

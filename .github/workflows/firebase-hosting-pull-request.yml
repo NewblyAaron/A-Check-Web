@@ -1,0 +1,60 @@
+name: Deploy to Firebase Hosting as preview on pull request
+on:
+  pull_request:
+    paths:
+      - "lib/**"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+        - name: Setup Java
+          uses: actions/setup-java@v4
+          with: 
+            distribution: 'temurin'
+            java-version: '17'
+        - name: Setup Flutter
+          uses: subosito/flutter-action@master
+        - name: Install dependencies
+          run: flutter pub get --no-example
+        - name: Build build_runner outputs
+          run: dart run build_runner build --delete-conflicting-outputs
+        - name: Build web app
+          run: flutter build web --no-source-maps --web-renderer=canvaskit
+        - name: Archive production artifact
+          uses: actions/upload-artifact@master
+          with:
+            name: webapp
+            path: build/web/
+
+  deploy:
+    name: Deploy to Firebase
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node (for firebase-tools)
+        uses: actions/setup-node@v4
+      - name: Setup Java (for flutter)
+        uses: actions/setup-java@v4
+        with: 
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@master
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: webapp
+          path: build/web/
+      - name: Setup Firebase tools
+        uses: w9jds/setup-firebase@v1.0.0
+        with:
+          gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+      - run: firebase experiments:enable webframeworks
+      - name: Deploy to Firebase Hosting as preview
+        run: firebase hosting:channel:deploy --expires 3d

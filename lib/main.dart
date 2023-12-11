@@ -35,6 +35,7 @@ void main() async {
   // }
 
   runApp(MaterialApp(
+      title: "A-Check Web",
       scaffoldMessengerKey: snackbarKey,
       theme: ThemeData(
         fontFamily: 'Inter',

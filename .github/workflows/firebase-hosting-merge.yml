@@ -5,6 +5,7 @@ on:
       - master
     paths:
       - "lib/**"
+      - ".github/workflows/**"
 jobs:
   build:
     name: Build
@@ -28,8 +29,8 @@ jobs:
         - name: Archive production artifact
           uses: actions/upload-artifact@master
           with:
-            name: dist
-            path: dist
+            name: webapp
+            path: build/web/
 
   deploy:
     name: Deploy to Firebase

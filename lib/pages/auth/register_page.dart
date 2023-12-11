@@ -52,7 +52,6 @@ class RegisterPageState extends State<RegisterPage> {
     if (!formKey.currentState!.validate()) return;
 
     final auth = FirebaseAuth.instance;
-    final func = FirebaseFunctions.instance;
     try {
       auth
           .createUserWithEmailAndPassword(

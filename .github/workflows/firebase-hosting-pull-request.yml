@@ -37,8 +37,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup Node
+      - name: Setup Node (for firebase-tools)
         uses: actions/setup-node@v4
+      - name: Setup Java (for flutter)
+        uses: actions/setup-java@v4
+        with: 
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@master
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:

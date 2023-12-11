@@ -25,7 +25,7 @@ jobs:
         - name: Build build_runner outputs
           run: dart run build_runner build --delete-conflicting-outputs
         - name: Build web app
-          run: flutter build web --source-maps --web-renderer=canvaskit
+          run: flutter build web --no-source-maps --web-renderer=canvaskit
         - name: Archive production artifact
           uses: actions/upload-artifact@master
           with:
@@ -42,8 +42,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: dist
-          path: dist
+          name: webapp
+          path: build/web/
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v13.0.1
         with:

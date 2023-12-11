@@ -234,6 +234,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.schoolNameCon,
               validator: Validators.hasValue,
+              keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(
@@ -247,6 +248,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.officeNameCon,
               validator: Validators.hasValue,
+              keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(
@@ -260,6 +262,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.emailCon,
               validator: Validators.isAnEmail,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(
@@ -273,6 +276,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.passwordCon,
               validator: Validators.hasValue,
+              keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               obscuringCharacter: '•',
               decoration: const InputDecoration(
@@ -288,6 +292,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.confirmCon,
               validator: state.confirmPassword,
+              keyboardType: TextInputType.visiblePassword,
               onFieldSubmitted: (_) => state.register(),
               obscureText: true,
               obscuringCharacter: '•',

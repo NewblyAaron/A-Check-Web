@@ -1,5 +1,4 @@
 import 'package:a_check_web/globals.dart';
-import 'package:a_check_web/utils/abstracts.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,28 +11,56 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final formKey = GlobalKey<FormState>();
+  late TextEditingController emailCon;
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailCon = TextEditingController();
+  }
+
+  void finalize() async {
+    if (!formKey.currentState!.validate()) return;
+
+    try {
+      FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailCon.text)
+          .whenComplete(() {
+        snackbarKey.currentState!.showSnackBar(const SnackBar(
+            content:
+                Text("Please check your email for your password reset link.")));
+      });
+    } on FirebaseAuthException catch (ex) {
+      snackbarKey.currentState!
+          .showSnackBar(SnackBar(content: Text(ex.message ?? ex.code)));
+    }
+
+    if (mounted) Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        width: 400,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            buildForm(),
-            const SizedBox(
-              height: 16,
-            ),
-            buildButtons()
-          ],
-        ),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: 400,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          buildForm(),
+          const SizedBox(
+            height: 16,
+          ),
+          buildButtons()
+        ],
       ),
     );
   }
 
   Form buildForm() {
     return Form(
-      key: const Key(""),
+      key: formKey,
       child: Padding(
         padding: const EdgeInsets.only(top: 32, left: 32, right: 32),
         child: Column(
@@ -53,7 +80,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
             const Padding(
               padding: EdgeInsets.only(bottom: 32),
-              child: Text("Enter your email address. You will receive a link to create a new password via email.",
+              child: Text(
+                  "Enter your email address. You will receive a link to create a new password via email.",
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -63,8 +91,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   )),
             ),
             TextFormField(
-              controller: null,
+              controller: emailCon,
               validator: Validators.isAnEmail,
+              onFieldSubmitted: (_) => finalize(),
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(
@@ -74,7 +103,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 labelText: "Email",
                 contentPadding:
-                EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               ),
             ),
             const SizedBox(height: 12),
@@ -86,49 +115,51 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   Row buildButtons() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            InkWell(
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              // hoverColor: const Color(0xff153faa).withOpacity(0.8),
-              // highlightColor: const Color(0xff153faa).withOpacity(0.4),
-              // splashColor: const Color(0xff153faa).withOpacity(1),
-              onTap: null,
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                width: 400,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
-                  // adding color will hide the splash effect
-                  color: const Color(0xff153faa),
+            Material(
+              color: const Color(0xff153faa),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35)),
+              child: InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text(
-                  "Request Reset Link",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
+                // hoverColor: const Color(0xff153faa).withOpacity(0.8),
+                // highlightColor: const Color(0xff153faa).withOpacity(0.4),
+                // splashColor: const Color(0xff153faa).withOpacity(1),
+                onTap: finalize,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+                  child: const Text(
+                    "Request Reset Link",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
                 ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            const MaterialButton(
+            MaterialButton(
                 minWidth: 30,
-                onPressed: null,
+                onPressed: () => Navigator.pop(context),
                 hoverColor: Colors.transparent,
-                child: Text(
+                child: const Text(
                   "Go back to Login",
                   style: TextStyle(
                       color: Color(0xff153faa),
                       fontWeight: FontWeight.w500,
-                      decoration:
-                      TextDecoration.underline),
+                      decoration: TextDecoration.underline),
                 )),
           ],
         ),

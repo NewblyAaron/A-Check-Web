@@ -36,9 +36,8 @@ class LoginPageState extends State<LoginPage> {
     final auth = FirebaseAuth.instance;
 
     try {
-      await auth
-          .signInWithEmailAndPassword(
-              email: emailCon.text, password: passwordCon.text);
+      await auth.signInWithEmailAndPassword(
+          email: emailCon.text, password: passwordCon.text);
     } on FirebaseAuthException catch (e) {
       snackbarKey.currentState!.showSnackBar(
           SnackBar(content: Text(e.message ?? "Error! ${e.code}")));
@@ -61,12 +60,13 @@ class LoginPageState extends State<LoginPage> {
         ));
   }
 
-  void forgotPassword() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ForgotPassword(),
-        ));
+  void forgotPassword() async {
+    await showDialog(
+      context: context,
+      builder: (context) => const Dialog(
+        child: ForgotPassword(),
+      ),
+    );
   }
 }
 
@@ -118,7 +118,8 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                 const Text(
                                   "Log in to A-Check",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w600, fontSize: 24),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24),
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -149,11 +150,12 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                       onTap: state.studentLogin,
                                       child: Container(
                                         alignment: Alignment.center,
-                                        padding:
-                                            const EdgeInsets.symmetric(vertical: 8),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8),
                                         width: 350,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(35),
+                                          borderRadius:
+                                              BorderRadius.circular(35),
                                           border: Border.all(
                                             color: const Color(0xff153faa),
                                             width: 1,
@@ -200,9 +202,11 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                                       height: 25,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Text("Don't have a school account?"),
+                                        const Text(
+                                            "Don't have a school account?"),
                                         MaterialButton(
                                             minWidth: 30,
                                             onPressed: state.register,
@@ -243,6 +247,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
             TextFormField(
               controller: state.emailCon,
               validator: Validators.isAnEmail,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(
@@ -260,6 +265,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
               controller: state.passwordCon,
               onFieldSubmitted: (_) => state.login(),
               validator: Validators.hasValue,
+              keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               obscuringCharacter: '•',
               decoration: const InputDecoration(
@@ -284,8 +290,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                       style: TextStyle(
                           color: Color(0xff153faa),
                           fontWeight: FontWeight.w400,
-                          decoration:
-                          TextDecoration.underline),
+                          decoration: TextDecoration.underline),
                     )),
               ],
             ),

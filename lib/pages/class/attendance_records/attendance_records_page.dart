@@ -59,12 +59,6 @@ class AttendanceRecordsView
               onPressed: state.close,
               child: const Icon(Icons.close),
             )),
-        if (state.dataUpdated)
-          Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(top: 16, left: 16),
-            child: const Icon(Icons.warning),
-          )
       ]),
     );
   }

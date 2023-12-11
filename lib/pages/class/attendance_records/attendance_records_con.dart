@@ -29,7 +29,6 @@ class AttendanceRecordsState extends State<AttendanceRecordsPage> {
   late AttendanceRecordDataSource dataSource;
   int sortColumnIndex = 0;
   bool sortAscending = false;
-  bool dataUpdated = false;
 
   sort<T>(Comparable<T> Function(AttendanceRecord r) getField, int columnIndex,
       bool ascending) {

@@ -58,5 +58,5 @@ jobs:
       - run: firebase experiments:enable webframeworks
       - name: Deploy to Firebase Hosting as preview
         env:
-          CHANNEL_ID: ${{ github.event.pull_request.base.ref }}
-        run: firebase hosting:channel:deploy $CHANNEL_ID --expires 3d
+          CHANNEL_ID: ${{ github.event.pull_request.head.ref }}
+        run: firebase hosting:channel:deploy $CHANNEL_ID --expires 2d

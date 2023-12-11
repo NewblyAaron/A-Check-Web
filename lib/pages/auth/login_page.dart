@@ -243,6 +243,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
             const SizedBox(height: 12),
             TextFormField(
               controller: state.passwordCon,
+              onFieldSubmitted: (_) => state.login(),
               validator: Validators.hasValue,
               obscureText: true,
               obscuringCharacter: '•',

@@ -241,6 +241,7 @@ class StudentLoginPageView
             TextFormField(
               controller: state.idCon,
               validator: Validators.hasValue,
+              onFieldSubmitted: (_) => state.login(),
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.account_circle_rounded,color:Colors.black54, size: 20,),

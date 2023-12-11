@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:a_check_web/globals.dart';
+import 'package:a_check_web/main.dart';
 import 'package:a_check_web/model/person.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
@@ -24,9 +25,9 @@ TeacherCollectionReference get teachersRef => schoolRef.teachers;
 AttendanceRecordCollectionReference get attendancesRef => schoolRef.attendances;
 
 SchoolDocumentReference get schoolRef {
-  final uid = FirebaseAuth.instance.currentUser!.uid;
+  final id = FirebaseAuth.instance.currentUser!.uid;
 
-  return schoolsRef.doc(uid);
+  return schoolsRef.doc(id);
 }
 
 @Collection<School>('schools')
@@ -66,10 +67,9 @@ class Student extends Person {
       required super.lastName,
       super.email,
       super.phoneNumber,
-      List<String>? guardianIds,
+      this.guardian,
       List? faceArray,
       String? photoPath}) {
-    this.guardianIds = guardianIds ?? List.empty();
     this.faceArray = faceArray ?? List.empty();
     this.photoPath = photoPath ?? "";
   }
@@ -80,8 +80,8 @@ class Student extends Person {
   @Id()
   final String id;
 
+  late final Person? guardian;
   late final String photoPath;
-  late final List<String> guardianIds;
   late final List faceArray;
 
   @override
@@ -157,6 +157,10 @@ class Teacher extends Person {
   @override
   Map<String, Object?> toJson() => _$TeacherToJson(this);
 
+  bool authenticate(String password) {
+    return this.password == password;
+  }
+
   Future<String> getPhotoUrl() async {
     if (photoPath.isEmpty) return "";
 
@@ -202,6 +206,17 @@ class SchoolClass {
 
   Future<Teacher> getTeacher() async {
     return (await teachersRef.doc(teacherId).get()).data!;
+  }
+
+  bool get isScheduleToday {
+    final now = DateTime.now();
+    for (var s in schedule) {
+      if (now.weekday == s.weekday) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -371,6 +386,11 @@ class AttendanceRecord {
   Future<Student> getStudent() async {
     return (await studentsRef.doc(studentId).get()).data!;
   }
+
+  @override
+  String toString() {
+    return "${DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(dateTime)}: $status";
+  }
 }
 
 enum AttendanceStatus {
@@ -384,4 +404,32 @@ enum AttendanceStatus {
   Late,
   @JsonValue(3)
   Excused;
+
+  static AttendanceStatus statusByTime(DateTime startTime, DateTime endTime, DateTime currentTime) {
+    if (startTime.isBefore(currentTime) && endTime.isAfter(currentTime)) {
+      if (currentTime.isAfter(startTime.add(Duration(minutes: prefs.getInt('late_value') ?? 15)))) {
+        return Late;
+      }
+
+      return Present;
+    } else {
+      return Absent;
+    }
+  }
+
+  @override
+  String toString() {
+    switch (this) {
+      case Present:
+        return "Present";
+      case Absent:
+        return "Absent";
+      case Late:
+        return "Late";
+      case Excused:
+        return "Excused";
+      default:
+        return "Unknown";
+    }
+  }
 }

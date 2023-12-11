@@ -104,29 +104,35 @@ class TeacherView extends WidgetView<TeacherProfile, TeacherState> {
             decoration: const BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(35.0)),
-              border: Border.fromBorderSide(BorderSide(strokeAlign: BorderSide.strokeAlignOutside)),
+              border: Border.fromBorderSide(
+                  BorderSide(strokeAlign: BorderSide.strokeAlignOutside)),
             ),
-            child: FutureBuilder(
-                future: state.teacher.getPhotoUrl(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return snapshot.hasData
-                        ? snapshot.data!.isNotEmpty
-                            ? Image.network(
-                                snapshot.data!,
-                                fit: BoxFit.cover,
-                              )
-                            : const Center(
-                                child: Icon(
-                                  Icons.person_outline,
-                                  size: 64,
-                                ),
-                              )
-                        : const Center(child: CircularProgressIndicator());
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                })),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+              FutureBuilder(
+                  future: state.teacher.getPhotoUrl(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return snapshot.hasData
+                          ? snapshot.data!.isNotEmpty
+                              ? Image.network(
+                                  snapshot.data!,
+                                  fit: BoxFit.cover,
+                                )
+                              : const Center(
+                                  child: Icon(
+                                    Icons.person_outline,
+                                    size: 64,
+                                  ),
+                                )
+                          : const Center(child: Text("No image!"));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  }),
+                  if (state.uploadProgress != null) CircularProgressIndicator(value: state.uploadProgress,)
+            ])),
         GestureDetector(
           onTap: state.pickPhoto,
           child: Container(

@@ -46,7 +46,9 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
     return const TabBar(
       indicatorColor: Color(0xff153faa),
       tabs: [
-        Tab(child: Text("Student List", style: TextStyle(color: Color(0xff153faa)))),
+        Tab(
+            child: Text("Student List",
+                style: TextStyle(color: Color(0xff153faa)))),
         Tab(
             child: Text("Attendance Records",
                 style: TextStyle(color: Color(0xff153faa))))
@@ -109,7 +111,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 14,
-                      color:Color(0xff153faa),
+                      color: Color(0xff153faa),
                     ),
                   ),
                   Padding(
@@ -122,7 +124,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                         fontSize: 14,
-                        color:Colors.black87,
+                        color: Colors.black87,
                       ),
                     ),
                   ),
@@ -133,8 +135,8 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                       child: Container(
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                          color:const Color(0xff153faa),
+                          borderRadius: BorderRadius.circular(30),
+                          color: const Color(0xff153faa),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -156,19 +158,29 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
   Widget buildStudentsListView(SchoolClass schoolClass) {
     return Stack(children: [
       FutureBuilder(
-        future: schoolClass.getStudents(),
-        builder: (context, snapshot) => snapshot.hasData
-            ? ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                children: snapshot.data!
-                    .map((e) => StudentCard(
-                          student: e,
-                          studentClass: schoolClass,
-                        ))
-                    .toList())
-            : const Center(child: CircularProgressIndicator()),
-      ),
+          future: schoolClass.getStudents(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return ListView(
+                  shrinkWrap: true,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  children: snapshot.data!
+                      .map((e) => StudentCard(
+                            student: e,
+                            studentClass: schoolClass,
+                          ))
+                      .toList());
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          }),
       Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsets.only(bottom: 16, right: 16),
@@ -199,8 +211,8 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
 
             if (records.isEmpty) {
               return const Center(
-              child: Text("No records found!"),
-            );
+                child: Text("No records found!"),
+              );
             }
 
             return ListView(

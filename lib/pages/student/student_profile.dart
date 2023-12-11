@@ -21,15 +21,19 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildHeader(state.student),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: Column(
-              children: [
-                buildStudentInfo(state.student),
-                const SizedBox(height: 24),
-                buildEnrolledClasses()
-              ],
-            )),
+        SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Column(
+                children: [
+                  buildStudentInfo(state.student),
+                  const SizedBox(height: 24),
+                  if (state.student.guardian != null)
+                    buildGuardianInfo(state.student),
+                  buildEnrolledClasses()
+                ],
+              )),
+        ),
       ],
     );
   }
@@ -217,7 +221,30 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
   }
 
   Widget buildGuardianInfo(Student student) {
-    return const Placeholder();
-    // TODO: guardian information using firebase stuff
+    if (student.guardian == null) {
+      return const Center(
+        child: Text("No guardian!"),
+      );
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Guardian Information",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        ListTile(
+          title: Text(student.guardian!.email ?? "None"),
+          leading: const Icon(Icons.email),
+        ),
+        ListTile(
+          title: Text(student.guardian!.phoneNumber!),
+          leading: const Icon(Icons.phone),
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
   }
 }

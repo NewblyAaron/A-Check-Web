@@ -4,6 +4,7 @@ import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
 
 import 'package:a_check_web/pages/student/student_profile.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,7 +20,8 @@ class StudentState extends State<StudentProfile> {
 
     student = widget.student;
 
-    studentsStream = studentsRef.doc(widget.student.id).snapshots().listen((event) {
+    studentsStream =
+        studentsRef.doc(widget.student.id).snapshots().listen((event) {
       if (context.mounted) setState(() => student = event.data!);
     });
   }
@@ -34,6 +36,7 @@ class StudentState extends State<StudentProfile> {
   late StreamSubscription studentsStream;
   late Student student;
   final _picker = ImagePicker();
+  double? uploadProgress;
 
   Stream<SchoolClassQuerySnapshot> getEnrolledClasses() {
     return classesRef
@@ -50,10 +53,41 @@ class StudentState extends State<StudentProfile> {
     }
 
     final fsRef = storage.ref().child("student_profiles/${image.name}");
-    fsRef.putData(await image.readAsBytes()).whenComplete(() {
-      studentsRef.doc(student.id).update(photoPath: fsRef.fullPath).then(
-          (value) => snackbarKey.currentState!.showSnackBar(SnackBar(
+    final uploadTask = fsRef.putData(await image.readAsBytes(),
+        SettableMetadata(contentType: image.mimeType));
+
+    uploadTask.snapshotEvents.listen((event) {
+      setState(() {
+        uploadProgress =
+            event.bytesTransferred.toDouble() / event.totalBytes.toDouble();
+      });
+    });
+
+    uploadTask.whenComplete(() {
+      setState(() => uploadProgress = null);
+      snackbarKey.currentState!.clearSnackBars();
+
+      studentsRef.doc(student.id).update(photoPath: fsRef.fullPath).then((_) =>
+          snackbarKey.currentState!.showSnackBar(SnackBar(
               content: Text("Uploaded photo of ${student.fullName}!"))));
     });
+
+    snackbarKey.currentState!.showSnackBar(SnackBar(
+      content: Row(
+        children: [
+          CircularProgressIndicator(value: uploadProgress),
+          const SizedBox(width: 8),
+          const Text("Uploading file...")
+        ],
+      ),
+      action: SnackBarAction(
+          label: "Cancel",
+          onPressed: () {
+            uploadTask.cancel();
+            uploadProgress = null;
+          }),
+      dismissDirection: DismissDirection.none,
+      duration: const Duration(minutes: 1),
+    ));
   }
 }

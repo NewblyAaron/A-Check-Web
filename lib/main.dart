@@ -24,19 +24,19 @@ void main() async {
   prefs = await SharedPreferences.getInstance();
   setDefaultPrefs();
 
-  if (kDebugMode) {
-    bypassLogin = false;
-    try {
-      print("Connecting to local Firebase emulator");
-      // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!
-      await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-      await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
-      FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
-      FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
-    } catch (e) {
-      print(e);
-    }
-  }
+  // if (kDebugMode) {
+  //   bypassLogin = false;
+  //   try {
+  //     print("Connecting to local Firebase emulator");
+  //     // !!! CHANGE PORT TO THE PORT WHERE FIRESTORE IS HOSTED !!!
+  //     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  //     await FirebaseStorage.instance.useStorageEmulator('localhost', 9199);
+  //     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+  //     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   runApp(MaterialApp(
       scaffoldMessengerKey: snackbarKey,
@@ -52,7 +52,7 @@ void main() async {
         highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
         disabledColor: const Color(0xff153faa),
-        hoverColor:  Colors.blueAccent.shade100.withOpacity(0.2),
+        hoverColor: Colors.blueAccent.shade100.withOpacity(0.2),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: const Color(0xff353535)),
         ),
@@ -60,7 +60,8 @@ void main() async {
           fillColor: MaterialStateColor.resolveWith(
             (states) {
               if (states.contains(MaterialState.selected)) {
-                return const Color(0xff153faa); // the color when checkbox is selected;
+                return const Color(
+                    0xff153faa); // the color when checkbox is selected;
               }
               return Colors.white; //the color when checkbox is unselected;
             },

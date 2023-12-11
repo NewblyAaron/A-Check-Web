@@ -285,6 +285,7 @@ class RegisterPageView extends WidgetView<RegisterPage, RegisterPageState> {
             TextFormField(
               controller: state.confirmCon,
               validator: state.confirmPassword,
+              onFieldSubmitted: (_) => state.register(),
               obscureText: true,
               obscuringCharacter: '•',
               decoration: const InputDecoration(

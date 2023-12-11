@@ -37,14 +37,17 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: webapp
           path: build/web/
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@v13.0.1
+      - name: Setup Firebase tools
+        uses: w9jds/setup-firebase@v1.0.0
         with:
-          args: hosting:channel:deploy --expires 3d
-        env:
-          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+      - run: firebase experiments:enable webframeworks
+      - name: Deploy to Firebase Hosting as preview
+        run: firebase hosting:channel:deploy --expires 3d

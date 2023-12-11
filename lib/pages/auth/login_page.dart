@@ -71,148 +71,168 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
   }
 
   Widget buildBody() {
-    return Center(
-      child: Card(
-        color: Colors.white,
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SizedBox(
-            width: 350,
-            height: 670,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      SizedBox(
-                        width: 450,
-                        height: 670,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 35, bottom: 30),
-                              child: Image(
-                                  image: AssetImage(
-                                      "assets/images/small_logo_blue.png"),
-                                  height: 100),
-                            ),
-                            const Text(
-                              "Log in to A-Check",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 24),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            buildForm(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Column(
+    return Container(
+      color: Colors.transparent,
+      // decoration: const BoxDecoration(
+      //   // Box decoration takes a gradient
+      //   gradient: LinearGradient(
+      //     // Where the linear gradient begins and ends
+      //     begin: Alignment.topCenter,
+      //     end: Alignment.bottomCenter,
+      //     // Add one stop for each color. Stops should increase from 0 to 1
+      //     stops: [ 0.2, 0.7, 0.9],
+      //     colors:
+      //     [
+      //       Color(0xff5588ff),
+      //       Color(0xffbbeeff),
+      //       Color(0xff99ccff),
+      //     ],),
+      // ),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Card(
+            color: Colors.white,
+            elevation: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: SizedBox(
+                width: 350,
+                height: 670,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                            width: 450,
+                            height: 670,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Row(
-                                  children: [
-                                    Expanded(child: Divider()),
-                                    Text("     or     "),
-                                    Expanded(child: Divider()),
-                                  ],
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 35, bottom: 30),
+                                  child: Image(
+                                      image: AssetImage(
+                                          "assets/images/small_logo_blue.png"),
+                                      height: 100),
+                                ),
+                                const Text(
+                                  "Log in to A-Check",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600, fontSize: 24),
                                 ),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                InkWell(
-                                  customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  // hoverColor: const Color(0xff153faa).withOpacity(0.8),
-                                  // highlightColor: const Color(0xff153faa).withOpacity(0.4),
-                                  // splashColor: const Color(0xff153faa).withOpacity(1),
-                                  onTap: state.studentLogin,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    width: 350,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      border: Border.all(
-                                        color: const Color(0xff153faa),
-                                        width: 1,
-                                      ),
-                                      // adding color will hide the splash effect
-                                      color: Colors.transparent,
-                                    ),
-                                    child: const Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                buildForm(),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Column(
+                                  children: [
+                                    const Row(
                                       children: [
-                                        Icon(
-                                          Icons.account_circle_rounded,
-                                          color: Color(0xff153faa),
-                                          size: 23,
-                                        ),
-                                        SizedBox(
-                                          width: 9,
-                                        ),
-                                        Text(
-                                          "Log in as a Student",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff153faa)),
-                                        ),
+                                        Expanded(child: Divider()),
+                                        Text("     or     "),
+                                        Expanded(child: Divider()),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                const Row(
-                                  children: [
-                                    Expanded(child: Divider()),
-                                    Text("     or     "),
-                                    Expanded(child: Divider()),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text("Don't have a school account?"),
-                                    MaterialButton(
-                                        minWidth: 30,
-                                        onPressed: state.register,
-                                        hoverColor: Colors.transparent,
-                                        child: const Text(
-                                          "Register",
-                                          style: TextStyle(
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    InkWell(
+                                      customBorder: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      // hoverColor: const Color(0xff153faa).withOpacity(0.8),
+                                      // highlightColor: const Color(0xff153faa).withOpacity(0.4),
+                                      // splashColor: const Color(0xff153faa).withOpacity(1),
+                                      onTap: state.studentLogin,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding:
+                                            const EdgeInsets.symmetric(vertical: 8),
+                                        width: 350,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(35),
+                                          border: Border.all(
+                                            color: const Color(0xff153faa),
+                                            width: 1,
+                                          ),
+                                          // adding color will hide the splash effect
+                                          color: Colors.transparent,
+                                        ),
+                                        child: const Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.account_circle_rounded,
                                               color: Color(0xff153faa),
-                                              fontWeight: FontWeight.w500,
-                                              decoration:
-                                                  TextDecoration.underline),
-                                        )),
+                                              size: 23,
+                                            ),
+                                            SizedBox(
+                                              width: 9,
+                                            ),
+                                            Text(
+                                              "Log in as a Student",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xff153faa)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Expanded(child: Divider()),
+                                        Text("     or     "),
+                                        Expanded(child: Divider()),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Text("Don't have a school account?"),
+                                        MaterialButton(
+                                            minWidth: 30,
+                                            onPressed: state.register,
+                                            hoverColor: Colors.transparent,
+                                            child: const Text(
+                                              "Register",
+                                              style: TextStyle(
+                                                  color: Color(0xff153faa),
+                                                  fontWeight: FontWeight.w500,
+                                                  decoration:
+                                                      TextDecoration.underline),
+                                            )),
+                                      ],
+                                    ),
                                   ],
-                                ),
+                                )
                               ],
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

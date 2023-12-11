@@ -59,23 +59,27 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      const SizedBox(height: 5,),
                       Text(
                         student.fullName.toString(),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.clip,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
                           fontStyle: FontStyle.normal,
                           fontSize: 18,
                         ),
                       ),
+                      const SizedBox(height: 5,),
                       Text(
                         student.id,
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w300,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
                           fontStyle: FontStyle.normal,
                           fontSize: 14,
                         ),
@@ -182,7 +186,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
           final classes = snapshot.data!.docs.map((e) => e.data).toList();
 
           if (classes.isEmpty) {
-            return const Text("No enrolled classes!");
+            return const Text("No enrolled classes!",style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff153faa)));
           }
 
           return Column(
@@ -205,6 +209,7 @@ class StudentView extends WidgetView<StudentProfile, StudentState> {
                   shrinkWrap: true,
                   children: classes
                       .map((e) => Card(
+                            color: Theme.of(context).secondaryHeaderColor,
                             child: ListTile(
                               title: Text(e.name),
                               subtitle: Text(e.section),

@@ -31,8 +31,9 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
               padding: const EdgeInsets.only(top: 16, right: 64),
               alignment: Alignment.topRight,
               child: IconButton(
+                splashRadius: 15,
                   onPressed: state.openSettings,
-                  icon: const Icon(Icons.settings)),
+                  icon: const Icon(Icons.settings, color: Colors.black54,)),
             ),
           ]),
           buildTabBar(),
@@ -176,13 +177,23 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
             mainAxisSize: MainAxisSize.min,
             children: [
               FloatingActionButton(
+                elevation: 0,
+                foregroundColor: Colors.black,
+                backgroundColor: const Color(0xff153faa),
                 onPressed: state.addStudents,
-                child: const Icon(Icons.person_add_alt_1),
+                shape: RoundedRectangleBorder(side: const BorderSide(width: 1,color: Color(0xff153faa), ),
+                    borderRadius: BorderRadius.circular(100)),
+                child: const Icon(Icons.person_add_alt_1, color: Colors.white,size: 24),
               ),
               const SizedBox(width: 8),
               FloatingActionButton(
+                elevation: 0,
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.white,
                 onPressed: state.removeStudents,
-                child: const Icon(Icons.person_remove_alt_1),
+                shape: RoundedRectangleBorder(side: const BorderSide(width: 1,color: Color(0xff153faa)),
+                    borderRadius: BorderRadius.circular(100)),
+                child: const Icon(Icons.person_remove_alt_1, color: Color(0xff153faa), size: 24,),
               ),
             ],
           ))

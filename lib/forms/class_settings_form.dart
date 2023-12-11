@@ -56,13 +56,13 @@ class ClassSettingsView
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 600,
+      width: 100,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           buildForm(),
           const SizedBox(
-            height: 32,
+            height: 16,
           ),
           buildButtons()
         ],
@@ -74,7 +74,7 @@ class ClassSettingsView
     return Form(
       key: state.formKey,
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.only(top: 32, left: 32, right: 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -86,7 +86,7 @@ class ClassSettingsView
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.normal,
-                    fontSize: 35,
+                    fontSize: 24,
                     color: Color(0xff000000),
                   )),
             ),
@@ -119,21 +119,18 @@ class ClassSettingsView
 
   Row buildButtons() {
     return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Material(
-          color: Colors.grey.shade200,
+          color: Colors.grey.shade100,
           child: InkWell(
-            hoverColor: Colors.red.withOpacity(0.4),
-            highlightColor: Colors.red.withOpacity(0.4),
-            splashColor: Colors.red.withOpacity(0.5),
+            hoverColor: Colors.grey.withOpacity(0.4),
+            highlightColor: Colors.grey.withOpacity(0.4),
+            splashColor: Colors.grey.withOpacity(0.5),
             onTap: state.cancel,
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(vertical: 24),
-              width: 300,
+              width: 140,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
                 // adding color will hide the splash effect
@@ -141,22 +138,22 @@ class ClassSettingsView
               ),
               child: const Text(
                 "Cancel",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
           ),
         ),
         Material(
-          color: Colors.lightGreen.shade200,
+          color: const Color(0xff153faa).withOpacity(0.6),
           child: InkWell(
-            hoverColor: Colors.green.withOpacity(0.4),
-            highlightColor: Colors.green.withOpacity(0.4),
-            splashColor: Colors.green.withOpacity(0.5),
+            hoverColor: const Color(0xff153faa).withOpacity(0.8),
+            highlightColor: const Color(0xff153faa).withOpacity(0.4),
+            splashColor: const Color(0xff153faa).withOpacity(1),
             onTap: state.finalize,
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(vertical: 24),
-              width: 300,
+              width: 140,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
                 // adding color will hide the splash effect
@@ -169,7 +166,7 @@ class ClassSettingsView
                 children: [
                   Text(
                     "Confirm",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),

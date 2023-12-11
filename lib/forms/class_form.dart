@@ -104,7 +104,7 @@ class ClassFormView extends WidgetView<ClassForm, ClassFormState> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.normal,
-                          fontSize: 35,
+                          fontSize: 24,
                           color: Color(0xff000000),
                         )),
                   ),

@@ -107,29 +107,36 @@ class StudentLoginPageView
                               children: [
                                 const Padding(
                                   padding: EdgeInsets.only(top: 35, bottom: 30),
-                                  child:
-                                  Image(
-                                      image: AssetImage("assets/images/small_logo_blue.png"),
+                                  child: Image(
+                                      image: AssetImage(
+                                          "assets/images/small_logo_blue.png"),
                                       height: 100),
                                 ),
-                                const Text("Log in as a Student", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),),
-                                const SizedBox(height: 25,),
+                                const Text(
+                                  "Log in as a Student",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24),
+                                ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
                                 buildForm(),
-                                const SizedBox(height: 25,),
+                                const SizedBox(
+                                  height: 25,
+                                ),
                                 Column(
                                   children: [
                                     const Row(
                                       children: [
-                                        Expanded(
-                                            child: Divider()
-                                        ),
+                                        Expanded(child: Divider()),
                                         Text("     or     "),
-                                        Expanded(
-                                            child: Divider()
-                                        ),
+                                        Expanded(child: Divider()),
                                       ],
                                     ),
-                                    const SizedBox(height: 25,),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
                                     InkWell(
                                       customBorder: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
@@ -137,15 +144,17 @@ class StudentLoginPageView
                                       // hoverColor: const Color(0xff153faa).withOpacity(0.8),
                                       // highlightColor: const Color(0xff153faa).withOpacity(0.4),
                                       // splashColor: const Color(0xff153faa).withOpacity(1),
-                                      onTap: (){
+                                      onTap: () {
                                         Navigator.pop(context);
                                       },
                                       child: Container(
                                         alignment: Alignment.center,
-                                        padding: const EdgeInsets.symmetric(vertical: 8),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8),
                                         width: 350,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(35),
+                                          borderRadius:
+                                              BorderRadius.circular(35),
                                           border: Border.all(
                                             color: const Color(0xff153faa),
                                             width: 1,
@@ -154,14 +163,25 @@ class StudentLoginPageView
                                           color: Colors.transparent,
                                         ),
                                         child: const Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Icon(Icons.keyboard_backspace_rounded, color: Color(0xff153faa),size: 23,),
-                                            SizedBox(width: 9,),
+                                            Icon(
+                                              Icons.keyboard_backspace_rounded,
+                                              color: Color(0xff153faa),
+                                              size: 23,
+                                            ),
+                                            SizedBox(
+                                              width: 9,
+                                            ),
                                             Text(
                                               "Back to Login",
-                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff153faa)),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xff153faa)),
                                             ),
                                           ],
                                         ),
@@ -192,49 +212,63 @@ class StudentLoginPageView
                 contentPadding: EdgeInsets.all(0),
                 title: Row(
                   children: [
-                    Icon(Icons.search_rounded, color: Color(0xff828282),size: 23,),
-                    SizedBox(width: 9,),
+                    Icon(
+                      Icons.search_rounded,
+                      color: Color(0xff828282),
+                      size: 23,
+                    ),
+                    SizedBox(
+                      width: 9,
+                    ),
                     Text("Find your school",
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xff828282)
-                        )
-                    ),
+                            color: Color(0xff828282))),
                   ],
                 ),
               )
             : ListTile(
-            contentPadding: const EdgeInsets.all(0),
-            title: Text(
-              item.name,
-              textAlign: TextAlign.left,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 13.5, color: Colors.black),
-            )
-        )
-    );
+                contentPadding: const EdgeInsets.all(0),
+                title: Text(
+                  item.name,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 14, color: Colors.black),
+                ),
+                subtitle: Text(
+                  item.officeName,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ));
   }
+
   Form buildForm() {
     return Form(
-      key: state.formKey,
+        key: state.formKey,
         child: Column(
           children: [
             DropdownSearch<School>(
               dropdownBuilder: _customDropDownSchool,
-              popupProps: const PopupProps.menu(
-                  title: Text("Search school", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+              popupProps: PopupProps.dialog(
+                  itemBuilder: (context, item, isSelected) {
+                    return ListTile(
+                      title: Text(item.name),
+                      subtitle: Text(item.officeName),
+                      selected: isSelected,
+                    );
+                  },
                   showSearchBox: true,
                   showSelectedItems: true,
-                  searchFieldProps: TextFieldProps(
+                  searchFieldProps: const TextFieldProps(
                       decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          // labelText: "School",
-                      )
-                  )
-              ),
+                    isDense: true,
+                    labelText: "Search school...",
+                    border: OutlineInputBorder(),
+                  ))),
               asyncItems: state.getSearchedItems,
               itemAsString: (item) => item.name,
               compareFn: (item1, item2) => item1.id == item2.id,
@@ -242,18 +276,21 @@ class StudentLoginPageView
               selectedItem: state.selectedSchool,
               validator: state.validateDropdown,
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             TextFormField(
               controller: state.idCon,
               validator: Validators.hasValue,
               onFieldSubmitted: (_) => state.login(),
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.account_circle_rounded,color:Colors.black54, size: 20,),
-                  labelText: "Enter Student ID Number"
-              ),
+                  prefixIcon: Icon(
+                    Icons.account_circle_rounded,
+                    color: Colors.black54,
+                    size: 20,
+                  ),
+                  labelText: "Enter Student ID Number"),
             ),
-            const SizedBox(height:12),
+            const SizedBox(height: 12),
             InkWell(
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -273,11 +310,14 @@ class StudentLoginPageView
                 ),
                 child: const Text(
                   "Log in",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
               ),
             ),
           ],
-    ));
+        ));
   }
 }

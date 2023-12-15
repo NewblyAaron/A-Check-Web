@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:a_check_web/forms/student_form.dart';
 import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
+import 'package:a_check_web/pages/student/csv_table.dart';
 import 'package:a_check_web/pages/student/student_list.dart';
+import 'package:a_check_web/utils/csv_helpers.dart';
 import 'package:a_check_web/utils/dialogs.dart';
 import 'package:a_check_web/widgets/cell_actions.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class StudentListState extends State<StudentList> {
@@ -18,8 +21,9 @@ class StudentListState extends State<StudentList> {
 
     rows = StudentDataSource(
         data: [],
-        onViewButtonPressed: viewStudent,
-        onEditButtonPressed: (s) => openForm(student: s));
+        onViewButtonPressed: (s) => viewStudent(s),
+        onEditButtonPressed: (s) => openForm(student: s),
+        selectable: true);
 
     studentsStream = studentsRef.snapshots().listen((event) {
       if (context.mounted) {
@@ -98,20 +102,71 @@ class StudentListState extends State<StudentList> {
           .showSnackBar(SnackBar(content: Text("Deleted $count students")));
     }
   }
+
+  Future<void> importStudents() async {
+    final pickedFile = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['csv']);
+
+    if (pickedFile == null || pickedFile.files.isEmpty) {
+      snackbarKey.currentState!.showSnackBar(
+          const SnackBar(content: Text("Select a valid .csv file!")));
+      return;
+    }
+
+    final bytes = pickedFile.files.single.bytes!;
+    final fields = await CsvHelpers.importFromCsvFile(bytes: bytes);
+
+    if (fields.isEmpty) {
+      snackbarKey.currentState!.showSnackBar(
+          const SnackBar(content: Text("There's nothing in the .csv file!")));
+      return;
+    }
+
+    int values = 6;
+    for (var row in fields) {
+      if (row.length != values) {
+        snackbarKey.currentState!.showSnackBar(const SnackBar(
+            content: Text("Your .csv file has inconsistent values!")));
+        return;
+      }
+    }
+
+    if (mounted) {
+      await showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: StudentCSV(
+              students: List.generate(fields.length, (index) {
+            return Student(
+                id: fields[index][0],
+                firstName: fields[index][2],
+                middleName: fields[index][3],
+                lastName: fields[index][1],
+                phoneNumber: fields[index][4].toString(),
+                email: fields[index][5].toString());
+          })),
+        ),
+      );
+    }
+  }
 }
 
 class StudentDataSource extends DataTableSource {
   StudentDataSource(
       {required List<Student> data,
-      required this.onViewButtonPressed,
-      required this.onEditButtonPressed}) {
+      this.onViewButtonPressed,
+      this.onEditButtonPressed,
+      required this.selectable}) {
     updateData(data);
   }
 
-  final Function(Student student) onViewButtonPressed;
-  final Function(Student student) onEditButtonPressed;
+  final Function(dynamic)? onViewButtonPressed;
+  final Function(dynamic)? onEditButtonPressed;
+  final bool selectable;
 
-  late Map<Student, bool> _map;
+  late Map<Student, bool> _map = {};
   List<Student> _data = [];
   List<Student> _filteredData = [];
   bool _filtered = false;
@@ -175,43 +230,80 @@ class StudentDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     var data = _filtered ? _filteredData : _data;
 
-    return DataRow(
-        cells: [
-          DataCell(Text(
-            data[index].id,
-            style: const TextStyle(fontSize: 12),
-          )),
-          DataCell(Text(
-            data[index].lastName,
-            style: const TextStyle(fontSize: 12),
-          )),
-          DataCell(Text(
-            data[index].firstName,
-            style: const TextStyle(fontSize: 12),
-          )),
-          DataCell(Text(
-            data[index].email ?? "None",
-            style: const TextStyle(fontSize: 12),
-          )),
-          DataCell(Text(
-            data[index].phoneNumber ?? "None",
-            style: const TextStyle(fontSize: 12),
-          )),
+    if (selectable) {
+      return DataRow(
+          cells: [
+            DataCell(Text(
+              data[index].id,
+              style: const TextStyle(fontSize: 12),
+            )),
+            DataCell(Text(
+              data[index].lastName,
+              style: const TextStyle(fontSize: 12),
+            )),
+            DataCell(Text(
+              data[index].firstName,
+              style: const TextStyle(fontSize: 12),
+            )),
+            DataCell(Text(
+              data[index].email ?? "None",
+              style: const TextStyle(fontSize: 12),
+            )),
+            DataCell(Text(
+              data[index].phoneNumber ?? "None",
+              style: const TextStyle(fontSize: 12),
+            )),
+            if (onViewButtonPressed is Function ||
+                onEditButtonPressed is Function)
+              DataCell(
+                CellActions(
+                  data: data[index],
+                  onViewButtonPressed: onViewButtonPressed,
+                  onEditButtonPressed: onEditButtonPressed,
+                  viewTooltip: "View student info",
+                  editTooltip: "Edit student info",
+                ),
+              )
+          ],
+          selected: _map[data[index]] ?? false,
+          onSelectChanged: (value) {
+            _map[data[index]] = value ?? false;
+            notifyListeners();
+          });
+    } else {
+      return DataRow(cells: [
+        DataCell(Text(
+          data[index].id,
+          style: const TextStyle(fontSize: 12),
+        )),
+        DataCell(Text(
+          data[index].lastName,
+          style: const TextStyle(fontSize: 12),
+        )),
+        DataCell(Text(
+          data[index].firstName,
+          style: const TextStyle(fontSize: 12),
+        )),
+        DataCell(Text(
+          data[index].email ?? "None",
+          style: const TextStyle(fontSize: 12),
+        )),
+        DataCell(Text(
+          data[index].phoneNumber ?? "None",
+          style: const TextStyle(fontSize: 12),
+        )),
+        if (onViewButtonPressed is Function || onEditButtonPressed is Function)
           DataCell(
             CellActions(
               data: data[index],
-              onViewButtonPressed: (o) => onViewButtonPressed(o),
-              onEditButtonPressed: (o) => onEditButtonPressed(o),
+              onViewButtonPressed: onViewButtonPressed,
+              onEditButtonPressed: onEditButtonPressed,
               viewTooltip: "View student info",
               editTooltip: "Edit student info",
             ),
           )
-        ],
-        selected: _map[data[index]] ?? false,
-        onSelectChanged: (value) {
-          _map[data[index]] = value ?? false;
-          notifyListeners();
-        });
+      ]);
+    }
   }
 
   @override

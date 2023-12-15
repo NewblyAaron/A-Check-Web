@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:a_check_web/forms/teacher_form.dart';
 import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
+import 'package:a_check_web/pages/teacher/csv_table.dart';
 import 'package:a_check_web/pages/teacher/teacher_list.dart';
+import 'package:a_check_web/utils/csv_helpers.dart';
 import 'package:a_check_web/utils/dialogs.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/cell_actions.dart';
@@ -19,8 +22,9 @@ class TeacherListState extends State<TeacherList> {
 
     rows = TeacherDataSource(
         data: [],
-        onViewButtonPressed: viewTeacher,
-        onEditButtonPressed: (t) => openForm(teacher: t));
+        onViewButtonPressed: (t) => viewTeacher(t),
+        onEditButtonPressed: (t) => openForm(teacher: t),
+        selectable: true);
 
     teachersStream = teachersRef.snapshots().listen((event) {
       if (context.mounted) {
@@ -97,20 +101,72 @@ class TeacherListState extends State<TeacherList> {
           .showSnackBar(SnackBar(content: Text("Deleted $count teachers")));
     }
   }
+
+  Future<void> importTeachers() async {
+    final pickedFile = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['csv']);
+
+    if (pickedFile == null || pickedFile.files.isEmpty) {
+      snackbarKey.currentState!.showSnackBar(
+          const SnackBar(content: Text("Select a valid .csv file!")));
+      return;
+    }
+
+    final bytes = pickedFile.files.single.bytes!;
+    final fields = await CsvHelpers.importFromCsvFile(bytes: bytes);
+
+    if (fields.isEmpty) {
+      snackbarKey.currentState!.showSnackBar(
+          const SnackBar(content: Text("There's nothing in the .csv file!")));
+      return;
+    }
+
+    int values = 6;
+    for (var row in fields) {
+      if (row.length != values) {
+        snackbarKey.currentState!.showSnackBar(const SnackBar(
+            content: Text("Your .csv file has inconsistent values!")));
+        return;
+      }
+    }
+
+    if (mounted) {
+      await showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: TeacherCSV(
+              teachers: List.generate(fields.length, (index) {
+            return Teacher(
+                id: fields[index][0],
+                firstName: fields[index][2],
+                middleName: fields[index][3],
+                lastName: fields[index][1],
+                phoneNumber: fields[index][4].toString(),
+                email: fields[index][5].toString(),
+                password: "123");
+          })),
+        ),
+      );
+    }
+  }
 }
 
 class TeacherDataSource extends DataTableSource {
   TeacherDataSource(
       {required List<Teacher> data,
-      required this.onViewButtonPressed,
-      required this.onEditButtonPressed}) {
+      this.onViewButtonPressed,
+      this.onEditButtonPressed,
+      required this.selectable}) {
     updateData(data);
   }
 
-  final Function(Teacher student) onViewButtonPressed;
-  final Function(Teacher student) onEditButtonPressed;
+  final Function(dynamic teacher)? onViewButtonPressed;
+  final Function(dynamic teacher)? onEditButtonPressed;
+  final bool selectable;
 
-  late Map<Teacher, bool> _map;
+  late Map<Teacher, bool> _map = {};
   List<Teacher> _data = [];
   List<Teacher> _filteredData = [];
   bool _filtered = false;
@@ -131,12 +187,12 @@ class TeacherDataSource extends DataTableSource {
 
   updateData(List<Teacher> data) {
     _data = data;
-    _map = {for (var student in _data) student: _map[student] ?? false};
+    _map = {for (var teacher in _data) teacher: _map[teacher] ?? false};
 
     notifyListeners();
   }
 
-  void sort<T>(Comparable<T> Function(Teacher s) getField, bool ascending) {
+  void sort<T>(Comparable<T> Function(Teacher t) getField, bool ascending) {
     var data = _filtered ? _filteredData : _data;
 
     data.sort((a, b) {
@@ -174,36 +230,66 @@ class TeacherDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     var data = _filtered ? _filteredData : _data;
 
-    return DataRow(
-        cells: [
-          DataCell(Text(
-            data[index].id,
-            style: const TextStyle(fontSize: 12),
-          )),
-          DataCell(
-            Text(data[index].lastName, style: const TextStyle(fontSize: 12)),
-          ),
-          DataCell(Text(data[index].firstName,
-              style: const TextStyle(fontSize: 12))),
-          DataCell(Text(data[index].email ?? "None",
-              style: const TextStyle(fontSize: 12))),
-          DataCell(Text(data[index].phoneNumber ?? "None",
-              style: const TextStyle(fontSize: 12))),
+    if (selectable == true) {
+      return DataRow(
+          cells: [
+            DataCell(Text(
+              data[index].id,
+              style: const TextStyle(fontSize: 12),
+            )),
+            DataCell(
+              Text(data[index].lastName, style: const TextStyle(fontSize: 12)),
+            ),
+            DataCell(Text(data[index].firstName,
+                style: const TextStyle(fontSize: 12))),
+            DataCell(Text(data[index].email ?? "None",
+                style: const TextStyle(fontSize: 12))),
+            DataCell(Text(data[index].phoneNumber ?? "None",
+                style: const TextStyle(fontSize: 12))),
+            if (onViewButtonPressed is Function ||
+                onEditButtonPressed is Function)
+              DataCell(
+                CellActions(
+                  data: data[index],
+                  onViewButtonPressed: onViewButtonPressed,
+                  onEditButtonPressed: onEditButtonPressed,
+                  viewTooltip: "View teacher info",
+                  editTooltip: "Edit teacher info",
+                ),
+              ),
+          ],
+          selected: _map[data[index]] ?? false,
+          onSelectChanged: (value) {
+            _map[data[index]] = value ?? false;
+            notifyListeners();
+          });
+    } else {
+      return DataRow(cells: [
+        DataCell(Text(
+          data[index].id,
+          style: const TextStyle(fontSize: 12),
+        )),
+        DataCell(
+          Text(data[index].lastName, style: const TextStyle(fontSize: 12)),
+        ),
+        DataCell(
+            Text(data[index].firstName, style: const TextStyle(fontSize: 12))),
+        DataCell(Text(data[index].email ?? "None",
+            style: const TextStyle(fontSize: 12))),
+        DataCell(Text(data[index].phoneNumber ?? "None",
+            style: const TextStyle(fontSize: 12))),
+        if (onViewButtonPressed is Function || onEditButtonPressed is Function)
           DataCell(
             CellActions(
               data: data[index],
-              onViewButtonPressed: (o) => onViewButtonPressed(o),
-              onEditButtonPressed: (o) => onEditButtonPressed(o),
+              onViewButtonPressed: onViewButtonPressed,
+              onEditButtonPressed: onEditButtonPressed,
               viewTooltip: "View teacher info",
               editTooltip: "Edit teacher info",
             ),
           ),
-        ],
-        selected: _map[data[index]] ?? false,
-        onSelectChanged: (value) {
-          _map[data[index]] = value ?? false;
-          notifyListeners();
-        });
+      ]);
+    }
   }
 
   @override

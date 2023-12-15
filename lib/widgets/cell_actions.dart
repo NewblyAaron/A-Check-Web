@@ -4,8 +4,8 @@ class CellActions extends StatelessWidget {
   const CellActions(
       {super.key,
       required this.data,
-      required this.onViewButtonPressed,
-      required this.onEditButtonPressed,
+      this.onViewButtonPressed,
+      this.onEditButtonPressed,
       this.viewTooltip,
       this.editTooltip});
 
@@ -22,29 +22,28 @@ class CellActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          tooltip: viewTooltip,
-          splashRadius: 15,
-          onPressed: () {
-            if (onViewButtonPressed is Function) {
+        if (onViewButtonPressed is Function)
+          IconButton(
+            tooltip: viewTooltip,
+            splashRadius: 15,
+            onPressed: () {
               onViewButtonPressed!(data);
-            }
-          },
-          icon: const Icon(Icons.visibility_outlined, color: Color(0xff153faa)),
-        ),
-        IconButton(
-          tooltip: editTooltip,
-          splashRadius: 15,
-          onPressed: () {
-            if (onEditButtonPressed is Function) {
-              onEditButtonPressed!(data);
-            }
-          },
-          icon: const Icon(
-            Icons.edit_outlined,
-            color: Colors.black45,
+            },
+            icon:
+                const Icon(Icons.visibility_outlined, color: Color(0xff153faa)),
           ),
-        ),
+        if (onEditButtonPressed is Function)
+          IconButton(
+            tooltip: editTooltip,
+            splashRadius: 15,
+            onPressed: () {
+              onEditButtonPressed!(data);
+            },
+            icon: const Icon(
+              Icons.edit_outlined,
+              color: Colors.black45,
+            ),
+          ),
       ],
     );
   }

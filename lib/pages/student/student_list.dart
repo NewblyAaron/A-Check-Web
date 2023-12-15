@@ -65,8 +65,10 @@ class StudentListView extends WidgetView<StudentList, StudentListState> {
             TableActionsRow(
               onAddButtonPressed: state.openForm,
               onDeleteAllButtonPressed: state.deleteSelected,
+              onImportButtonPressed: state.importStudents,
               addTooltip: "Add new student",
               deleteAllTooltip: "Delete selected rows",
+              importTooltip: "Import a CSV file",
             ),
           ],
           onSelectAll: state.rows.selectAll,

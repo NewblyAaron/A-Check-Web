@@ -1,9 +1,11 @@
 import 'package:a_check_web/globals.dart';
 import 'package:a_check_web/model/school.dart';
 import 'package:a_check_web/utils/abstracts.dart';
+import 'package:a_check_web/utils/csv_helpers.dart';
 import 'package:a_check_web/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class ClassSettingsForm extends StatefulWidget {
   const ClassSettingsForm({super.key, required this.schoolClass});
@@ -45,6 +47,107 @@ class ClassSettingsState extends State<ClassSettingsForm> {
           content: Text(
               "Successfully edited ${widget.schoolClass.id}'s settings!")));
       Navigator.pop(context);
+    });
+  }
+
+  void exportDialog() async {
+    final classRecords = (await attendancesRef
+            .whereClassId(isEqualTo: widget.schoolClass.id)
+            .get())
+        .docs
+        .map((e) => e.data)
+        .toList()
+      ..sort(
+        (a, b) => a.dateTime.compareTo(b.dateTime),
+      );
+
+    if (!mounted) return;
+    final DateTimeRange? result = await showDateRangePicker(
+        context: context,
+        firstDate: classRecords.first.dateTime,
+        lastDate: classRecords.last.dateTime);
+    if (result == null) return;
+
+    final Map<DateTime, List<AttendanceRecord>> map = {};
+    for (var s in classRecords) {
+      if (s.dateTime.isAfter(result.start) && s.dateTime.isBefore(result.end)) {
+        final date =
+            DateTime(s.dateTime.year, s.dateTime.month, s.dateTime.day);
+
+        if (!map.containsKey(date)) {
+          map[date] = [];
+        }
+
+        map[date]!.add(s);
+      }
+    }
+
+    await _exportRecords(map);
+  }
+
+  Future<void> _exportRecords(
+      Map<DateTime, List<AttendanceRecord>> records) async {
+    final now = DateTime.now();
+    final records = Map.fromEntries(
+        (await widget.schoolClass.getAttendanceRecords()).entries.toList()
+          ..sort(
+            (a, b) => a.key.compareTo(b.key),
+          ));
+    Map<String, List<AttendanceRecord>> map = {};
+
+    for (var entry in records.entries) {
+      for (var record in entry.value) {
+        final id = record.studentId;
+        if (!map.containsKey(id)) {
+          map[id] = [];
+        }
+
+        try {
+          // check if this record exists
+          // will throw StateError if it doesnt exist
+          // otherwise, do nothing
+          map[id]?.firstWhere((element) =>
+              DateUtils.isSameDay(element.dateTime, record.dateTime));
+        } on StateError {
+          // add new record
+          map[id]!.add(record);
+        }
+      }
+    }
+
+    final header = [
+      "ID",
+      "Last Name",
+      "First Name",
+      "Middle Name",
+      for (var date in records.keys) DateFormat.yMd().format(date).toString()
+    ];
+    final List<List<dynamic>> data = [];
+
+    for (var entry in map.entries) {
+      final student = (await studentsRef.doc(entry.key).get()).data!;
+      final row = <dynamic>[
+        student.id,
+        student.lastName,
+        student.firstName,
+        student.lastName
+      ];
+
+      for (var record in entry.value) {
+        row.add(record.status.toString());
+      }
+
+      data.add(row);
+    }
+
+    await CsvHelpers.exportToCsvFile(
+            fileName: "${widget.schoolClass.id}-${now.toString()}",
+            header: header,
+            data: data)
+        .whenComplete(() {
+      snackbarKey.currentState!.showSnackBar(const SnackBar(
+          content: Text(
+              "Successfully exported class attendance records as CSV file!")));
     });
   }
 }
@@ -110,6 +213,14 @@ class ClassSettingsView
                       EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   hintText: 'Default value: 3',
                   labelText: "Maximum allowable absences"),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: state.exportDialog,
+              label: const Text("Export Class Attendance Records"),
+              icon: const Icon(Icons.download_rounded),
+              style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(35)),
             )
           ],
         ),

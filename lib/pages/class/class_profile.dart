@@ -28,12 +28,12 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
           Stack(children: [
             buildHeader(state.schoolClass),
             Container(
-              padding: const EdgeInsets.only(top: 16, right: 64),
+              padding: const EdgeInsets.only(top: 20, right: 68),
               alignment: Alignment.topRight,
-              child: IconButton(
-                splashRadius: 15,
+              child: TextButton.icon(
                   onPressed: state.openSettings,
-                  icon: const Icon(Icons.settings, color: Colors.black54,)),
+                  label: const Text("Class Settings"),
+                  icon: const Icon(Icons.settings)),
             ),
           ]),
           buildTabBar(),

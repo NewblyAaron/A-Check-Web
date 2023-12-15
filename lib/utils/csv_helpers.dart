@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:csv/csv.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:file_saver/file_saver.dart';
 
 const _csvConverter = ListToCsvConverter();
 
@@ -29,10 +28,9 @@ class CsvHelpers {
     }
 
     // convert to csv
-    final dir = await getDownloadsDirectory();
-    final csvFile = File("${dir?.path}/$fileName.csv");
-    String csv = _csvConverter.convert(rows);
-    await csvFile.writeAsString(csv);
-    return csvFile.path;
+    final csv = _csvConverter.convert(rows);
+    final bytes = utf8.encode(csv);
+    return await FileSaver.instance.saveFile(
+        name: fileName, bytes: bytes, ext: "csv", mimeType: MimeType.csv);
   }
 }

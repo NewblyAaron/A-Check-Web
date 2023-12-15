@@ -55,9 +55,21 @@ class AttendanceRecordsView
         Container(
             alignment: Alignment.bottomRight,
             padding: const EdgeInsets.only(bottom: 16, right: 16),
-            child: FloatingActionButton(
-              onPressed: state.close,
-              child: const Icon(Icons.close),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton.extended(
+                  onPressed: state.exportRecord,
+                  icon: const Icon(Icons.download),
+                  label: const Text("Export record"),
+                ),
+                const SizedBox(width: 8),
+                FloatingActionButton(
+                  onPressed: state.close,
+                  child: const Icon(Icons.close),
+                ),
+              ],
             )),
       ]),
     );

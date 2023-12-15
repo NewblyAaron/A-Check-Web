@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:a_check_web/forms/teacher_form.dart';
 import 'package:a_check_web/globals.dart';
@@ -9,7 +7,6 @@ import 'package:a_check_web/pages/teacher/csv_table.dart';
 import 'package:a_check_web/pages/teacher/teacher_list.dart';
 import 'package:a_check_web/utils/csv_helpers.dart';
 import 'package:a_check_web/utils/dialogs.dart';
-import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 

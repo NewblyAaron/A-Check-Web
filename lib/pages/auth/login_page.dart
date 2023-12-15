@@ -6,6 +6,8 @@ import 'package:a_check_web/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'forgot_password_form.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -34,9 +36,8 @@ class LoginPageState extends State<LoginPage> {
     final auth = FirebaseAuth.instance;
 
     try {
-      await auth
-          .signInWithEmailAndPassword(
-              email: emailCon.text, password: passwordCon.text);
+      await auth.signInWithEmailAndPassword(
+          email: emailCon.text, password: passwordCon.text);
     } on FirebaseAuthException catch (e) {
       snackbarKey.currentState!.showSnackBar(
           SnackBar(content: Text(e.message ?? "Error! ${e.code}")));
@@ -58,6 +59,15 @@ class LoginPageState extends State<LoginPage> {
           builder: (context) => const StudentLoginPage(),
         ));
   }
+
+  void forgotPassword() async {
+    await showDialog(
+      context: context,
+      builder: (context) => const Dialog(
+        child: ForgotPassword(),
+      ),
+    );
+  }
 }
 
 class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
@@ -71,148 +81,157 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
   }
 
   Widget buildBody() {
-    return Center(
-      child: Card(
-        color: Colors.white,
-        elevation: 2,
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SizedBox(
-            width: 350,
-            height: 670,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      SizedBox(
-                        width: 450,
-                        height: 670,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 35, bottom: 30),
-                              child: Image(
-                                  image: AssetImage(
-                                      "assets/images/small_logo_blue.png"),
-                                  height: 100),
-                            ),
-                            const Text(
-                              "Log in to A-Check",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 24),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            buildForm(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Column(
+    return Container(
+      color: Colors.transparent,
+      child: Center(
+        child: SingleChildScrollView(
+          child: Card(
+            color: Colors.white,
+            elevation: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: SizedBox(
+                width: 350,
+                height: 670,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                            width: 450,
+                            height: 670,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Row(
-                                  children: [
-                                    Expanded(child: Divider()),
-                                    Text("     or     "),
-                                    Expanded(child: Divider()),
-                                  ],
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 35, bottom: 30),
+                                  child: Image(
+                                      image: AssetImage(
+                                          "assets/images/small_logo_blue.png"),
+                                      height: 100),
+                                ),
+                                const Text(
+                                  "Log in to A-Check",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24),
                                 ),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                InkWell(
-                                  customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  // hoverColor: const Color(0xff153faa).withOpacity(0.8),
-                                  // highlightColor: const Color(0xff153faa).withOpacity(0.4),
-                                  // splashColor: const Color(0xff153faa).withOpacity(1),
-                                  onTap: state.studentLogin,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    width: 350,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      border: Border.all(
-                                        color: const Color(0xff153faa),
-                                        width: 1,
-                                      ),
-                                      // adding color will hide the splash effect
-                                      color: Colors.transparent,
+                                buildForm(),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Column(
+                                  children: [
+                                    const Row(
+                                      children: [
+                                        Expanded(child: Divider()),
+                                        Text("     or     "),
+                                        Expanded(child: Divider()),
+                                      ],
                                     ),
-                                    child: const Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    InkWell(
+                                      customBorder: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      // hoverColor: const Color(0xff153faa).withOpacity(0.8),
+                                      // highlightColor: const Color(0xff153faa).withOpacity(0.4),
+                                      // splashColor: const Color(0xff153faa).withOpacity(1),
+                                      onTap: state.studentLogin,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8),
+                                        width: 350,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(35),
+                                          border: Border.all(
+                                            color: const Color(0xff153faa),
+                                            width: 1,
+                                          ),
+                                          // adding color will hide the splash effect
+                                          color: Colors.transparent,
+                                        ),
+                                        child: const Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.account_circle_rounded,
+                                              color: Color(0xff153faa),
+                                              size: 23,
+                                            ),
+                                            SizedBox(
+                                              width: 9,
+                                            ),
+                                            Text(
+                                              "Log in as a Student",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xff153faa)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Expanded(child: Divider()),
+                                        Text("     or     "),
+                                        Expanded(child: Divider()),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Icon(
-                                          Icons.account_circle_rounded,
-                                          color: Color(0xff153faa),
-                                          size: 23,
-                                        ),
-                                        SizedBox(
-                                          width: 9,
-                                        ),
-                                        Text(
-                                          "Log in as a Student",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xff153faa)),
-                                        ),
+                                        const Text(
+                                            "Don't have a school account?"),
+                                        MaterialButton(
+                                            minWidth: 30,
+                                            onPressed: state.register,
+                                            hoverColor: Colors.transparent,
+                                            child: const Text(
+                                              "Register",
+                                              style: TextStyle(
+                                                  color: Color(0xff153faa),
+                                                  fontWeight: FontWeight.w500,
+                                                  decoration:
+                                                      TextDecoration.underline),
+                                            )),
                                       ],
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                const Row(
-                                  children: [
-                                    Expanded(child: Divider()),
-                                    Text("     or     "),
-                                    Expanded(child: Divider()),
                                   ],
-                                ),
-                                const SizedBox(
-                                  height: 25,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text("Don't have a school account?"),
-                                    MaterialButton(
-                                        minWidth: 30,
-                                        onPressed: state.register,
-                                        hoverColor: Colors.transparent,
-                                        child: const Text(
-                                          "Register",
-                                          style: TextStyle(
-                                              color: Color(0xff153faa),
-                                              fontWeight: FontWeight.w500,
-                                              decoration:
-                                                  TextDecoration.underline),
-                                        )),
-                                  ],
-                                ),
+                                )
                               ],
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -228,6 +247,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
             TextFormField(
               controller: state.emailCon,
               validator: Validators.isAnEmail,
+              keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(
@@ -245,6 +265,7 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
               controller: state.passwordCon,
               onFieldSubmitted: (_) => state.login(),
               validator: Validators.hasValue,
+              keyboardType: TextInputType.visiblePassword,
               obscureText: true,
               obscuringCharacter: '•',
               decoration: const InputDecoration(
@@ -255,6 +276,23 @@ class LoginPageView extends WidgetView<LoginPage, LoginPageState> {
                     size: 20,
                   ),
                   labelText: "Password"),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                MaterialButton(
+                    minWidth: 30,
+                    onPressed: state.forgotPassword,
+                    hoverColor: Colors.transparent,
+                    child: const Text(
+                      "Forgot your password?",
+                      style: TextStyle(
+                          color: Color(0xff153faa),
+                          fontWeight: FontWeight.w400,
+                          decoration: TextDecoration.underline),
+                    )),
+              ],
             ),
             const SizedBox(height: 12),
             InkWell(

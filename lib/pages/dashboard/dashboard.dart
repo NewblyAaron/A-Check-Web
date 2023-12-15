@@ -84,6 +84,7 @@ class DashboardView extends WidgetView<Dashboard, DashboardState> {
                                 final url = snapshot.data!;
 
                                 return CircleAvatar(
+                                  backgroundColor:const Color(0xff153faa),
                                   foregroundImage: NetworkImage(url),
                                   child: Text(
                                       "${e.key.firstName[0]}${e.key.lastName[0]}"),
@@ -194,7 +195,7 @@ class DashboardView extends WidgetView<Dashboard, DashboardState> {
         side: const BorderSide(color: Color(0x4d9e9e9e), width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
         child: Column(
           children: [
             const Text(
@@ -257,7 +258,7 @@ class DashboardView extends WidgetView<Dashboard, DashboardState> {
         side: const BorderSide(color: Color(0x4d9e9e9e), width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
         child: Column(
           children: [
             const Text(

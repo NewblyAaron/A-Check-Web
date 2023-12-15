@@ -187,7 +187,7 @@ class TeacherView extends WidgetView<TeacherProfile, TeacherState> {
           final classes = snapshot.data!.docs.map((e) => e.data).toList();
 
           if (classes.isEmpty) {
-            return const Text("No handled classes!");
+            return const Text("No handled classes!", style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xff153faa)),);
           }
 
           return Column(
@@ -210,6 +210,7 @@ class TeacherView extends WidgetView<TeacherProfile, TeacherState> {
                   shrinkWrap: true,
                   children: classes
                       .map((e) => Card(
+                            color: Theme.of(context).secondaryHeaderColor,
                             child: ListTile(
                               title: Text(e.name),
                               subtitle: Text(e.section),

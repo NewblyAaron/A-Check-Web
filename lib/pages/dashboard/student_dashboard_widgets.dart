@@ -17,52 +17,109 @@ class Classes extends StatefulWidget {
 class _ClassesState extends State<Classes> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.fromLTRB(50, 70, 70, 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                "List of Enrolled Classes",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 25,
-                  color: Color(0xff000000),
-                ),
+    return Expanded(
+      flex: 1,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 50, left: 40, right: 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Your Enrolled Classes",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                fontSize: 30,
+                color: Colors.black87,
               ),
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(50, 20, 70, 0),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.classes.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.class_rounded,
-                    size: 40,
-                  ),
-                  onTap: () => widget.onClassTap(widget.classes[index]),
-                  dense: false,
-                  contentPadding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
-                  selectedTileColor: Colors.blue.shade100,
-                  title: Text(widget.classes[index].name),
-                  subtitle: Text(widget.classes[index].section),
+            ),
+            const SizedBox(height: 12,),
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.fromLTRB(20,16,4,4),
+                decoration: const BoxDecoration(
+                    boxShadow: [
+                      // BoxShadow(
+                      //   color: Colors.black38,
+                      //   blurRadius: 4,
+                      //   blurStyle: BlurStyle.outer,
+                      //   offset: Offset(2, 3),
+                      // ),
+                    ],
+                    borderRadius: BorderRadius.all(Radius.circular(50))
                 ),
-              );
-            },
-          ),
+                child:  GridView.builder(
+                    shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 600,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  itemCount: widget.classes.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => widget.onClassTap(widget.classes[index]),
+                      child: Container(
+                        width: 530,
+                        height: 500,
+                        padding: const EdgeInsets.all(14),
+                        margin: const EdgeInsets.all(12),
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 3,
+                                blurStyle: BlurStyle.outer,
+                                offset: Offset(2, 3),
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(50))
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(widget.classes[index].name,style: const TextStyle(color:Colors.black, fontWeight: FontWeight.w500, fontSize: 18),),
+                            Text(widget.classes[index].section,style: const TextStyle(color:Color(0xff153faa), fontWeight: FontWeight.w400, fontSize: 13),),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                // child: ListView.builder(
+                //   shrinkWrap: true,
+                //   itemCount: widget.classes.length,
+                //   itemBuilder: (context, index) {
+                //     return ListTile(
+                //       // shape: const RoundedRectangleBorder(
+                //       //     borderRadius: BorderRadius.all(Radius.circular(25))
+                //       // ),
+                //       contentPadding: const EdgeInsets.fromLTRB(40, 5, 20, 5),
+                //       hoverColor: Colors.transparent,
+                //       selectedTileColor: Colors.blue.shade100,
+                //       trailing: const Icon(
+                //         Icons.more_horiz_rounded,
+                //         color: Colors.white,
+                //         size: 26,
+                //       ),
+                //       onTap: () => widget.onClassTap(widget.classes[index]),
+                //       dense: false,
+                //       title: Text(widget.classes[index].name,style: const TextStyle(color:Colors.white, fontWeight: FontWeight.w500, fontSize: 18),),
+                //       subtitle: Text(widget.classes[index].section,style: const TextStyle(color:Colors.orangeAccent, fontWeight: FontWeight.w400, fontSize: 13),),
+                //     );
+                //   },
+                // ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -114,31 +171,44 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.fromLTRB(50, 70, 70, 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                "Attendance Records",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 25,
-                  color: Color(0xff000000),
-                ),
-              ),
-            ],
+    return Container(
+      padding: const EdgeInsets.all(24),
+      margin: const EdgeInsets.all(25),
+      decoration: const BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 4,
+            blurStyle: BlurStyle.outer,
+            offset: Offset(2, 3),
           ),
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(50, 20, 70, 0),
-          child: FutureBuilder(
+        ],
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(50))
+      ),
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 12.0),
+            child: Text(
+              "Your Attendance Records",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                fontSize: 25,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          const SizedBox(height: 6,),
+          const Divider(
+            height: 12,
+            color: Colors.black,
+            thickness: 0.1,
+          ),
+          const SizedBox(height: 6,),
+          FutureBuilder(
             future: getRecords(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
@@ -158,34 +228,52 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    IconData icon;
+                    Icon icon;
                     switch (snapshot.data![index].status) {
                       case AttendanceStatus.Absent:
-                        icon = Icons.close;
+                        icon = const Icon(
+                          Icons.hdr_auto_outlined,
+                          size: 24,
+                          color: Colors.redAccent,
+                        );
                         break;
                       case AttendanceStatus.Late:
-                        icon = Icons.watch_later;
+                        icon = const Icon(
+                          Icons.dark_mode_outlined,
+                          size: 24,
+                          color: Colors.orangeAccent,
+                        );
                         break;
                       case AttendanceStatus.Excused:
-                        icon = Icons.assistant_photo;
+                        icon = const Icon(
+                          Icons.flag_circle_outlined,
+                          size: 24,
+                          color: Colors.purple,
+                        );
                         break;
                       default:
-                        icon = Icons.fact_check_rounded;
+                        icon = const Icon(
+                          Icons.check_circle,
+                          size: 24,
+                          color: Colors.green,
+                        );
                     }
 
-                    return Card(
+                    return Container(
+                      padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(25))
+                      ),
                       child: ListTile(
-                        leading: Icon(
-                          icon,
-                          size: 40,
-                        ),
+                        leading: icon,
                         dense: false,
                         contentPadding:
-                            const EdgeInsets.fromLTRB(20, 5, 20, 10),
-                        selectedTileColor: Colors.blue.shade100,
+                            const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         title: Text(DateFormat(DateFormat.YEAR_MONTH_DAY)
-                            .format(snapshot.data![index].dateTime)),
-                        trailing: Text(snapshot.data![index].status.name),
+                            .format(snapshot.data![index].dateTime), style: const TextStyle(color:Colors.black, fontWeight: FontWeight.w400, fontSize: 16),),
+                        trailing: Text(snapshot.data![index].status.name,style: const TextStyle(color:Colors.black, fontWeight: FontWeight.w500, fontSize: 13, letterSpacing: 0.2),),
                       ),
                     );
                   },
@@ -197,8 +285,8 @@ class _AttendanceRecordsState extends State<AttendanceRecords> {
               }
             },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

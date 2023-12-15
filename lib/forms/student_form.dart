@@ -39,7 +39,7 @@ class StudentFormView extends WidgetView<StudentForm, StudentFormState> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.normal,
-                            fontSize: 35,
+                            fontSize: 24,
                             color: Color(0xff000000),
                           )),
                     ),

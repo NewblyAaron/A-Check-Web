@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:a_check_web/model/school.dart';
 import 'package:flutter/material.dart';
 
+import '../auth/login_page.dart';
 import 'student_dashboard_widgets.dart';
 
 class StudentDashboard extends StatefulWidget {
@@ -60,26 +61,64 @@ class StudentDashboardState extends State<StudentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: true,
+        toolbarHeight: 70,
+        primary: false,
+        automaticallyImplyLeading: false,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 14),
+            child: TextButton.icon (
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+              icon: const Icon(Icons.logout_rounded, size: 24, color: Colors.black54, ),
+              label: const Text("Log out"),
+            ),
+          ),
+        ],
+        elevation: 0.5,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         title: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 0),
-                child: Image(
-                    image: AssetImage('assets/images/logo_blue.png'),
-                    height: 56),
-              ),
-            ]),
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 40.0, bottom: 30),
+              child: Image(
+                  image: AssetImage("assets/images/small_logo_blue.png"),
+                  height: 50),
+            ),
+            Padding(
+                padding: EdgeInsets.only(left: 4, top: 30, bottom: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "A-Check",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff153faa)
+                      ),
+                    ),
+                  ],
+                ))
+          ],
+        ),
       ),
       body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Expanded(flex: 1,child: Container(color: Colors.white,)),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Column(
               children: [
                 FutureBuilder(
@@ -88,13 +127,13 @@ class StudentDashboardState extends State<StudentDashboard> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (!snapshot.hasData) {
                           return const Center(
-                            child: Text("Failed to get enrolled classes"),
+                            child: Text("Failed to get enrolled classes", style: TextStyle(fontWeight: FontWeight.w600),),
                           );
                         }
 
                         if (snapshot.data!.isEmpty) {
                           return const Center(
-                            child: Text("No enrolled classes"),
+                            child: Text("You have no enrolled classes."),
                           );
                         }
 
@@ -111,84 +150,19 @@ class StudentDashboardState extends State<StudentDashboard> {
               ],
             ),
           ),
+          const VerticalDivider(
+            color: Colors.black,
+            thickness: 0.1,
+          ),
           attendancesWidget != null
               ? Expanded(
-                  flex: 1,
-                  child: attendancesWidget!,
-                )
-              : Container()
+                flex: 2,
+                child: Container(color: Colors.white,child: attendancesWidget!),
+              )
+              : Expanded(flex: 2,child: Container(color: Colors.white,))
         ],
       ),
-    );
-  }
-}
 
-class ProfileDropdown extends StatefulWidget {
-  const ProfileDropdown({
-    super.key,
-    required this.onSettingsTap,
-    required this.studentName,
-    required this.schoolName,
-  });
-
-  final String studentName, schoolName;
-  final Function()? onSettingsTap;
-
-  @override
-  State<ProfileDropdown> createState() => _ProfileDropdownState();
-}
-
-class _ProfileDropdownState extends State<ProfileDropdown> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              widget.studentName,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600),
-            ),
-            Text(
-              widget.schoolName,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-        PopupMenuButton<String>(
-          offset: Offset.zero,
-          position: PopupMenuPosition.under,
-          icon: const Icon(Icons.arrow_drop_down, size: 25),
-          tooltip: 'Profile',
-          itemBuilder: (BuildContext context) {
-            return [
-              PopupMenuItem(
-                onTap: widget.onSettingsTap,
-                child: const Text(
-                  "Settings",
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
-                ),
-              ),
-            ];
-          },
-        ),
-      ],
     );
   }
 }

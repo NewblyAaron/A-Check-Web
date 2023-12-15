@@ -54,8 +54,9 @@ class StudentFormState extends State<StudentForm> {
         photoPath: widget.student?.photoPath);
 
     studentsRef.doc(student.id).set(student).then((_) {
-      snackbarKey.currentState!.showSnackBar(
-          SnackBar(content: Text("Successfully added ${student.fullName}!")));
+      snackbarKey.currentState!.showSnackBar(SnackBar(
+          content: Text(
+              "Successfully ${widget.student != null ? "edited" : "added"} ${student.fullName}!")));
       Navigator.pop(context, student);
     });
   }

@@ -22,24 +22,29 @@ class TeacherFormState extends State<TeacherForm> {
     if (!formKey.currentState!.validate()) return;
 
     final teacher = Teacher(
-        id: idCon.text,
-        firstName: fNameCon.text,
-        middleName: mNameCon.text,
-        lastName: lNameCon.text,
-        email: emailCon.text,
-        phoneNumber: phoneNumCon.text,
-        password: passwordCon.text,
-        photoPath: widget.teacher?.photoPath,);
+      id: idCon.text,
+      firstName: fNameCon.text,
+      middleName: mNameCon.text,
+      lastName: lNameCon.text,
+      email: emailCon.text,
+      phoneNumber: phoneNumCon.text,
+      password: passwordCon.text,
+      photoPath: widget.teacher?.photoPath,
+    );
 
     teachersRef.doc(teacher.id).set(teacher).then((value) {
-      snackbarKey.currentState!.showSnackBar(
-          SnackBar(content: Text("Successfully added ${teacher.fullName}!")));
+      snackbarKey.currentState!.showSnackBar(SnackBar(
+          content: Text(
+              "Successfully ${widget.teacher != null ? "edited" : "added"} ${teacher.fullName}!")));
       Navigator.pop(context);
     });
   }
 
   void resetPassword() async {
-    final result = await Dialogs.showConfirmDialog(context, const Text("Reset password"), const Text("Reset this teacher's password to 123?"));
+    final result = await Dialogs.showConfirmDialog(
+        context,
+        const Text("Reset password"),
+        const Text("Reset this teacher's password to 123?"));
 
     if (result ?? false) {
       passwordCon.text = "123";

@@ -67,8 +67,10 @@ class TeacherListView extends WidgetView<TeacherList, TeacherListState> {
             TableActionsRow(
               onAddButtonPressed: state.openForm,
               onDeleteAllButtonPressed: state.deleteSelected,
+              onImportButtonPressed: state.importTeachers,
               addTooltip: "Add new teacher",
               deleteAllTooltip: "Delete selected rows",
+              importTooltip: "Import a CSV file",
             ),
           ],
           rowsPerPage: 15,

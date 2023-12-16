@@ -57,17 +57,23 @@ class AttendanceRecordsView
             padding: const EdgeInsets.only(bottom: 16, right: 16),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 FloatingActionButton.extended(
+                  elevation: 0,
+                  backgroundColor: Colors.green,
                   onPressed: state.exportRecord,
                   icon: const Icon(Icons.download),
                   label: const Text("Export record"),
                 ),
-                const SizedBox(width: 8),
-                FloatingActionButton(
+                const SizedBox(width: 12),
+                FloatingActionButton.extended(
+                  elevation: 0,
+                  backgroundColor: Colors.grey,
                   onPressed: state.close,
-                  child: const Icon(Icons.close),
+                  icon: const Icon(Icons.close),
+                  label: const Text("Cancel"),
                 ),
               ],
             )),

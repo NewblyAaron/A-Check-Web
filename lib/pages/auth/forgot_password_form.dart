@@ -62,7 +62,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Form(
       key: formKey,
       child: Padding(
-        padding: const EdgeInsets.only(top: 32, left: 32, right: 32),
+        padding: const EdgeInsets.only(top: 32, left: 12, right: 12),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,7 +79,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   )),
             ),
             const Padding(
-              padding: EdgeInsets.only(bottom: 32),
+              padding: EdgeInsets.only(bottom: 12),
               child: Text(
                   "Enter your email address. You will receive a link to create a new password via email.",
                   textAlign: TextAlign.start,
@@ -90,6 +90,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     color: Colors.black54,
                   )),
             ),
+            const SizedBox(height: 12,),
             TextFormField(
               controller: emailCon,
               validator: Validators.isAnEmail,
@@ -106,7 +107,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               ),
             ),
-            const SizedBox(height: 12),
           ],
         ),
       ),
@@ -115,53 +115,58 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   Row buildButtons() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Material(
-              color: const Color(0xff153faa),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(35)),
-              child: InkWell(
-                customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                // hoverColor: const Color(0xff153faa).withOpacity(0.8),
-                // highlightColor: const Color(0xff153faa).withOpacity(0.4),
-                // splashColor: const Color(0xff153faa).withOpacity(1),
-                onTap: finalize,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-                  child: const Text(
-                    "Request Reset Link",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.only(top: 0, left: 12, right: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Material(
+                color: const Color(0xff153faa),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35)),
+                child: InkWell(
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  // hoverColor: const Color(0xff153faa).withOpacity(0.8),
+                  // highlightColor: const Color(0xff153faa).withOpacity(0.4),
+                  // splashColor: const Color(0xff153faa).withOpacity(1),
+                  onTap: finalize,
+                  child: Container(
+                    width:344,
+                    alignment: Alignment.center,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+                    child: const Text(
+                      "Request Reset Link",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            MaterialButton(
-                minWidth: 30,
-                onPressed: () => Navigator.pop(context),
-                hoverColor: Colors.transparent,
-                child: const Text(
-                  "Go back to Login",
-                  style: TextStyle(
-                      color: Color(0xff153faa),
-                      fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.underline),
-                )),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              MaterialButton(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  minWidth: 30,
+                  onPressed: () => Navigator.pop(context),
+                  hoverColor: Colors.transparent,
+                  child: const Text(
+                    "Go back to Login",
+                    style: TextStyle(
+                        color: Color(0xff153faa),
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline),
+                  )),
+            ],
+          ),
         ),
       ],
     );

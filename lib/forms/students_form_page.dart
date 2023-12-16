@@ -57,15 +57,30 @@ class StudentsFormView extends WidgetView<StudentsFormPage, StudentsFormState> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(
-                  width: 400,
+                  width: 520,
+                  height: 40,
                   child: SearchBar(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        const RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: BorderSide(color: Colors.black, width: 0.5, strokeAlign: BorderSide.strokeAlignOutside)),
+                      ),
+                    elevation: MaterialStateProperty.resolveWith<double>(
+                          (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return 0;
+                        }
+                        return 0; // Defer to the widget's default.
+                      },
+                    ),
+                    backgroundColor: null,
                     controller: state.searchController,
                     hintText: "Search here...",
                   ),
                 ),
                 FloatingActionButton(
+                  backgroundColor: Colors.green,
+                  mini: true,
                   onPressed: state.finalize,
-                  child: const Icon(Icons.check),
+                  child: const Icon(Icons.check, color: Colors.white, size: 20,),
                 ),
               ],
             ))

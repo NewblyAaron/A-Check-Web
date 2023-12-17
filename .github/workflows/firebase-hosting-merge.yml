@@ -19,7 +19,7 @@ jobs:
             distribution: 'temurin'
             java-version: '17'
         - name: Setup Flutter
-          uses: subosito/flutter-action@master
+          uses: subosito/flutter-action@v2
         - name: Install dependencies
           run: flutter pub get --no-example
         - name: Build build_runner outputs

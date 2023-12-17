@@ -139,10 +139,10 @@ class TeacherListState extends State<TeacherList> {
           child: TeacherCSV(
               teachers: List.generate(fields.length, (index) {
             return Teacher(
-                id: fields[index][0],
-                firstName: fields[index][2],
-                middleName: fields[index][3],
-                lastName: fields[index][1],
+                id: fields[index][0].toString(),
+                firstName: fields[index][2].toString(),
+                middleName: fields[index][3].toString(),
+                lastName: fields[index][1].toString(),
                 phoneNumber: fields[index][4].toString(),
                 email: fields[index][5].toString(),
                 password: "123");

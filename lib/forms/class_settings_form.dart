@@ -61,6 +61,12 @@ class ClassSettingsState extends State<ClassSettingsForm> {
         (a, b) => a.dateTime.compareTo(b.dateTime),
       );
 
+    if (classRecords.isEmpty) {
+      snackbarKey.currentState!
+          .showSnackBar(const SnackBar(content: Text("No records!")));
+      return;
+    }
+
     if (!mounted) return;
     final DateTimeRange? result = await showDateRangePicker(
         context: context,
@@ -277,7 +283,10 @@ class ClassSettingsView
                 children: [
                   Text(
                     "Confirm",
-                    style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
                   ),
                 ],
               ),

@@ -216,16 +216,28 @@ class MainScreenView extends WidgetView<MainScreen, MainScreenState> {
   }
 
   Widget buildSearchBar(BuildContext context) {
-    return SearchBar(
-      constraints: const BoxConstraints(
-          minWidth: 100.0, maxWidth: 300, maxHeight: 100, minHeight: 100),
-      controller: state.searchController,
-      elevation: const MaterialStatePropertyAll(1),
-      leading: const Icon(Icons.search),
-      hintText: "Search ${state.getSearchName()}...",
-      trailing: [
-        IconButton(onPressed: state.clearSearch, icon: const Icon(Icons.clear))
-      ],
+    const key = ValueKey("searchbar");
+
+    return AnimatedSwitcher(
+      key: key,
+      duration: const Duration(milliseconds: 350),
+      child: state.selectedIndex != 0
+          ? SearchBar(
+              constraints: const BoxConstraints(
+                  minWidth: 100.0,
+                  maxWidth: 300,
+                  maxHeight: 100,
+                  minHeight: 100),
+              controller: state.searchController,
+              elevation: const MaterialStatePropertyAll(1),
+              leading: const Icon(Icons.search),
+              hintText: "Search ${state.getSearchName()}...",
+              trailing: [
+                IconButton(
+                    onPressed: state.clearSearch, icon: const Icon(Icons.clear))
+              ],
+            )
+          : Container(key: key),
     );
   }
 

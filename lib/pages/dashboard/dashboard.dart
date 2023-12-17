@@ -87,7 +87,7 @@ class DashboardView extends WidgetView<Dashboard, DashboardState> {
                                   backgroundColor:const Color(0xff153faa),
                                   foregroundImage: NetworkImage(url),
                                   child: Text(
-                                      "${e.key.firstName[0]}${e.key.lastName[0]}", style: TextStyle(fontSize: 12)),
+                                      "${e.key.firstName[0]}${e.key.lastName[0]}", style: const TextStyle(fontSize: 12)),
                                 );
                               } else {
                                 return const CircularProgressIndicator();

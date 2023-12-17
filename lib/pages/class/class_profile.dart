@@ -32,7 +32,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
               alignment: Alignment.topRight,
               child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff153faa),
+                    backgroundColor: const Color(0xff153faa),
                     foregroundColor: Colors.white,
                   ),
                   onPressed: state.openSettings,

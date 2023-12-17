@@ -10,7 +10,6 @@ class CsvHelpers {
   static Future<List<dynamic>> importFromCsvFile(
       {required Uint8List bytes}) async {
     final toUtf8 = const Utf8Decoder().convert(bytes);
-    print(toUtf8);
     return const CsvToListConverter().convert(toUtf8);
   }
 

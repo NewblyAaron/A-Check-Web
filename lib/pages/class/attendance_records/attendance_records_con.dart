@@ -195,8 +195,9 @@ class AttendanceRecordDataSource extends DataTableSource {
           })),
       DataCell(Text(
           DateFormat(DateFormat.HOUR_MINUTE).format(_data[index].dateTime),
-          style: const TextStyle(fontSize: 12))),
-      DataCell(Text(_data[index].status.name)),
+          style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic))),
+      DataCell(Text(_data[index].status.name,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Color(0xff153faa)))),
     ]);
   }
 

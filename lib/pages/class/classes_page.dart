@@ -39,6 +39,8 @@ class ClassesPageView extends WidgetView<ClassesPage, ClassesPageState> {
                     padding: const EdgeInsets.only(top: 16, right: 16),
                     alignment: Alignment.topRight,
                     child: IconButton(
+                        splashRadius: 15,
+                        color: const Color(0xff153faa),
                         onPressed: state.closeProfile,
                         icon: const Icon(Icons.close)),
                   )

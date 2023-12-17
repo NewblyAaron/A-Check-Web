@@ -165,15 +165,13 @@ class ClassSettingsView
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100,
+      width: 440,
+      height: 230,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          buildForm(),
-          const SizedBox(
-            height: 16,
-          ),
-          buildButtons()
+          buildForm()
+          // buildButtons()
         ],
       ),
     );
@@ -185,47 +183,88 @@ class ClassSettingsView
       child: Padding(
         padding: const EdgeInsets.only(top: 32, left: 32, right: 32),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
             const Padding(
-              padding: EdgeInsets.only(bottom: 32),
+              padding: EdgeInsets.only(bottom: 8),
               child: Text("Class Settings",
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 27,
                     color: Color(0xff000000),
                   )),
             ),
-            TextFormField(
-              controller: state.maxAbsenceCon,
-              validator: Validators.hasValue,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              obscureText: false,
-              textAlign: TextAlign.start,
-              textInputAction: TextInputAction.next,
-              maxLines: 1,
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontStyle: FontStyle.normal,
-                fontSize: 14,
-                color: Colors.black54,
-              ),
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  hintText: 'Default value: 3',
-                  labelText: "Maximum allowable absences"),
+            const Divider(thickness: 1,),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Flexible(
+                  flex: 3,
+                  child: Text("Edit Absence Limit",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Flexible(
+                  flex: 1,
+                  child: TextFormField(
+                    controller: state.maxAbsenceCon,
+                    validator: Validators.hasValue,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    obscureText: false,
+                    textAlign: TextAlign.center,
+                    textInputAction: TextInputAction.next,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(4),
+                      suffixIcon:
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const VerticalDivider(thickness: 3, color: Colors.blue, width: 2,),
+                              Tooltip(message: "Save changes",
+                              child: InkWell(
+                                radius: 10,
+                                onTap: state.finalize,
+                                child: const Icon(Icons.check_circle, color: Color(0xff153faa),),
+                              ),
+                            ),
+                          ],
+                        ),
+                        filled: true,
+                        fillColor: const Color(0xffFAF9FE),
+                        focusColor: const Color(0xff153faa),
+                        enabled: true,
+                        border: OutlineInputBorder(borderRadius:BorderRadius.circular(15.0)),
+                        hintText: 'Default value: 3', alignLabelWithHint: true),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
+            const SizedBox(height: 20),
+            OutlinedButton.icon(
               onPressed: state.exportDialog,
-              label: const Text("Export Class Attendance Records"),
-              icon: const Icon(Icons.download_rounded),
-              style: ElevatedButton.styleFrom(
+              label: const Text("Export All Class Attendance Records"),
+              icon: const Icon(Icons.download_rounded, size: 16),
+              style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(35)),
             )
           ],
@@ -247,7 +286,7 @@ class ClassSettingsView
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(vertical: 24),
-              width: 140,
+              width: 225,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
                 // adding color will hide the splash effect
@@ -270,7 +309,7 @@ class ClassSettingsView
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(vertical: 24),
-              width: 140,
+              width: 225,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
                 // adding color will hide the splash effect

@@ -30,10 +30,14 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
             Container(
               padding: const EdgeInsets.only(top: 20, right: 68),
               alignment: Alignment.topRight,
-              child: TextButton.icon(
+              child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff153faa),
+                    foregroundColor: Colors.white,
+                  ),
                   onPressed: state.openSettings,
                   label: const Text("Class Settings"),
-                  icon: const Icon(Icons.settings)),
+                  icon: const Icon(Icons.settings, size: 18,)),
             ),
           ]),
           buildTabBar(),
@@ -143,7 +147,7 @@ class ClassView extends WidgetView<ClassProfile, ClassProfileState> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "${schoolClass.studentIds.length.toString()} student${schoolClass.studentIds.length > 1 ? "s" : ""}",
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ),
